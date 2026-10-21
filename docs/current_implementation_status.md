@@ -3,7 +3,7 @@
 **Status:** Restart baseline  
 **Current product phase:** Phase 0 — Architecture, Contracts and ADR Freeze  
 **Phase lifecycle:** IN_PROGRESS (restart/reconciliation work); Phase 0 exit gate remains open  
-**Current ICM run:** `phase0-ownership-reconciliation-20261021` (Stages 01–04 prepared; sequence accepted)  
+**Current ICM run:** `phase0-ownership-reconciliation-20261021` (Stages 01–09 executed for P0.1; delivered 2026-10-21; audit PARTIAL, remediated and verified at `2e15523`)  
 **Last status reset:** 2026-10-21  
 **Repository baseline:** The commit/PR that records this reset; update the exact SHA after merge.
 
@@ -34,7 +34,7 @@ The ICM execution pipeline remains independent of product phase numbering:
 → 05-implement → 06-audit → 07-remediate → 08-verify → 09-deliver
 ```
 
-The current planning run is `phase0-ownership-reconciliation-20261021`. Its selection brief, research memo, investigation and Stage 04 plan are stored under their respective stage `output/` directories. The part order is accepted; P0.1's exact write set and stop condition must be recorded before the implementation agent starts that part. Product-code implementation is not this assistant's role. Prior run folders remain historical unless explicitly selected as supporting evidence.
+The current run is `phase0-ownership-reconciliation-20261021`. Its selection brief, research memo, investigation, Stage 04 plan, P0.1 implementation report, audit, remediation and verification are stored under their respective stage `output/` directories. **P0.1 is delivered** (audit verdict PARTIAL, remediated, verified at `2e15523`); the next gate is P0.2's exact write set, which has not been proposed or accepted. Product-code implementation is not this assistant's role. Prior run folders remain historical unless explicitly selected as supporting evidence.
 
 ## Evidence rule
 

@@ -1,7 +1,7 @@
 # Phase Context Router
 
 **Current active product phase:** Phase 0 — Architecture, Contracts and ADR Freeze.  
-**Current ICM action:** Continue `phase0-ownership-reconciliation-20261021`; P0.1 exact write set is the next gate.
+**Current ICM action:** P0.1 delivered 2026-10-21 (Stage 06 audit PARTIAL → remediated → verified at `2e15523`); the next gate is P0.2's exact write set. Phase 1 remains blocked.
 **Phase-part sequence:** P0.1–P0.8 approved by the product owner on 2026-10-21; each part's exact write set/stop condition is separately reviewed.
 **Mobile framework:** React Native only under `docs/ADR-026-react-native-mobile.md`; Flutter is prohibited.  
 **Canonical phase sequence:** `docs/implementation_plan.md`.  
@@ -17,7 +17,7 @@ For every implementation-phase run, also apply `../../../../docs/phase_part_exec
 |---|---|---|---|
 | **0 — ACTIVE** | `../../../../docs/phase0_architecture_contract_freeze.md` | Every new implementation-program run during the restart baseline | Phase 1 only after Phase 0 exit is reviewed and accepted; package map must be ratified first |
 
-Read the Phase 0 contract and phase execution guide, then route only the relevant canonical inputs. The current run has produced Stages 01–04 artifacts; its part order is accepted, but P0.1's exact write set remains a gate before Stage 05. Product-code implementation is assigned to the implementation agent. Do not load all future-phase contracts by default.
+Read the Phase 0 contract and phase execution guide, then route only the relevant canonical inputs. The current run has produced Stages 01–09 artifacts for P0.1, which is delivered; P0.2 has not started and its exact write set is the next gate. Product-code implementation is assigned to the implementation agent. Do not load all future-phase contracts by default.
 
 ## Phase contracts — reference index
 
