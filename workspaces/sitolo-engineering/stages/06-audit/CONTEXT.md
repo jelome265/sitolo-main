@@ -12,6 +12,8 @@ One job: independently determine whether the implemented change is logically cor
 | Working | Research | ../02-research/output/[run-slug]-research.md | Full file | External constraints |
 | Reference | Governance | ../../shared/governance-context/CONTEXT.md | Relevant sections | Engineering authority |
 | Reference | Project docs | ../../../../docs/README.md | Applicable contracts | Requirement evidence |
+| Reference | Phase parts | ../../../../docs/phase_part_execution_contract.md | Current part gates | Audit the accepted scope and stop condition |
+| Reference | Code ownership map | ../../../../docs/code_ownership_map.md | Relevant package/app/test rows | Detect omitted or misplaced responsibility and test coverage |
 | Reference | Audit skill | ../../skills/engineering-review/SKILL.md | Full file | Review method |
 | Reference | Audit contract | references/audit-contract.md | Full file | Independent semantic audit contract |
 | Reference | Security checks | references/security-checks.md | Full file | Security-specific adversarial checks |
