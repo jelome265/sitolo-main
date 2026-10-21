@@ -121,17 +121,9 @@ The repository intentionally separates enterprise-capable architecture from unva
 
 ## Local verification
 
-Run the canonical verifier from a clean checkout:
+The aggregate verifier (`scripts/ci/verify` and `scripts/ci/verify.ps1`) has not been established in this restart baseline. Do not invoke or report either entrypoint as available until Phase 1 creates and verifies it.
 
-```sh
-./scripts/ci/verify
-```
-
-On Windows:
-
-```powershell
-.\scripts\ci\verify.ps1
-```
+Until then, use the explicit commands in the approved phase contract and record each command, result, environment and skipped check in the ICM verification artifact. A missing verifier is a known repository gap, not a passing result.
 
 ## Contributing and security
 
