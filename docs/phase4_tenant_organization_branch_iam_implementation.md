@@ -6,7 +6,7 @@
 **Primary market:** Malawi first; controlled African expansion  
 **Backend:** Rust + Axum + Tokio  
 **Persistence:** PostgreSQL authoritative; SQLite client continuity  
-**Clients:** Flutter Android-first; Tauri desktop; TypeScript web/admin where materially useful  
+**Clients:** React Native Android-first; Tauri desktop; TypeScript web/admin where materially useful  
 **Architecture:** Modular monolith first; durable workers; explicit integration adapters  
 **Security posture:** Zero trust; deny by default; least privilege; server authoritative; tenant isolation; fail closed  
 **Status:** Implementation-governing specification  
