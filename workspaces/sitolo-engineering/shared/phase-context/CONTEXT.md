@@ -1,13 +1,15 @@
 # Phase Context Router
 
 **Current active product phase:** Phase 0 — Architecture, Contracts and ADR Freeze.  
-**Current ICM action:** Start a fresh Stage 01 Select run.  
+**Current ICM action:** Continue `phase0-ownership-reconciliation-20261021`; P0.1 exact write set is the next gate.
+**Phase-part sequence:** P0.1–P0.8 approved by the product owner on 2026-10-21; each part's exact write set/stop condition is separately reviewed.
+**Mobile framework:** React Native only under `docs/ADR-026-react-native-mobile.md`; Flutter is prohibited.  
 **Canonical phase sequence:** `docs/implementation_plan.md`.  
 **Phase-specific direction:** `docs/phase_execution_guide.md`.
 
 This file is an ICM Layer 3 routing surface. It selects the relevant phase contract; it does not override the implementation plan or any authoritative domain/security/provider source.
 
-For every implementation-phase run, also apply `../../../../docs/phase_part_execution_contract.md`. Load `../../../../docs/code_ownership_map.md` when planning or changing package/app/file ownership. That map is a Phase 0 proposal until the human accepts its decisions; do not scaffold candidate crates or move responsibilities between them before then.
+For every implementation-phase run, also apply `../../../../docs/phase_part_execution_contract.md`. Load `../../../../docs/code_ownership_map.md` when planning or changing package/app/file ownership. That map is partially settled only for React Native mobile; the complete package inventory and remaining ownership decisions are still a Phase 0 proposal. Do not scaffold candidate crates or move responsibilities between them before approval.
 
 ## Active phase
 
@@ -15,7 +17,7 @@ For every implementation-phase run, also apply `../../../../docs/phase_part_exec
 |---|---|---|---|
 | **0 — ACTIVE** | `../../../../docs/phase0_architecture_contract_freeze.md` | Every new implementation-program run during the restart baseline | Phase 1 only after Phase 0 exit is reviewed and accepted; package map must be ratified first |
 
-Read the Phase 0 contract and the phase execution guide, then route only the relevant canonical inputs listed by the Phase 0 contract. Do not load all future-phase contracts by default.
+Read the Phase 0 contract and phase execution guide, then route only the relevant canonical inputs. The current run has produced Stages 01–04 artifacts; its part order is accepted, but P0.1's exact write set remains a gate before Stage 05. Product-code implementation is assigned to the implementation agent. Do not load all future-phase contracts by default.
 
 ## Phase contracts — reference index
 
