@@ -99,3 +99,5 @@ Phase 0 documentation checks:
 ## Approved next action
 
 The eight-part ordering is accepted. The next work item is P0.1, beginning with a bounded evidence/conflict-register write set. Its exact files and stop condition must be identified before that part is handed to the implementation agent. The crate inventory and detailed ownership recommendations remain open; the ownership map is only partially settled because React Native is the accepted mobile framework while package/workspace/client-tooling decisions remain unresolved. Phase 1 scaffolding remains blocked.
+
+**Stage 04 amendment (proposed, not accepted):** [`phase0-p01-write-set-proposal.md`](phase0-p01-write-set-proposal.md) records the proposed P0.1 deliverable, five-path write set, read-only evidence inputs and stop condition. It remains a proposal until its §11 acceptance record carries a human name and date; this plan's approved sequence text is unchanged.
