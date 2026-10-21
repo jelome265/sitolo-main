@@ -88,18 +88,16 @@ The implementation program defines **21 numbered phases (0 through 20 inclusive)
 Current corpus coverage:
 
 ~~~text
-Dedicated strong phase contracts:      19
-Lightweight/partial phase contracts:    1
-Foundational phase package, no
- single phase contract:                  1
-Missing dedicated phase contracts:       0
+Dedicated phase contracts with full governance depth: 20
+Partial phase contracts:                                1 (Phase 8)
+Missing dedicated phase contracts:                      0
 ~~~
 
 No dedicated phase-contract gaps remain for Phases 11–20.
 
 Phase 8 has a contract but remains materially lighter than the surrounding deep contracts.
 
-Phase 0 has a substantial architectural package, but not a single phase-level implementation contract.
+Phase 0 now has a canonical reconciliation contract. The phase's implementation/reconciliation work and exit evidence remain open until reviewed.
 
 ---
 
@@ -107,11 +105,11 @@ Phase 0 has a substantial architectural package, but not a single phase-level im
 
 | Phase | Canonical contract | Supporting sources | Authority | Contract completeness | ICM routing | Implementation status | Evidence status | Known gaps | Required remediation |
 |---|---|---|---|---|---|---|---|---|---|
-| **0** | No single phase-level contract. Package is anchored by implementation_plan.md plus foundational design/security/testing/ADR documents. | implementation_plan.md; domain_model.md; database_design.md; api_contract.md; auth_authorization_spec.md; sync_protocol.md; payment_integration_spec.md; mra_eis_integration_spec.md; testing_strategy.md; threat_model.md; observability_spec.md; deployment_spec.md; ADR-001-025.md; security-test/CI foundation | Higher-authority project corpus | **Partial** | Not applicable as a normal product phase entry | Architecture baseline established; no phase-complete claim | Broad repository evidence exists; no single current Phase 0 exit package identified | No canonical phase-level contract; foundational package spans many documents | Create a thin Phase 0 reconciliation contract/index without duplicating subject truth |
+| **0** | docs/phase0_architecture_contract_freeze.md | implementation_plan.md; product/domain/architecture; database/API/auth; sync/payment/MRA; testing/observability/deployment; threat/security; ADRs | Higher-authority approved project corpus | **Complete contract introduced; Phase 0 exit remains open** | **Routed — active restart phase** | **IN_PROGRESS: contract reconciliation and restart baseline; no phase-complete claim** | Verification must be recorded against the reset PR/commit; copied content is not completion evidence | Existing subject-specific documents remain canonical for their own concerns; decisions/gaps must be rechecked | Run Phase 0 ICM stages, reconcile contradictions and record human-reviewed exit evidence |
 | **1** | docs/phase1_repository_rust_workspace_ci_deep_implementation.md | implementation_plan.md; ci_enforcement.md; repository/CI configuration; supply-chain controls | Implementation plan + repository/CI authority | **Complete** | **Routed** | Repository/workspace/CI foundation substantially implemented; phase closure not claimed here | Strong repository and CI evidence; release evidence remains run-specific | Final closure depends on current executable evidence | Keep contract current; close only with revision-attributable evidence |
 | **2** | docs/phase2_config_secrets_logging_errors_telemetry_implementation.md | observability_spec.md; deployment_spec.md; security_implementation_spec.md; Phase 2 remediation records | Phase 2 contract + platform/security authority | **Complete** | **Routed** | Runtime foundation implemented in substantial portions; no blanket phase-closure claim | Current source evidence exists; old Phase 0–2 audit is explicitly historical | Historical remediation artifacts can be mistaken for current evidence | Use current source/CI evidence for closure; preserve historical classification |
 | **3** | docs/phase3_identity_sessions_mfa_device_identity_implementation.md | auth_authorization_spec.md; security_implementation_spec.md; api_contract.md; observability/security contracts | Phase 3 contract + security hierarchy | **Complete** | **Routed** | Identity/device foundation exists; no phase-complete claim | Repository implementation plus contract-level evidence exist; final closure must be current-head based | No dedicated current Phase 3 closure record identified | Add/maintain explicit closure evidence when formally certified |
-| **4** | docs/phase4_tenant_organization_branch_iam_implementation.md | auth_authorization_spec.md; api_contract.md; database_design.md; security_architecture_design.md; Phase 4 Part 8 records | Phase 4 contract + security/database/API authority | **Complete** | **Routed** | **Active Phase 4 work**; Part 8 / audit-outbox stream remains operationally significant | Extensive PR-specific evidence exists; snapshots must match current head | Many Part documents can look authoritative; current-status pointer has stale main SHA | Keep phase contract authoritative; classify PR snapshots; refresh exact-head status evidence |
+| **4** | docs/phase4_tenant_organization_branch_iam_implementation.md | auth_authorization_spec.md; api_contract.md; database_design.md; security_architecture_design.md; Phase 4 Part 8 records | Phase 4 contract + security/database/API authority | **Complete** | **Routed** | Not active in the current restart; Phase 4 and Part 8 records remain scoped contracts/history, not the active work pointer | Extensive PR-specific evidence exists; snapshots must match current head | Many Part documents can look authoritative; current-status pointer has stale main SHA | Keep phase contract authoritative; classify PR snapshots; refresh exact-head status evidence |
 | **5** | docs/phase5_postgresql_schema_migrations_constraints_rls_implementation.md | database_design.md; security_architecture_design.md; testing_strategy.md; Phase 5 source evidence | Phase 5 contract + database/security authority | **Complete** | **Routed** | PostgreSQL/security foundation materially implemented; full business schema/RLS phase not complete | Strong design/repository evidence; real PostgreSQL closure evidence must be current | Contract completion is ahead of complete business implementation | Enumerate unchecked exit evidence before phase closure |
 | **6** | docs/phase6_authorization_engine_policy_enforcement_implementation.md | auth_authorization_spec.md; security_architecture_design.md; security_test_harness.md; Phase 5 contract | Phase 6 contract + security authority | **Complete** | **Routed** | Authorization foundation exists; full production enforcement remains phase-dependent | Strong contract/source evidence; complete endpoint/runtime proof not yet established | [X] gate markers can be misread as implementation proof | Require endpoint inventory and executable negative evidence before closure |
 | **7** | docs/phase7_security_test_framework_implementation.md | security_test_harness.md; testing_strategy.md; ci_enforcement.md; threat/security contracts | Phase 7 contract + security/test authority | **Complete** | **Routed** | Security verification framework substantially specified/implemented | Strong contract and CI/test infrastructure evidence; downstream product-surface coverage remains | Framework existence does not prove all future endpoint coverage | Expand executable coverage as later phases add surfaces |
@@ -135,9 +133,7 @@ Phase 0 has a substantial architectural package, but not a single phase-level im
 
 ## 3.1 Phase 0
 
-Phase 0 is information-rich but contract-structurally incomplete. The implementation plan defines a sixteen-part foundation package, and those underlying artifacts exist. The missing piece is a single phase-level reconciliation contract that tells agents how that package fits together without duplicating subject authority.
-
-The existing phase0-2 implementation audit is explicitly historical and cannot be promoted into current Phase 0 authority.
+The Phase 0 structural gap is addressed by `docs/phase0_architecture_contract_freeze.md`, which reconciles the existing foundational package without replacing subject-specific authority. Its presence establishes contract routing, not phase completion. Phase 0 work must still reconcile the copied corpus, record unresolved decisions, run applicable checks, and obtain human acceptance of revision-attributable exit evidence. Historical audits remain historical evidence.
 
 ## 3.2 Phases 1–7
 
@@ -173,9 +169,7 @@ verification evidence
 
 ## 3.4 Phase 8
 
-Phase 8 is both a contract-depth problem and an ICM routing problem. Its canonical contract exists, but the engineering phase-context router currently skips it.
-
-A phase that exists only by repository-wide discovery is not sufficient for the intended bounded ICM context-loading model.
+Phase 8 has a canonical contract and is listed in the ICM phase router. Its remaining identified gap is contract depth relative to adjacent phases. Deepen it when Phase 8 is prepared for implementation; do not use that future work to bypass the active Phase 0–7 gates.
 
 ## 3.5 Phases 11–20
 
@@ -281,7 +275,7 @@ R2  Add register to engineering ICM phase-context inputs
     ↓
 R3  Make CI protect register existence
     ↓
-R4  Normalize Phase 0 contract/index
+R4  Add and route canonical Phase 0 contract; keep its exit gate open until evidence is accepted
     ↓
 R5  Deepen + route Phase 8
     ↓
@@ -370,9 +364,9 @@ Therefore the current-status pointer should be refreshed before it is relied upo
 
 PR-specific Phase 4 records must be interpreted against their recorded revision and the actual current main/PR head. They are not standalone current-state authority.
 
-## 9.3 Phase 8 routing omission
+## 9.3 Phase 8 routing
 
-Phase 8 is currently absent from the canonical engineering phase-context input table even though its contract exists.
+Phase 8 is present in the engineering phase-context input table. The remaining register concern is contract depth, not an absent route.
 
 ---
 
@@ -391,8 +385,8 @@ Phase 8 is currently absent from the canonical engineering phase-context input t
 [ ] Known gaps are explicit
 [ ] Required remediation is explicit
 [ ] Historical artifacts are not promoted to current authority
-[ ] Phase 8 routing defect is recorded
-[ ] Missing Phases 11–20 are recorded individually
+[ ] Phase 8 contract-depth gap is recorded
+[ ] Phases 11–20 have canonical contract links and target-state status
 [ ] Current-head drift is recorded
 [ ] Register is discoverable through canonical docs/ICM routing
 [ ] CI protects register existence
@@ -434,11 +428,10 @@ PHASE 20
 The contract corpus is currently incomplete:
 
 ~~~text
-0    PARTIAL
-1–7  COMPLETE CONTRACT COVERAGE
-8    PARTIAL
-9–10 COMPLETE CONTRACT COVERAGE
-11–20 MISSING
+0    CONTRACT ROUTED; EXIT GATE OPEN
+1–7  CONTRACT COVERAGE PRESENT
+8    PARTIAL CONTRACT DEPTH
+9–20 CONTRACT COVERAGE PRESENT
 ~~~
 
 This register is the reconciliation boundary between:
