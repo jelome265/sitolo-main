@@ -4,14 +4,16 @@ status: human-approved-sequence
 run_slug: "phase0-ownership-reconciliation-20261021"
 icm_stage: "04-plan"
 product_phase: "Phase 0 — Architecture, Contracts and ADR Freeze"
-part_sequence_status: "human-approved; current part write set requires confirmation"
+part_sequence_status: "sequence human-approved 2026-10-21; P0.1 write set accepted and implemented 2026-10-21; Stage 06 audit PARTIAL; Stage 07 remediation applied — Stage 08 verification pending"
+current_part: "P0.1 — Source of truth and conflict register"
+part_status: "remediated; awaiting Stage 08 verification"
 ---
 
 # Phase 0 — Ownership Reconciliation Plan
 
 ## Decision gate
 
-**The product owner approved the eight-part Phase 0 sequence (P0.1–P0.8) on 2026-10-21.** That approval accepts the part ordering, not every architecture recommendation inside those parts. The current part's exact file write set and stop condition must still be recorded and accepted before any Stage 05 implementation. My role in this workflow is architecture guidance and independent audit; product-code implementation is assigned to the implementation agent. Phase 1 scaffolding remains blocked until the Phase 0 exit gate is accepted.
+**The product owner approved the eight-part Phase 0 sequence (P0.1–P0.8) on 2026-10-21.** That approval accepts the part ordering, not every architecture recommendation inside those parts. P0.1's exact write set and stop condition were recorded and accepted on 2026-10-21 in [the Stage 04 amendment](phase0-p01-write-set-proposal.md); P0.1 was implemented that day and audited **PARTIAL**, with remediation applied and Stage 08 verification pending. Each later part repeats this gate: its own exact write set and stop condition must be recorded and accepted before its Stage 05 begins. This plan does not authorize implementing a later part by reference to P0.1's acceptance. My role in this workflow is architecture guidance and independent audit; product-code implementation is assigned to the implementation agent. Phase 1 scaffolding remains blocked until the Phase 0 exit gate is accepted.
 
 ## Objective
 

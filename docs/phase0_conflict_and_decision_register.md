@@ -6,7 +6,8 @@ icm_stage: "05-implement"
 product_phase: "Phase 0 — Architecture, Contracts and ADR Freeze"
 phase_part: "P0.1 — Source of truth and conflict register"
 evidence_date: "2026-10-21"
-repository_revision: "64ad7bc05e5276c8abf75e05c74703d55c82256c"
+inspected_baseline_revision: "64ad7bc05e5276c8abf75e05c74703d55c82256c"
+implementation_revision: "251df6c327c1029c6c0db2e496d19ea38ea7e41e"
 ---
 
 # Phase 0 — Conflict and Decision Register
@@ -25,14 +26,19 @@ Every row points at a source that already exists. No row adds design prose of it
 
 | Fact | Value | Evidence |
 |---|---|---|
-| Repository revision | `64ad7bc05e5276c8abf75e05c74703d55c82256c` | `git rev-parse HEAD` |
-| Working tree during inspection | Dirty: P0.1 acceptance edits to this run's Stage 04 amendment are uncommitted | `git status` |
+| Inspected baseline revision | `64ad7bc05e5276c8abf75e05c74703d55c82256c` | `git rev-parse HEAD` at inspection time, before this register existed |
+| Revision that introduced this register | `251df6c327c1029c6c0db2e496d19ea38ea7e41e` | Commit containing this file |
+| Working tree during inspection | Dirty: P0.1 acceptance edits to this run's Stage 04 amendment were uncommitted | `git status` |
 | Root `Cargo.toml` / `Cargo.lock` | absent | `Test-Path` returned false |
 | Root `rust-toolchain.toml` | absent | `Test-Path` returned false |
 | `.github/workflows/` | absent | `Test-Path` returned false |
 | `scripts/ci/verify`, `scripts/ci/verify.ps1`, `scripts/ci/check-code-ownership` | absent | `Test-Path` returned false |
 | Git-tracked files under `crates/` | none | `git ls-files crates` returned empty |
 | Directories under `crates/` | 15, all empty (0 files recursively) | `Get-ChildItem -Recurse -File` returned 0 |
+
+The inspected baseline is the state that was read, not the revision that contains this register. Line references in every row point at the inspected baseline; later commits shift them.
+
+The revision actually verified after remediation is recorded in the Stage 08 verification report, not here.
 
 The repository therefore contains documents, ICM workspaces and empty local directories. It contains no buildable Rust workspace, no client application and no executable CI check. No build, test or lint claim is made anywhere in this register.
 
@@ -42,7 +48,7 @@ The repository therefore contains documents, ICM workspaces and empty local dire
 |---|---|---|
 | `C` | Conflict between sources | Each competing statement is cited; a decision owner and resolution gate exist |
 | `D` | Decision no approved source settles | Options, recommendation, owner, blocked work and gate exist |
-| `V` | External/version claim verified against an official source | Source, date checked and verdict recorded |
+| `V` | External/version claim verified against an official source | Source, date checked, verdict, accountable owner, resolution gate and status recorded; the verdict never decides the question |
 | `G` | Gap or integrity defect | Observed state, check performed, owner and disposition |
 
 ## 4. Conflicts
@@ -259,6 +265,9 @@ Each decision lists a recommendation. A recommendation is not approval and does 
 | Checked on | 2026-10-21 |
 | Finding | The Rust Release Team published Rust 1.99.1 on 2026-10-15. It fixes an FFI `bool` return miscompilation on x86_64, missing `wcslen` symbol/link failures, and `rust-lld` failing to load `libLLVM` on macOS. |
 | Verdict | **stale** — statements that 1.98.x is the latest stable release are no longer current. The statements remain historically accurate about the date they name. |
+| Owner | Engineering owner (toolchain baseline) |
+| Resolution gate | P0.7 records the outcome of D-12; no pin change without a compatibility review |
+| Status | **verification complete; decision open** — the verdict is a factual finding, not a decision |
 | Authority limit | This verification does not authorize changing the pin. It establishes only that the "current stable" wording is outdated. The pin decision is D-12. |
 
 ### V-02 — Was Rust 1.98.1 released on 2026-09-03 with a vtable fix?
@@ -270,6 +279,9 @@ Each decision lists a recommendation. A recommendation is not approval and does 
 | Checked on | 2026-10-21 |
 | Finding | Confirmed. The announcement is dated Sept. 3, 2026 and states 1.98.1 fixes a miscompilation where rustc could generate a trait-object vtable with a null function pointer, leading to undefined behavior. |
 | Verdict | **current** for the claim as written. The pin remains defensible on its own terms even though it is no longer the newest release. |
+| Owner | Engineering owner (toolchain baseline) |
+| Resolution gate | P0.7, D-12 |
+| Status | **verification complete; decision open** — confirming the historical release does not confirm the pin |
 
 ## 7. Gaps
 
@@ -325,6 +337,17 @@ Each decision lists a recommendation. A recommendation is not approval and does 
 | Owner | Stage 09 delivery / P0.8 |
 | Status | open |
 
+### G-06 — Literal `\n` escape in the documentation index
+
+| Field | Value |
+|---|---|
+| Observed | `docs/README.md` L14: the ADR-001–025 row ends with the two characters `\n` instead of an actual line break, so the ADR-026 row is glued into the same line and the table row can render incorrectly |
+| Origin | Pre-existing. The P0.1 commit added a separate register row and did not introduce or touch this line |
+| Significance | Cosmetic to a reader, but it corrupts a table in the index that routes every governing document. Discovered during Stage 06 audit (F-04) and deliberately not fixed there or in P0.1 |
+| Disposition | Recorded only. Assigned to P0.7 canonical-document reconciliation, or a separately scoped documentation correction if P0.7 does not cover `docs/README.md`. Do not fix it silently as part of an unrelated change |
+| Owner | P0.7 |
+| Status | open |
+
 ## 8. Settled — recorded, not reopened
 
 | Subject | Decision | Status |
@@ -365,7 +388,7 @@ Additional rows found during P0.1 that were not in the seed list: C-02 (third to
 | P0.4 | C-03, D-04 | Persistence, migration and cross-cutting ownership |
 | P0.5 | D-05, D-06, D-07, D-08, D-13 | Client, native and generated-contract map |
 | P0.6 | D-11 | Lifecycle, test placement and CI enforcement contract |
-| P0.7 | C-04, D-12, G-03 | Canonical document and ADR reconciliation; accepted decisions applied |
+| P0.7 | C-04, D-12, G-03, G-06 | Canonical document and ADR reconciliation; accepted decisions applied |
 | P0.8 | G-01, G-05 | Independent audit, verification and exit package |
 
 A part may add rows. A part may not close a row owned by another part without a plan amendment.

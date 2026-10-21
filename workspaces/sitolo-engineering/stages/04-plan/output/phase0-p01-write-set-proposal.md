@@ -41,7 +41,7 @@ This satisfies Phase 0 contract §4 artifact 5 (architecture/contract reconcilia
 |---|---|---|
 | `C-nn` | Conflict: two or more sources state incompatible things | Concern; each competing statement with file + section; impact (owning crate/app/phase); decision owner; resolution gate (which P0.x part settles it); status |
 | `D-nn` | Decision: no approved source settles it | Question; why it matters; options with evidence for and against; recommended option (labelled **recommendation**, never **accepted**); decision owner; blocked phases/parts; due condition; status |
-| `V-nn` | External/version-sensitive claim needing verification | Claim as written; source document; official source consulted; date checked; verdict (current / stale / unverified); does not itself authorize a change |
+| `V-nn` | External/version-sensitive claim needing verification | Claim as written; source document; official source consulted; date checked; verdict (current / stale / unverified); accountable owner; resolution gate; status (the verification result and the decision status are recorded separately); does not itself authorize a change |
 | `G-nn` | Gap: missing file, broken reference or unverifiable claim | Expected path; observed state; evidence of the check; owner; disposition |
 
 ### 3.2 Expected seed contents

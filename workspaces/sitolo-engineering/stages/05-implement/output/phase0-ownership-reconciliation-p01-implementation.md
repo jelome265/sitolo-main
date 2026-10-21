@@ -6,11 +6,14 @@ icm_stage: "05-implement"
 phase_part: "P0.1 — Source of truth and conflict register"
 product_phase: "Phase 0 — Architecture, Contracts and ADR Freeze"
 implemented_on: "2026-10-21"
-repository_revision: "64ad7bc05e5276c8abf75e05c74703d55c82256c"
+inspected_baseline_revision: "64ad7bc05e5276c8abf75e05c74703d55c82256c"
+implementation_revision: "251df6c327c1029c6c0db2e496d19ea38ea7e41e"
 security_relevant: "yes"
 ---
 
 # P0.1 — Implementation Report
+
+**Revision provenance.** `64ad7bc…` is the **baseline inspected** while producing this part; that revision does not contain the register or this report. Both were introduced in `251df6c…`. The revision actually verified after Stage 07 remediation is recorded by Stage 08, not here.
 
 ## Implemented
 
@@ -61,7 +64,7 @@ All checks were read-only. No build, test, lint or CI command exists to run.
 
 | Check | Command / method | Result |
 |---|---|---|
-| Revision recorded | `git rev-parse HEAD` | PASS — `64ad7bc05e5276c8abf75e05c74703d55c82256c` |
+| Baseline revision recorded | `git rev-parse HEAD` before the artifacts existed | PASS — `64ad7bc05e5276c8abf75e05c74703d55c82256c`; the artifacts were committed in `251df6c…` |
 | Working-tree state | `git status --porcelain` | Recorded; see scope deviations |
 | No Rust workspace | `Test-Path Cargo.toml`, `Cargo.lock`, `rust-toolchain.toml` | Confirmed absent — reported as NOT RUN / N-A, not as passing |
 | No CI enforcement | `Test-Path scripts/ci/verify`, `scripts/ci/verify.ps1`, `scripts/ci/check-code-ownership`, `.github/workflows` | Confirmed absent — recorded as G-01 |
