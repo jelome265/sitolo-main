@@ -102,7 +102,7 @@ Consequential handoffs are intentionally visible. The person can inspect and edi
 
 ## Validation
 
-`scripts/ci/check-icm-workspace` and its PowerShell counterpart verify workspace structure, context boundaries, reference scaffolding, and factory-output hygiene. `scripts/ci/check-doc-references` verifies Markdown reference resolution.
+At the Phase 0 restart baseline, `scripts/ci/check-icm-workspace`, its PowerShell counterpart, `scripts/ci/check-doc-references` and the aggregate `scripts/ci/verify` entrypoints are not present in the repository. Do not claim these checks passed or route users to missing scripts as though they exist. Phase 1 owns the reproducible repository/CI validation foundation; the Phase 0 exit record must keep these checks marked blocked/not run until the actual commands are added and exercised. In the meantime, review routing and links directly and record the limitations.
 
 The CI cold walk is intentionally **mechanical**: it proves the routing graph, exact handoff paths, template instantiation, and System Map source navigation in an isolated copy. It does not prove that a fresh LLM can make correct engineering decisions or produce semantically meaningful run artifacts.
 
