@@ -12,6 +12,8 @@ security_relevant: "yes"
 
 ## Selection
 
+**Phase-part sequence approval:** The product owner approved the proposed P0.1–P0.8 sequence on 2026-10-21. This accepts the ordering only; each current part still needs an explicit bounded write set and stop condition. The assistant's role is architecture guidance and audit, not product-code implementation. A separate implementation agent owns product-code changes.
+
 - **Product phase:** Phase 0 — Architecture, Contracts and ADR Freeze.
 - **ICM run:** `phase0-ownership-reconciliation-20261021`.
 - **Current run mode:** Planning-only. This run researches and investigates, then proposes a phase-part sequence and ownership decisions for human review. It does not authorize product implementation or Phase 1 scaffolding.
@@ -37,7 +39,7 @@ The output must give us a clear implementation owner for each responsibility. If
 
 - Review PR #1 for correctness and internal consistency.
 - Reconcile `docs/system_architecture_design.md`, `docs/phase1_repository_rust_workspace_ci_deep_implementation.md`, `docs/implementation_plan.md`, relevant ADRs, `docs/code_ownership_map.md`, `docs/phase_part_execution_contract.md`, and `docs/testing_strategy.md`.
-- Produce a proposed complete target ownership inventory, high-level dependency rules, path/test map, and bounded Phase 0 part sequence.
+- Produce a complete proposed target ownership inventory, high-level dependency rules, path/test map, and bounded Phase 0 part sequence.
 - Mark decisions as accepted only when the human actually accepts them.
 - Identify current version-sensitive or otherwise stale claims that need verification before they become part of the frozen baseline.
 
@@ -52,6 +54,10 @@ The output must give us a clear implementation owner for each responsibility. If
 ## Security and integrity relevance
 
 Security relevance is **yes** because package boundaries affect the direction of trust, authorization enforcement, tenant isolation, migration privileges, test-only dependencies, client/native capabilities and CI enforcement. The run must preserve server-side authority and forbid domain dependencies on HTTP frameworks, persistence drivers and provider-specific representations.
+
+## Mobile framework constraint
+
+React Native is the sole permitted mobile framework by explicit product-owner decision (ADR-026). Flutter is prohibited and must not appear as an active implementation or testing option. The exact React Native workflow and tooling remain open for Phase 0/1 disposition.
 
 ## Success criteria
 
