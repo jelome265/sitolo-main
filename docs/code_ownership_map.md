@@ -209,7 +209,8 @@ The checker must at minimum:
 4. keep crate-owned test paths within the owning crate and reject root-level tests that actually belong to one package;
 5. verify Tauri/React source and tests remain inside the desktop package, native commands stay inside `src-tauri`, and each in-scope app has its required test/build command wired to CI;
 6. verify each required package's test/lint/build target is actually invoked and report package-level results rather than hiding missing targets behind a workspace-level green status;
-7. fail closed if its inputs are missing, malformed or ambiguous.
+7. enforce ADR-026 for `apps/mobile/`: the active application manifest, source, dependencies, native integration, lockfile and CI/test targets must match the approved React Native workflow; reject Flutter/Dart manifests, source and Flutter test/build targets under the active mobile app;
+8. fail closed if its inputs are missing, malformed or ambiguous.
 
 A future package may be absent before `first_required_phase`; that absence is not a failure and is not permission to implement its responsibility in another package. When a phase/part needs that responsibility, an absent owner blocks implementation until the plan and package lifecycle are reviewed. Deferred or optional packages must not disappear from the map: their disposition remains visible and downstream work that depends on them remains blocked until resolved.
 
