@@ -88,11 +88,11 @@ The ICM run must produce or update the following artifacts, using the existing s
 4. **Phase 0 plan** — ordered reconciliation work, owners/decision points, acceptance checks and dependencies.
 5. **Architecture/contract reconciliation record** — canonical source per concern, conflicts resolved or explicitly open, and affected ADRs.
 6. **Code ownership decision** — reviewed `docs/code_ownership_map.md`, approved package/client/test boundary decisions, unresolved options and the ADRs or phase gates affected.
-7. **Phase-part operating rule** — apply `docs/phase_part_execution_contract.md` so future parts are proposed, reviewed and accepted jointly before implementation.
+7. **Phase-part sequence and approval record** — proposed Phase 0 part sequence, exact current part/write set, human decision, and next agreed part or stop condition.
 8. **Phase 0 implementation/reconciliation report** — changes made and deliberately deferred, with file paths.
-7. **Audit and remediation records** — findings, severity, fix decisions and unresolved risk acceptance where relevant.
-8. **Verification report** — checks run/not run with reasons, results, repository revision and known limitations.
-9. **Delivery handoff** — PR/revision, summary, evidence, outstanding decisions and the exact next action.
+9. **Audit and remediation records** — findings, severity, fix decisions and unresolved risk acceptance where relevant.
+10. **Verification report** — checks run/not run with reasons, results, repository revision and known limitations.
+11. **Delivery handoff** — PR/revision, summary, evidence, outstanding decisions and the exact next agreed action.
 
 Artifacts must state facts, assumptions, risks and open decisions separately. A missing artifact is pending; file presence does not prove approval or quality.
 
