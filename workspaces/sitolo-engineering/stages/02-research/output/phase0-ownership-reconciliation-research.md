@@ -74,7 +74,7 @@ The system architecture's repository topology lists the main libraries `sitolo-d
 
 ## Accepted mobile-framework decision update (2026-10-21)
 
-The product owner explicitly approved React Native as the sole mobile framework and prohibited Flutter. This supersedes the earlier Flutter selection recorded in ADR-002; see the active [ADR-026](../../../../docs/ADR-026-react-native-mobile.md).
+The product owner explicitly approved React Native as the sole mobile framework and prohibited Flutter. This supersedes the earlier Flutter selection recorded in ADR-002; see the active [ADR-026](../../../../../docs/ADR-026-react-native-mobile.md).
 
 Current official React Native sources:
 
