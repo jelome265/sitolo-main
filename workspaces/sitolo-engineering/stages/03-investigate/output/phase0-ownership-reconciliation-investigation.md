@@ -18,10 +18,10 @@ Direct repository-content checks on the PR branch returned 404 for the following
 - `Cargo.toml` and `Cargo.lock`;
 - `crates/sitolo-domain/Cargo.toml`;
 - `apps/desktop/package.json` and `apps/desktop/src-tauri/Cargo.toml`;
-- `apps/mobile/pubspec.yaml`;
+- `apps/mobile/package.json`;
 - `scripts/ci/check-code-ownership` and `scripts/ci/verify`.
 
-That supports the conclusion that this branch is currently an architecture/ICM document corpus, not an implemented Rust workspace or runnable Tauri/React or Flutter application. No build, runtime test suite or local checkout was executed as part of this investigation.
+That supports the conclusion that this branch is currently an architecture/ICM document corpus, not an implemented Rust workspace or runnable Tauri/React or React Native mobile application. No build, runtime test suite or local checkout was executed as part of this investigation.
 
 ## Findings
 
@@ -73,8 +73,12 @@ These are not silently accepted merely because a candidate map describes them.
 
 No CI status or workflow run was returned for the inspected PR head, and the aggregate verifier/ownership checker does not exist. The PR must not be described as build/test verified. Since this work is documentation and policy, the appropriate available checks are reference resolution, internal-consistency review and explicit verification of unchanged/absent tool paths; no product test pass can be claimed.
 
+## F8 — Mobile framework selection is now explicit
+
+The product owner has approved React Native as the sole mobile framework and expressly prohibited Flutter. The old accepted Flutter selection in ADR-002 is superseded by ADR-026. This requires updates to the system architecture, mobile testing strategy, code ownership map, phase guide and all active references. Do not create or retain a Flutter implementation path in target-state instructions. React Native setup workflow (Expo versus Community CLI), package manager, toolchain pin, SQLite adapter and device/E2E harness remain separate decisions and must not be inferred from the framework selection.
+
 ## Review conclusion
 
-PR #1 establishes the correct control direction: explicit owner mapping, owner-local tests, bounded parts, stop-and-replan rules, and blocking Phase 1 enforcement. Two ambiguities were found and corrected in the PR branch: phase-aware package expectations, and the Tauri `src/lib.rs` mapping. The architecture inventory, Tauri workspace/lockfile, toolchain pin and parts remain open Phase 0 decisions.
+PR #1 establishes the correct control direction: explicit owner mapping, owner-local tests, bounded parts, stop-and-replan rules, and blocking Phase 1 enforcement. Two ambiguities were found and corrected in the PR branch: phase-aware package expectations, and the Tauri `src/lib.rs` mapping. The architecture inventory, Tauri workspace/lockfile, toolchain pin and client tooling details remain Phase 0 decisions; the mobile framework itself is now fixed to React Native by product-owner direction.
 
 No Phase 0 architecture choice is recorded as approved by this investigation. Stage 04 must present a recommendation and bounded parts for human edit/acceptance; stop there.
