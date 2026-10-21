@@ -101,14 +101,15 @@ This is a target map, not current files to create all at once. Create only the p
 
 ~~~text
 apps/desktop/
-  package.json                  # frontend commands and pinned package-manager contract
+  package.json                  # UI dependencies and approved package scripts
+  <one package-manager lockfile> # exact name/tool is selected and pinned in Phase 1
   index.html                    # frontend entry document
-  vite.config.ts                # bundling/dev server if Vite is approved
+  vite.config.ts                # bundling/dev server only if Vite is approved
   tsconfig.json                 # TypeScript compiler policy
   src/
     main.tsx                    # React bootstrap only
     app/                        # app shell and route composition
-    features/<feature>/         # feature-specific pages, components, hooks and UI logic
+    features/<feature>/         # feature pages, components, hooks, UI state and colocated *.test.tsx/*.test.ts
     shared/components/           # genuinely shared UI components
     shared/api/                 # generated or typed API client boundary
     shared/tauri/               # narrow, typed wrapper around approved native commands
@@ -116,8 +117,12 @@ apps/desktop/
     styles/                     # frontend styling
   src-tauri/
     Cargo.toml                  # native-shell package; workspace membership requires Phase 0 decision
+    build.rs                    # Tauri build integration if required by the selected scaffold
     tauri.conf.json             # Tauri app/build configuration
     capabilities/               # least-privilege window/plugin capabilities
+    permissions/                # custom permission definitions only when needed
+    icons/                      # app assets; not runtime business logic
+    gen/schemas/                # generated Tauri schemas/permissions; regenerate, do not hand-maintain
     src/main.rs                 # desktop process startup only
     src/commands/               # small, capability-scoped invoke handlers
     src/adapters/               # printing/scanner/filesystem/OS credential adapters as required
