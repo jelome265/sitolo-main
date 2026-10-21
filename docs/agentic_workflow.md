@@ -104,13 +104,13 @@ Consequential handoffs are intentionally visible. The person can inspect and edi
 
 At the Phase 0 restart baseline, `scripts/ci/check-icm-workspace`, its PowerShell counterpart, `scripts/ci/check-doc-references` and the aggregate `scripts/ci/verify` entrypoints are not present in the repository. Do not claim these checks passed or route users to missing scripts as though they exist. Phase 1 owns the reproducible repository/CI validation foundation; the Phase 0 exit record must keep these checks marked blocked/not run until the actual commands are added and exercised. In the meantime, review routing and links directly and record the limitations.
 
-The CI cold walk is intentionally **mechanical**: it proves the routing graph, exact handoff paths, template instantiation, and System Map source navigation in an isolated copy. It does not prove that a fresh LLM can make correct engineering decisions or produce semantically meaningful run artifacts.
+Once the mechanical validator is established in Phase 1, its cold walk should verify the routing graph, exact handoff paths, template instantiation, and System Map source navigation in an isolated copy. That check is currently a required design target, not an executed proof. Even when available, it will not prove that a fresh LLM can make correct engineering decisions or produce semantically meaningful run artifacts.
 
 ## Walk-test requirement
 
-Use two distinct proofs:
+Use two distinct proofs once the validation foundation is available:
 
-1. **Mechanical walk:** CI traverses the filesystem, instantiates every stage artifact, checks exact handoffs, and validates a System Map source hop.
+1. **Mechanical walk:** a repository validator traverses the filesystem, instantiates each stage artifact, checks exact handoffs, and validates a System Map source hop.
 2. **Cold-agent walk:** a fresh agent with no prior conversation memory enters through the root router, follows the declared Inputs, performs a meaningful bounded task, writes a valid handoff, and reports status from filesystem state alone.
 
-Only the second demonstrates agent usability; neither substitutes for product-level tests or human approval.
+Neither proof is currently claimed for this restart baseline. Only the second demonstrates agent usability; neither substitutes for product-level tests or human approval.
