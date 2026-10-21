@@ -11,6 +11,8 @@ One job: produce reproducible evidence that the approved implementation and re-a
 | Working | Implementation | ../05-implement/output/[run-slug]-implementation.md | Full file | Claimed change |
 | Reference | Governance | ../../shared/governance-context/CONTEXT.md | Definitions of done | Verification requirements |
 | Reference | Project docs | ../../../../docs/README.md | Applicable testing/deployment docs | Required evidence |
+| Reference | Phase parts | ../../../../docs/phase_part_execution_contract.md | Part completion gates | Verify the accepted part, not an assumed larger scope |
+| Reference | Code ownership map | ../../../../docs/code_ownership_map.md | Affected package/app/test rows | Report per-owner package and client results |
 | Reference | Verification guide | references/verification.md | Full file | Gate selection |
 | Reference | Security control register | ../../../../docs/security_control_register.md | Applicable control IDs | Security proof and release status |
 | Reference | Security context | ../../shared/security-context/CONTEXT.md | Conditional when security_relevant=yes | Security verification and current standards |
