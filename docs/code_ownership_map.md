@@ -81,7 +81,7 @@ The final dependency allowlist must be approved in Phase 0 and mechanically chec
 | apps/worker/ | Worker process startup, task registration/dispatch, runtime lifecycle and dependency wiring. | Job-specific domain decisions or replacement implementations of application use cases. |
 | apps/mobile/ | The separately governed Flutter mobile app: pubspec.yaml, lib/main.dart, lib/core/, lib/features/<feature>/, test/, and integration_test/ where needed. Feature behavior belongs to that feature; local persistence and sync stay behind their approved repositories/services. | React/TypeScript sources, server authority or duplicated server business policy. Flutter is the current mobile architecture; changing that needs an ADR. |
 | apps/desktop/ | Tauri desktop application package and React + TypeScript UI, per the requested target pending Phase 0 ratification. | A second Rust business engine or direct authority over server-owned financial, inventory, identity or tenant state. |
-| apps/desktop/src-tauri/ | Tauri Rust package, app entry point, narrow native commands, capability configuration and device adapters (printing/scanner/OS credential/filesystem features only when approved). | General business use cases, arbitrary shell/process access, unrestricted filesystem commands or database/provider business logic. |
+| apps/desktop/src-tauri/ | Tauri Rust package, `src/lib.rs` app builder/command registration and native composition, thin `src/main.rs` entry point, narrow commands, capability configuration and device adapters (printing/scanner/OS credential/filesystem features only when approved). | General business use cases, arbitrary shell/process access, unrestricted filesystem commands or database/provider business logic. |
 | apps/desktop/src/ | React UI: app bootstrap, route composition, feature pages/components/hooks, typed API/command bridge, UI state, formatting and interaction. | Domain authority, SQL, credentials, manual copies of server permission rules or ungenerated duplicate API truth. |
 | apps/admin-web/ | Optional separate React/Next.js admin-web client only after an explicit product decision. | A required part of the Tauri desktop app or a hidden second backend. Do not scaffold now merely because it appears in an architecture sketch. |
 | packages/api-types/ | Generated API types/client artifacts, when approved; output must name its canonical source and generation command. | Hand-authored competing DTOs or business logic. |
@@ -123,7 +123,8 @@ apps/desktop/
     permissions/                # custom permission definitions only when needed
     icons/                      # app assets; not runtime business logic
     gen/schemas/                # generated Tauri schemas/permissions; regenerate, do not hand-maintain
-    src/main.rs                 # desktop process startup only
+    src/lib.rs                  # app builder, command registration and native composition
+    src/main.rs                 # thin desktop process entry point calling the app library
     src/commands/               # small, capability-scoped invoke handlers
     src/adapters/               # printing/scanner/filesystem/OS credential adapters as required
     tests/                      # native package integration tests
