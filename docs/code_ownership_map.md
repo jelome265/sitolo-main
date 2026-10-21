@@ -1,6 +1,6 @@
 # Sitolo Repository Code, Package, Client and Test Ownership Map
 
-**Status:** Phase 0 proposal — requires human review before it becomes the approved implementation map.  
+**Status:** Phase 0 proposal — React Native mobile selection is accepted by ADR-026; remaining package, path and dependency decisions require joint review before this map becomes fully approved.  
 **Purpose:** Give every implementation responsibility one explicit home and prevent code or tests from being moved into a convenient but incorrect crate.  
 **Authority:** This map becomes binding after Phase 0 reconciles the package-list conflicts below. Until then, it is a decision and routing aid, not permission to scaffold either candidate layout.
 
@@ -32,7 +32,7 @@ The current target documents are not fully aligned. Do not silently merge their 
 | API crate vs executable | Phase 1 proposes both crates/sitolo-api and apps/api. | Keep distinct responsibilities: the crate owns reusable HTTP routing/transport behavior; the app is a thin process entry point and composition root. Do not duplicate handlers or business logic. Ratify the exact package shape in Phase 0. |
 | Worker executable vs jobs crate | The Phase 1 tree has apps/worker; the system architecture tree also names sitolo-jobs. | Phase 0 decides whether a separate reusable jobs package is justified. Until then, neither create both copies nor hide job business rules in the worker entry point. |
 | Migration location vs ownership | The system architecture tree places migrations/ at repository root; the Phase 1 contract assigns migration responsibility to persistence. | Make logical ownership explicit. If the root path is retained, persistence owns schema/migration design and verification even though the files physically live at migrations/. Do not add a competing migrations directory. |
-| Desktop frontend | The system architecture specifies a Tauri shell with a TypeScript UI and separately mentions optional React/Next.js for admin web. The current user direction requests React for the Tauri UI. | Proposed reconciliation: React + TypeScript lives under apps/desktop; optional apps/admin-web is a separate surface and is not created without an approved product requirement. Record the final choice in Phase 0/ADR. This is not a decision to replace Flutter mobile with React Native. |
+| Desktop frontend | The system architecture specifies a Tauri shell with a TypeScript UI and separately mentions optional React/Next.js for admin web. The current user direction requests React for the Tauri UI. | Proposed reconciliation: React + TypeScript lives under apps/desktop; optional apps/admin-web is a separate surface and is not created without an approved product requirement. Record the final choice in Phase 0/ADR. React Native is the sole permitted mobile framework per ADR-026; Flutter is not allowed. |
 | Tauri Rust package/lockfile | A root Cargo workspace normally shares a workspace lockfile; Tauri's documented setup places its Rust application package/config under src-tauri/ and recommends a committed lockfile for app builds. | Decide whether apps/desktop/src-tauri is a member of the root workspace or an isolated package. Do not accidentally create competing lockfiles or leave the package outside intended CI coverage. |
 
 ## 4. Candidate Rust package ownership
@@ -79,7 +79,7 @@ The final dependency allowlist must be approved in Phase 0 and mechanically chec
 |---|---|---|
 | apps/api/ | API process startup, dependency wiring, runtime configuration hookup and graceful startup/shutdown. | Route-specific business rules, SQL queries written in main.rs, duplicated policy enforcement. |
 | apps/worker/ | Worker process startup, task registration/dispatch, runtime lifecycle and dependency wiring. | Job-specific domain decisions or replacement implementations of application use cases. |
-| apps/mobile/ | The separately governed Flutter mobile app: pubspec.yaml, lib/main.dart, lib/core/, lib/features/<feature>/, test/, and integration_test/ where needed. Feature behavior belongs to that feature; local persistence and sync stay behind their approved repositories/services. | React/TypeScript sources, server authority or duplicated server business policy. Flutter is the current mobile architecture; changing that needs an ADR. |
+| apps/mobile/ | The React Native mobile application: reviewed package manifest and one lockfile; TypeScript/JavaScript under src/; feature modules and colocated tests; API/local-persistence/sync adapters; platform-specific Android/iOS projects and native modules when required by the accepted workflow; mobile E2E tests inside this app. Follow ADR-026. | Flutter/Dart, a duplicate server business engine, direct authority over server-owned financial/inventory/tenant state, or mobile UI as a substitute for server authorization. |
 | apps/desktop/ | Tauri desktop application package and React + TypeScript UI, per the requested target pending Phase 0 ratification. | A second Rust business engine or direct authority over server-owned financial, inventory, identity or tenant state. |
 | apps/desktop/src-tauri/ | Tauri Rust package, `src/lib.rs` app builder/command registration and native composition, thin `src/main.rs` entry point, narrow commands, capability configuration and device adapters (printing/scanner/OS credential/filesystem features only when approved). | General business use cases, arbitrary shell/process access, unrestricted filesystem commands or database/provider business logic. |
 | apps/desktop/src/ | React UI: app bootstrap, route composition, feature pages/components/hooks, typed API/command bridge, UI state, formatting and interaction. | Domain authority, SQL, credentials, manual copies of server permission rules or ungenerated duplicate API truth. |
@@ -94,6 +94,27 @@ The final dependency allowlist must be approved in Phase 0 and mechanically chec
 | infra/ | Deployment/runtime infrastructure definitions, least-privilege configuration, operational runbooks and environment wiring. | Application domain behavior. |
 | docs/ | Human-readable contracts, ADRs, phase plans, test strategy and evidence. | A substitute for source code or executable verification. |
 | map/ and workspaces/ | ICM routing, context contracts, System Map and per-run artifacts according to their own ICM contracts. | Product runtime source or duplicate implementation specs. |
+
+### React Native mobile proposed source tree
+
+The complete mobile decision is in [ADR-026](ADR-026-react-native-mobile.md). This is a target map, not a command to scaffold all files before the accepted phase part requires them.
+
+~~~text
+apps/mobile/
+  package.json                    # package scripts/dependencies; chosen workflow decides exact setup
+  <one package-manager lockfile>  # package manager chosen and pinned in Phase 1
+  src/
+    app/                          # bootstrap and navigation composition
+    features/<feature>/           # feature modules with colocated *.test.ts(x)
+    shared/                       # genuinely shared presentation/client utilities
+    data/                         # API and local persistence adapters
+    sync/                         # client-side protocol adapters; server remains authoritative
+  android/                        # native project/config when required by selected workflow
+  ios/                            # native project/config when required by selected workflow
+  e2e/                            # full-device journeys with the approved harness
+~~~
+
+Do not choose Expo versus Community CLI, or create speculative native directories, from this map alone; those setup choices are assigned to the Phase 0/Phase 1 decision gate.
 
 ### Tauri + React proposed source tree
 
@@ -149,7 +170,7 @@ Do not place all screens in App.tsx, a universal utils/ file, or one generic hoo
 | React app-level integration test | Inside the desktop frontend package under its source test area | Routing, component composition and typed command/API bridge integration. |
 | Tauri native command and adapter tests | apps/desktop/src-tauri/src/ unit modules or apps/desktop/src-tauri/tests/ | Capability-scoped command validation, adapter error mapping and native integration boundaries. |
 | Full Tauri UI/native journey | apps/desktop/tests/e2e/ | Receipt/reprint workflow, app startup, permission-restricted command behavior. Use a Tauri-supported end-to-end harness; frontend-only mocks do not prove native behavior. |
-| Flutter feature/component test | Inside the mobile package's apps/mobile/test/; mobile end-to-end under the package's integration_test/ if required | Feature behavior stays in the Flutter package; no root-level aggregation of all mobile unit tests. |
+| React Native mobile unit/component test | Colocated with TypeScript/JavaScript feature/module code under apps/mobile/src/ using the approved Jest/React Native test setup | Mobile feature behavior and tests stay in apps/mobile; do not move them to root tests/. |
 | Reusable test builders and fixtures | sitolo-testkit only after approved, imported from [dev-dependencies] | No production package may depend on testkit. |
 | Real multi-surface merchant journey | Root tests/ only when the scenario genuinely crosses multiple packages/apps/infrastructure | Complete sale to inventory/payment/outbox, offline replay, cross-tenant negative journeys. |
 
