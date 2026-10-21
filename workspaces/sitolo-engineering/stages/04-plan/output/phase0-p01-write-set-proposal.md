@@ -1,21 +1,21 @@
 ---
 artifact_type: implementation-plan-amendment
-status: proposed-awaiting-human-acceptance
+status: accepted-scope-only
 run_slug: "phase0-ownership-reconciliation-20261021"
 icm_stage: "04-plan"
 product_phase: "Phase 0 — Architecture, Contracts and ADR Freeze"
 current_part: "P0.1 — Source of truth and conflict register"
-part_sequence_status: "sequence human-approved 2026-10-21; P0.1 write set proposed, not accepted"
+part_sequence_status: "sequence human-approved 2026-10-21; P0.1 write set accepted 2026-10-21 — scope only"
 security_relevant: "yes"
 ---
 
-# P0.1 — Source of Truth and Conflict Register: Write-Set Proposal
+# P0.1 — Source of Truth and Conflict Register: Accepted Write Set
 
 ## 1. Purpose of this document
 
 Stage 04 produced an approved P0.1–P0.8 ordering but left P0.1 at *"Sequence approved; part not started"*, with the exact write set and stop condition unrecorded. `docs/phase_part_execution_contract.md` §2 requires that record before Stage 05 begins.
 
-This amendment supplies it. It is a plan, not an approval: it does not resolve any architecture decision, does not move Phase 0 toward closure, and does not authorize product code. The record becomes binding only when the responsible human accepts the write set and stop condition in §11.
+This amendment supplies it. It is a plan, not an approval of any decision inside it: it does not resolve an architecture question, does not move Phase 0 toward closure and does not authorize product code. The product owner accepted the scope boundary on 2026-10-21 (§11), which authorizes Stage 05 to write the register and nothing beyond it.
 
 ## 2. Part control
 
@@ -27,7 +27,7 @@ This amendment supplies it. It is a plan, not an approval: it does not resolve a
 | Predecessor gate | P0.1–P0.8 sequence approved 2026-10-21. No Stage 05 has run for this part. |
 | Work nature | Documentation reconciliation only. No product code, workspace or client artifact. |
 | Approval required from | Product owner (architecture/ownership decisions); engineering owner where a row is purely mechanical |
-| Approval status | **Proposed — awaiting acceptance** |
+| Approval status | **Accepted 2026-10-21 — P0.1 scope only** (§11). No row inside the register is thereby decided. |
 
 ## 3. Deliverable
 
@@ -65,11 +65,23 @@ These are the conflicts and decisions already evidenced in Stage 02/03. P0.1 mus
 
 Rows whose subject is settled by an accepted ADR (React Native per ADR-026) are recorded as **settled**, not reopened.
 
+### 3.3 Part conditions (accepted 2026-10-21)
+
+1. The register is an **evidence and routing artifact**, not a second architecture specification. It carries citations and disposition status, never new design prose.
+2. Every conflict, open decision, version claim or gap carries precise source evidence, an accountable owner, a resolution gate and a status.
+3. Every seed in §3.2 is either evidenced or **rejected as a genuine conflict, with the reason written down**. A seed cannot disappear silently.
+4. For the Rust version discrepancy, P0.1 records and re-evidences the competing claims. It does not choose the toolchain pin; that is a later compatibility decision.
+5. The same restraint applies to crate inventories, API schema authority, migration placement, Tauri workspace/lockfile boundaries and client tooling: describe the disagreement, name the decider, do not settle it.
+
 ## 4. Exact write set
 
 Five paths. Nothing else may change in P0.1.
 
-| # | Path | Action | Bounded scope |
+**Path convention:** every path below is relative to the **repository root**, not to this ICM workspace. Both workspace paths live under `workspaces/sitolo-engineering/stages/<stage>/output/` and must be written in full; a path resolved against `workspaces/sitolo-engineering/` produces a different, wrong location. A wrong base is a write-set violation, not a typo.
+
+**Path verification, 2026-10-21, before acceptance:** `git rev-parse --show-toplevel` returned the repository root. Rows 3, 4 and 5 exist as files. Rows 1 and 2 do not exist and both parent directories are present — the expected state for a create.
+
+| # | Path (repository-root-relative) | Action | Bounded scope |
 |---|---|---|---|
 | 1 | `docs/phase0_conflict_and_decision_register.md` | **Create** | The deliverable in §3. Register only — no architecture narrative. |
 | 2 | `workspaces/sitolo-engineering/stages/05-implement/output/phase0-ownership-reconciliation-p01-implementation.md` | **Create** | Stage 05 implementation report: files changed, rows added, checks run, limitations. |
@@ -79,9 +91,23 @@ Five paths. Nothing else may change in P0.1.
 
 ### 4.1 Read-only in P0.1 (must not be edited)
 
-`docs/system_architecture_design.md`, `docs/implementation_plan.md`, `docs/phase1_repository_rust_workspace_ci_deep_implementation.md`, `docs/ADR-001-025.md`, `docs/ADR-026-react-native-mobile.md`, `docs/api_contract.md`, `docs/database_design.md`, `docs/testing_strategy.md`, `docs/ci_enforcement.md`, `docs/code_ownership_map.md`, `docs/phase_contract_coverage_register.md`, plus the Stage 02/03 outputs.
+The nine accepted architecture and contract inputs:
 
-**Why this rule matters:** these files are the *subject* of the register. Editing one while writing the register would apply an undecided decision and destroy the evidence the register exists to preserve. `docs/code_ownership_map.md` in particular is a Phase 0 proposal; P0.1 must not ratify it by editing it.
+| # | Path | Why it is evidence, not a write target |
+|---|---|---|
+| 1 | `docs/system_architecture_design.md` | Candidate inventory under dispute |
+| 2 | `docs/implementation_plan.md` | Phase order and toolchain statement under review |
+| 3 | `docs/phase1_repository_rust_workspace_ci_deep_implementation.md` | Competing candidate inventory and workspace rules |
+| 4 | `docs/ADR-001-025.md` | Accepted-decision record; historical Flutter text is not reopened |
+| 5 | `docs/api_contract.md` | API authority assertion |
+| 6 | `docs/database_design.md` | Migration and persistence authority assertion |
+| 7 | `docs/testing_strategy.md` | Test-placement assertions under comparison |
+| 8 | `docs/ci_enforcement.md` | Gate requirements that cannot yet run |
+| 9 | `docs/code_ownership_map.md` | Phase 0 proposal; P0.1 must not ratify it by editing it |
+
+`docs/ADR-026-react-native-mobile.md`, `docs/phase_contract_coverage_register.md` and the Stage 02/03 run artifacts are likewise outside the write set. ADR-026 is settled authority and is not reopened by this part.
+
+**Why this rule matters:** these files are the *subject* of the register. Editing one while writing the register would apply an undecided decision and destroy the evidence the register exists to preserve.
 
 ### 4.2 Explicit exclusions
 
@@ -108,7 +134,7 @@ Documentation-only, so no Cargo command is applicable and none may be claimed.
 
 | Check | Method | Reporting |
 |---|---|---|
-| Write-set containment | `git diff --name-only` compared to §4 | PASS/FAIL — any extra path is a FAIL |
+| Write-set containment | `git diff --name-only` compared against the five repository-root-relative paths in §4 | PASS/FAIL — any added, missing or wrongly-rooted path is a FAIL |
 | Reference integrity | Resolve every relative Markdown link added in this part | PASS/FAIL per link |
 | No duplicated specification | Review: every claim in the register is a citation, not new design text | PASS/FAIL |
 | No premature decision | Grep the register for `accepted`, `approved`, `resolved` outside the ADR-026 settled row | PASS/FAIL |
@@ -121,7 +147,12 @@ Documentation-only, so no Cargo command is applicable and none may be claimed.
 
 `05 Implement → 06 Audit → (07 Remediate only if findings) → 08 Verify → 09 Deliver`
 
-Stage 06 is required even though the diff is documentation: the audit question is not "do the docs build" but "did any row smuggle an undecided decision into the record." Skipping it would let a pre-decided architecture claim reach P0.2 as if it were evidence.
+Stage 06 is required even though the diff is documentation. It audits two things independently and reports them separately:
+
+1. **Evidence quality** — each cited source actually says what the row claims, at the section named, and the row does not paraphrase it into a stronger claim.
+2. **Decision containment** — no unresolved decision was silently converted into an accepted one, and no canonical input was edited to match the register instead of the register recording the input.
+
+Skipping the audit would let a pre-decided architecture claim reach P0.2 as if it were evidence.
 
 Completing P0.1 does not complete Phase 0 and does not unblock Phase 1.
 
@@ -135,14 +166,17 @@ P0.1 is complete when all of the following are true, and stops immediately if an
 3. Every decided item is labelled **recommendation** or **proposed**; nothing is marked accepted.
 4. `docs/README.md` indexes the register and `docs/phase0_architecture_contract_freeze.md` points to it.
 5. The Stage 05 implementation report records the exact checks run and their results.
-6. `git diff --name-only` matches §4 exactly.
+6. `git diff --name-only` lists exactly the five repository-root-relative paths in §4 — no additions, no omissions, no path resolved against the ICM workspace instead of the repository root.
 
-**Return to Stage 04 and stop, without editing, if**
-- a required change falls outside §4, or a canonical input from §4.1 appears to need editing;
+**Stop and return to Stage 04 before editing, if**
+- the work requires a change outside the accepted write set — return to Stage 04, revise this proposal and obtain acceptance **before making that change**;
+- a canonical input from §4.1 appears to need editing;
 - a conflict cannot be recorded without choosing a winner;
 - Stage 02/03 evidence is contradicted by the current files;
 - a row needs product, commercial or legal authority that has not been obtained;
 - the register starts accumulating architecture explanation instead of citations.
+
+**After Stage 05, any unexpected path in the diff also blocks completion.** An out-of-boundary change is not repaired by deleting the file afterwards or by describing it in the report as incidental: the diff is the evidence, and a diff that does not match §4 fails the part.
 
 Re-planning is a correct outcome. Broadening the diff to "finish" P0.1 is not.
 
@@ -154,26 +188,26 @@ Re-planning is a correct outcome. Broadening the diff to "finish" P0.1 is not.
 | P0.1 silently settles inventory or lockfile questions | P0.2–P0.6 become rubber stamps; Phase 1 scaffolds an unratified map | §4.1 read-only inputs; §6 premature-decision grep; Stage 06 audit |
 | Empty speculative crates appear "to satisfy the register" | Violates `docs/phase_part_execution_contract.md` §3.3 | §4.2 exclusion; no workspace exists to scaffold anyway |
 | Version claims are copied forward unchecked | Stale pin or tooling becomes a frozen "fact" | `V-nn` requires official source + date; no compatibility claim without a run |
-| Human acceptance is assumed from silence | Implementation proceeds on an unapproved write set | §11 requires an explicit dated acceptance |
+| Human acceptance is assumed from silence | Implementation proceeds on an unapproved write set | §11 records an explicit dated acceptance; a later part cannot inherit it |
 
-## 10. Decisions requested
+## 10. Decisions recorded (2026-10-21)
 
-| # | Decision | Recommendation | Alternative |
+| # | Decision | Verdict | Direction recorded |
 |---|---|---|---|
-| A | Deliverable path and name | `docs/phase0_conflict_and_decision_register.md` | `docs/phase0_conflicts_and_decisions.md`; or keep it as a run artifact under `stages/05-implement/output/` (rejected: not discoverable to later phases) |
-| B | Write set of five paths in §4 | Accept as the boundary | Add/remove a path now; after acceptance any addition returns to Stage 04 |
-| C | Read-only rule for the ten canonical inputs in §4.1 | Accept — resolution happens in P0.2–P0.7 | Allow targeted edits, which must then name the part that owns each decision |
-| D | Stop condition and post-part route in §7–§8 | Accept, including mandatory Stage 06 audit | Accept with audit waived for documentation-only parts (not recommended) |
-| E | Register may name a required ADR without writing it | Accept | Permit draft ADR text inside the register (not recommended — conflates record and decision) |
+| A | Deliverable path and name | **Accepted** | `docs/phase0_conflict_and_decision_register.md` |
+| B | Five-path write set in §4 | **Revised, then accepted** | Paths must be repository-root-relative and match the real ICM layout. §4 now states the convention and records the pre-acceptance path check. |
+| C | Read-only rule for the nine canonical inputs in §4.1 | **Accepted** | All nine architecture and contract inputs stay untouched during P0.1. |
+| D | Stop condition and mandatory Stage 06 audit | **Accepted with amendment** | Outside-boundary work stops and returns to Stage 04 for a revised proposal *before* the edit; after Stage 05 an unexpected diff path also blocks completion; Stage 06 audits evidence quality and decision containment independently. |
+| E | ADR references only | **Accepted** | The register may identify an ADR a later part must create or amend; P0.1 never writes its decision text. |
 
 ## 11. Acceptance record
 
 | Field | Value |
 |---|---|
-| Accepted by | *(pending)* |
-| Accepted on | *(pending)* |
-| Decisions accepted | *(A–E, or the edited subset)* |
-| Edits requested to this proposal | *(pending)* |
-| Resulting part status | Proposed → **not yet accepted** |
+| Accepted by | Product owner |
+| Accepted on | 2026-10-21 |
+| Decisions accepted | A, C, E accepted as proposed; B revised (repository-root-relative paths) then accepted; D accepted with tightened stop condition and post-Stage-05 diff rule |
+| Edits requested to this proposal | §4 path convention and verification; §8 stop wording; §3.3 part conditions; §7 Stage 06 dual audit scope |
+| Resulting part status | **Accepted — P0.1 scope only** |
 
-Until this table carries a human name and date, P0.1 is proposed only, Stage 05 must not start, and Phase 1 remains blocked.
+**Scope boundary of this acceptance.** It authorizes Stage 05 to produce the register within the five paths above. It does not approve, resolve or pre-dispose any `C-`, `D-`, `V-` or `G-` row; the crate inventory, API schema authority, migration placement, Tauri workspace/lockfile boundary, client tooling and Rust pin all remain open. It does not begin P0.2, does not close Phase 0, and does not unblock Phase 1 scaffolding. Each later part repeats this gate for its own write set.

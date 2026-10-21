@@ -88,7 +88,7 @@ The ICM run must produce or update the following artifacts, using the existing s
 2. **Research memo** — dated authoritative evidence for external or version-sensitive claims; mark research as not required with a reason where appropriate.
 3. **Investigation report** — exact source files inspected, conflicts, gaps, broken references and evidence-backed findings.
 4. **Phase 0 plan** — ordered reconciliation work, owners/decision points, acceptance checks and dependencies.
-5. **Architecture/contract reconciliation record** — canonical source per concern, conflicts resolved or explicitly open, and affected ADRs.
+5. **Architecture/contract reconciliation record** — canonical source per concern, conflicts resolved or explicitly open, and affected ADRs. The live record is [`phase0_conflict_and_decision_register.md`](phase0_conflict_and_decision_register.md); the artifact is satisfied by maintaining that register, not by producing a second document.
 6. **Code ownership decision** — reviewed `docs/code_ownership_map.md`, approved package/client/test boundary decisions, unresolved options and the ADRs or phase gates affected.
 7. **Phase-part sequence and approval record** — proposed Phase 0 part sequence, exact current part/write set, human decision, and next agreed part or stop condition.
 8. **Phase 0 implementation/reconciliation report** — changes made and deliberately deferred, with file paths.
@@ -118,6 +118,8 @@ Do not fabricate approval, mark an unexecuted check as passed, or close Phase 0 
 ## 6. Open decisions
 
 Record decisions that cannot be settled from approved sources in a visible decision register or the existing ADR process. For each, capture the question, why it matters, options/evidence, decision owner, dependency, due condition, and the phases blocked by it.
+
+The visible register for this Phase 0 run is [`phase0_conflict_and_decision_register.md`](phase0_conflict_and_decision_register.md), using stable `C-`, `D-`, `V-` and `G-` identifiers. It is an evidence and routing artifact: it records the evidence, owner, gate and status per item and does not restate the architecture. Rows are resolved in the part named by their gate and applied to the canonical documents in P0.7.
 
 An unresolved decision may remain open only when the architecture supports deferring it safely and the downstream boundary is explicit. A decision that changes a security invariant, data authority or phase dependency is not silently deferred.
 

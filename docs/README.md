@@ -18,6 +18,7 @@ Source of authority: [`agent.md`](../agent.md) at the repository root. When docu
 | [`code_ownership_map.md`](code_ownership_map.md) | Proposed Rust crate, application, Tauri + React, React Native mobile, repository-file and test ownership map; Phase 0 ratification required |
 | [`phase_part_execution_contract.md`](phase_part_execution_contract.md) | Mandatory jointly reviewed part breakdown, per-owner implementation/test matrix, stage gates and handoff rules |
 | [`phase_contract_coverage_register.md`](phase_contract_coverage_register.md) | **Authoritative phase 0–20 contract coverage/reconciliation register** |
+| [`phase0_conflict_and_decision_register.md`](phase0_conflict_and_decision_register.md) | Phase 0 conflict, open-decision, version-verification and gap register (P0.1); evidence and routing only, no approved decisions |
 | [`current_implementation_status.md`](current_implementation_status.md) | Current product phase and active engineering-stream pointer |
 
 ## Historical / compatibility documents
