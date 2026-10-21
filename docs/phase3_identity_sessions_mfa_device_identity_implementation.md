@@ -8,7 +8,7 @@
 **Primary market:** Malawi first; controlled African regional expansion  
 **Backend:** Rust + Axum + Tokio  
 **Persistence:** PostgreSQL authoritative server state  
-**Mobile:** Flutter / Android-first  
+**Mobile:** React Native / Android-first  
 **Desktop:** Tauri  
 **Web/Admin:** TypeScript/Next.js where materially useful  
 **Offline client store:** SQLite  
@@ -357,7 +357,7 @@ The data model therefore requires explicit relationships rather than a single `u
                        |
               +--------+--------+
               |                 |
-          Flutter           Browser/Tauri
+          React Native           Browser/Tauri
               |                 |
               +--------+--------+
                        |
@@ -458,14 +458,14 @@ The rest of Sitolo must not depend on vendor-specific user types.
 
 ---
 
-# 7. Native Flutter Authentication
+# 7. React Native Mobile Authentication
 
 The Android-first client is a public OAuth client. It cannot safely hold a durable client secret.
 
 The preferred flow is:
 
 ```text
-Flutter
+React Native
   |
   | generate state + PKCE verifier
   v
@@ -479,7 +479,7 @@ Authorization Server
 OS callback
   |
   v
-Flutter validates state
+React Native validates state
   |
   v
 Code + PKCE verifier
@@ -1688,7 +1688,7 @@ PORTS
 PERSISTENCE / PROVIDER ADAPTERS
 ```
 
-Domain code must not depend directly on Axum, SQLx, HTTP provider clients or Flutter.
+Domain code must not depend directly on Axum, SQLx, HTTP provider clients or React Native.
 
 ---
 
@@ -2612,7 +2612,7 @@ For browser/admin sessions test:
 
 # 59. Mobile Security Tests
 
-For Flutter:
+For React Native:
 
 - state mismatch callback;
 - PKCE mismatch;
