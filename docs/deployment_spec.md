@@ -32,7 +32,7 @@ Deployment is therefore treated as an engineering control plane, not merely a me
 The deployment system MUST preserve these architectural truths:
 
 ```text
-Flutter / Tauri / Web
+React Native / Tauri / Web
         |
         v
    Edge / API
@@ -1074,7 +1074,7 @@ A new server release MUST NOT invalidate a valid already-installed mobile client
 
 ## 39. Mobile Release Coordination
 
-Flutter releases introduce a longer upgrade tail than backend deployments.
+React Native releases introduce a longer upgrade tail than backend deployments.
 
 Therefore API changes should follow:
 
