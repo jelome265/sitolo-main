@@ -1,17 +1,17 @@
 ---
 artifact_type: implementation-plan
-status: proposed
+status: human-approved-sequence
 run_slug: "phase0-ownership-reconciliation-20261021"
 icm_stage: "04-plan"
 product_phase: "Phase 0 — Architecture, Contracts and ADR Freeze"
-part_sequence_status: "proposed-not-approved"
+part_sequence_status: "human-approved; current part write set requires confirmation"
 ---
 
 # Phase 0 — Ownership Reconciliation Plan
 
 ## Decision gate
 
-**This is a proposal for joint review, not an approved implementation plan.** The proposed parts below must be edited and explicitly accepted by the human before any Phase 0 implementation/reconciliation part begins. Phase 1 scaffolding remains blocked.
+**The product owner approved the eight-part Phase 0 sequence (P0.1–P0.8) on 2026-10-21.** That approval accepts the part ordering, not every architecture recommendation inside those parts. The current part's exact file write set and stop condition must still be recorded and accepted before any Stage 05 implementation. My role in this workflow is architecture guidance and independent audit; product-code implementation is assigned to the implementation agent. Phase 1 scaffolding remains blocked until the Phase 0 exit gate is accepted.
 
 ## Objective
 
@@ -24,19 +24,19 @@ Freeze one coherent, testable ownership model across Rust libraries, executables
 - No business logic is duplicated in API handlers, worker startup, Tauri commands or React components.
 - No compiler pin, library list or lockfile topology is silently changed on the basis of a new source alone.
 
-## Proposed Phase 0 part sequence
+## Approved Phase 0 part sequence
 
 Part IDs are provisional until you accept them. They describe architecture reconciliation units, not implementation files or phase completion claims.
 
-| Proposed part | Purpose and required outcome | Exact planning/decision surface | Evidence and acceptance | State |
+| Part (order approved) | Purpose and required outcome | Exact planning/decision surface | Evidence and acceptance | State |
 |---|---|---|---|---|
-| **P0.1 — Source of truth and conflict register** | Reconcile the approved architecture hierarchy and identify contradictions, obsolete claims, unverified references and current external facts. Produce one conflict/decision register that records source, competing statements, impact, owner and resolution gate. | `docs/system_architecture_design.md`; `docs/implementation_plan.md`; `docs/phase1_repository_rust_workspace_ci_deep_implementation.md`; `docs/ADR-001-025.md`; `docs/api_contract.md`; `docs/database_design.md`; `docs/testing_strategy.md`; `docs/ci_enforcement.md`; Stage 02/03 run artifacts. | Each material conflict cites exact evidence. Version-sensitive claims are checked on official sources and are not converted into a product decision without compatibility review. | Proposed; not started |
-| **P0.2 — Rust crate inventory and dependency graph** | Decide the complete target crate set and the sole role of each crate. Record allowed/prohibited dependency edges and when each crate first becomes required. Avoid both dropped crates and unnecessary crate-per-noun fragmentation. | `docs/code_ownership_map.md`; `docs/system_architecture_design.md` §7; `docs/phase1_repository_rust_workspace_ci_deep_implementation.md` §§3–6; relevant accepted ADRs. | Every candidate is either accepted with a single responsibility, deferred/optional with an owner and trigger, or rejected with rationale. Dependency direction has no cycles, duplicate business rules or domain-to-infrastructure edges. | Proposed; requires human decision |
+| **P0.1 — Source of truth and conflict register** | Reconcile the approved architecture hierarchy and identify contradictions, obsolete claims, unverified references and current external facts. Produce one conflict/decision register that records source, competing statements, impact, owner and resolution gate. | `docs/system_architecture_design.md`; `docs/implementation_plan.md`; `docs/phase1_repository_rust_workspace_ci_deep_implementation.md`; `docs/ADR-001-025.md`; `docs/api_contract.md`; `docs/database_design.md`; `docs/testing_strategy.md`; `docs/ci_enforcement.md`; Stage 02/03 run artifacts. | Each material conflict cites exact evidence. Version-sensitive claims are checked on official sources and are not converted into a product decision without compatibility review. | Sequence approved; part not started |
+| **P0.2 — Rust crate inventory and dependency graph** | Decide the complete target crate set and the sole role of each crate. Record allowed/prohibited dependency edges and when each crate first becomes required. Avoid both dropped crates and unnecessary crate-per-noun fragmentation. | `docs/code_ownership_map.md`; `docs/system_architecture_design.md` §7; `docs/phase1_repository_rust_workspace_ci_deep_implementation.md` §§3–6; relevant accepted ADRs. | Every candidate is either accepted with a single responsibility, deferred/optional with an owner and trigger, or rejected with rationale. Dependency direction has no cycles, duplicate business rules or domain-to-infrastructure edges. | Sequence approved; decisions inside part remain open |
 | **P0.3 — Executable and background-work boundaries** | Resolve `crates/sitolo-api` versus `apps/api`, `apps/worker` versus `sitolo-jobs`, and whether `sitolo-cli` is warranted. Distinguish reusable transport/job contracts from composition roots and application use cases. | `docs/code_ownership_map.md`; `docs/system_architecture_design.md` §§7 and relevant worker/API sections; `docs/phase1_repository_rust_workspace_ci_deep_implementation.md` §§3, 5 and 14. | Each executable has a small, explicit composition-root scope; each library has independently testable responsibilities. CLI stays deferred without an approved use case. | Proposed; requires human decision |
 | **P0.4 — Persistence and cross-cutting service ownership** | Resolve migration path/authority and the boundary among persistence, configuration, integration adapters, sync, event contracts, audit evidence and telemetry. Confirm which cross-cutting items merit a crate versus a module based on reuse and trust/dependency needs. | `docs/code_ownership_map.md`; `docs/database_design.md`; `docs/domain_model.md`; `docs/api_contract.md`; `docs/payment_integration_spec.md`; `docs/mra_eis_integration_spec.md`; `docs/observability_spec.md`; `docs/ci_enforcement.md`. | Exactly one authoritative schema migration sequence; audit records are distinct from diagnostic telemetry; provider DTOs do not leak into the domain; sync does not bypass server authority. | Proposed; requires human decision |
-| **P0.5 — Client, native and generated-contract file map** | Freeze Flutter mobile, Tauri + React desktop, generated API type/client source, lockfile/package-manager boundaries and all source/test paths. Ensure each native/frontend file has a bounded job and no second business engine. | `docs/code_ownership_map.md`; `docs/system_architecture_design.md`; `docs/api_contract.md`; `docs/ADR-002-003` within `docs/ADR-001-025.md`; Tauri/React/Flutter test sections of `docs/testing_strategy.md`. | Every source, config, capability, generated path and test home has one owner. The source contract for generated client types is explicit. Tauri workspace membership and lockfile topology are approved, not guessed. | Proposed; requires human decision |
+| **P0.5 — Client, native and generated-contract file map** | Freeze React Native mobile, Tauri + React desktop, generated API type/client source, lockfile/package-manager boundaries and all source/test paths. Ensure each native/frontend file has a bounded job and no second business engine. | `docs/code_ownership_map.md`; `docs/system_architecture_design.md`; `docs/api_contract.md`; `docs/ADR-026-react-native-mobile.md`, historical `docs/ADR-002` and `docs/ADR-003`; Tauri/React/React Native test sections of `docs/testing_strategy.md`. | Every source, config, capability, generated path and test home has one owner. The source contract for generated client types is explicit. Tauri workspace membership and lockfile topology are approved, not guessed. | Proposed; requires human decision |
 | **P0.6 — Package lifecycle, test placement and CI enforcement contract** | Define the target inventory vs due packages; assign `first_required_phase` and lifecycle for each. Freeze owner-local test policy, package/app command matrix, testkit policy and the manifest requirements that Phase 1's blocking checker must enforce. | `docs/code_ownership_map.md`; `docs/phase_part_execution_contract.md`; `docs/phase1_repository_rust_workspace_ci_deep_implementation.md`; `docs/testing_strategy.md`; `docs/ci_enforcement.md`. | A future package can be mapped but absent until due; an in-scope missing owner blocks implementation. Every due package/app must have test locations and specific commands. Root tests are only cross-owner/system/repository-level. | Proposed; requires human decision |
-| **P0.7 — Canonical document and ADR reconciliation** | Apply only the approved decisions to the authoritative architecture, Phase 1 contract, code ownership map, ADRs and phase/test contracts. Remove conflicting statements rather than adding another parallel architecture document. Record the accepted code ownership map revision. | `docs/ADR-001-025.md`; `docs/system_architecture_design.md`; `docs/phase1_repository_rust_workspace_ci_deep_implementation.md`; `docs/code_ownership_map.md`; `docs/phase0_architecture_contract_freeze.md`; relevant phase/test/CI indexes. | One decision per concern; superseded statements are explicitly marked; links and phase routes resolve; no implementation phase depends on an unapproved owner. | Proposed; depends on P0.2–P0.6 |
+| **P0.7 — Canonical document and ADR reconciliation** | Apply only the approved decisions to the authoritative architecture, Phase 1 contract, code ownership map, ADRs and phase/test contracts. Remove conflicting statements rather than adding another parallel architecture document. Record the accepted code ownership map revision. | `docs/ADR-001-025.md`; `docs/system_architecture_design.md`; `docs/phase1_repository_rust_workspace_ci_deep_implementation.md`; `docs/code_ownership_map.md`; `docs/phase0_architecture_contract_freeze.md`; relevant phase/test/CI indexes. | One decision per concern; superseded statements are explicitly marked; links and phase routes resolve; no implementation phase depends on an unapproved owner. | Sequence approved; depends on P0.2–P0.6 |
 | **P0.8 — Independent audit, verification and Phase 0 exit package** | Audit the completed reconciliation against the accepted part sequence, verify references and contradiction removal, state all checks actually run, and prepare the human decision package for Phase 0 exit. | Final diff, updated ownership map/ADRs, `docs/phase_execution_guide.md`, `docs/phase_contract_coverage_register.md`, status pointer, Stage 06–09 outputs. | Revision-attributable evidence, owner map, decision register, unresolved risks with owners, skipped checks and explicit human acceptance. Phase 0 remains open if a material ownership or architecture decision remains unresolved. | Proposed; depends on all prior approved parts |
 
 ## Recommended ownership direction — proposal only
@@ -57,7 +57,7 @@ This is the starting recommendation to discuss in P0.2–P0.6; none of it is rec
 
 ### Client and repository paths
 
-- Keep `apps/mobile/` as Flutter per accepted ADR-002; its Dart source, `test/` and `integration_test/` belong inside that app.
+- Keep `apps/mobile/` as React Native per accepted ADR-026; TypeScript/JavaScript source, colocated tests and the approved mobile E2E harness belong inside that app.
 - Keep `apps/desktop/src/` for React/TypeScript UI, feature state and UI tests; keep `apps/desktop/src-tauri/` for native Rust commands, adapters, capability/configuration and native tests. Do not make either side authoritative for server-owned business rules.
 - Map `apps/desktop/src-tauri/src/lib.rs` to application setup/command registration and `main.rs` to a thin entrypoint.
 - Keep `packages/api-types/` generated from one approved canonical API contract and generation command; never hand-maintain a competing source of truth. The canonical machine-readable API schema path is still a decision.
@@ -80,7 +80,7 @@ These are proposed architectural constraints to validate against the accepted ma
 2. Approve the distinct roles for `sitolo-api` vs `apps/api`, and `sitolo-jobs` vs `apps/worker`.
 3. Approve single-root `migrations/` ownership by persistence or select another single location.
 4. Approve Tauri `src-tauri` as a member of the root Cargo workspace (one root `Cargo.lock`) or a separately locked Cargo project; no mixed policy.
-5. Confirm Flutter mobile, React + TypeScript in Tauri desktop, and whether a separate admin-web exists at all. Current recommendation: no separate admin-web until approved need.
+5. Confirm the approved React Native mobile boundary, React + TypeScript in Tauri desktop, and whether a separate admin-web exists at all. Current recommendation: no separate admin-web until approved need.
 6. Select the canonical machine-readable API contract and client-generation command/path.
 7. Approve when each package first becomes required, so Phase 1 does not create empty future crates and later phases cannot silently skip required owners.
 8. Review the current Rust pin (documented as 1.98.1 on 2026-09-05) against the official 1.99.1 release announced 2026-10-15; decide after compatibility review, not by release-date alone.
@@ -96,6 +96,6 @@ Phase 0 documentation checks:
 - Report tool checks as PASS only if run; otherwise BLOCKED/NOT RUN with the exact reason.
 - Use real Cargo metadata and build/test commands only after Phase 1 has an actual workspace. Do not call those checks passed in Phase 0.
 
-## Proposed next action
+## Approved next action
 
-Review/edit this eight-part sequence and the ownership recommendations together. Until you explicitly accept or revise it, the sequence remains **proposed**, no part write set is approved, the ownership map remains a proposal, and Phase 1 scaffolding remains blocked.
+The eight-part ordering is accepted. The next work item is P0.1, beginning with a bounded evidence/conflict-register write set. Its exact files and stop condition must be identified before that part is handed to the implementation agent. The crate inventory and detailed ownership recommendations remain open; the ownership map is only partially settled because React Native is the accepted mobile framework while package/workspace/client-tooling decisions remain unresolved. Phase 1 scaffolding remains blocked.
