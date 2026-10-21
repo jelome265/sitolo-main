@@ -8,7 +8,7 @@
 
 ## 1. Purpose
 
-Phase 0 establishes a coherent, reviewable model of what Sitolo is, what it must guarantee, how its major parts fit together, and which decisions must be settled before implementation work relies on them.
+Phase 0 establishes a coherent, reviewable model of what Sitolo is, what it must guarantee, how its major parts fit together, and which decisions must be settled before implementation work relies on them. React Native is the sole permitted mobile framework by explicit product-owner direction and accepted ADR-026; Flutter is prohibited.
 
 This restart begins at Phase 0. Files present in the repository are inputs to reconcile, not proof that a phase has been implemented, tested, approved or closed. Do not infer completion from copied code, document length, an existing checklist, or historical run output.
 
