@@ -3,13 +3,13 @@
 **Status:** Restart baseline  
 **Current product phase:** Phase 0 — Architecture, Contracts and ADR Freeze  
 **Phase lifecycle:** IN_PROGRESS (restart/reconciliation work); Phase 0 exit gate remains open  
-**Current ICM stage:** Start a fresh Stage 01 Select run  
+**Current ICM run:** `phase0-ownership-reconciliation-20261021` (Stages 01–04 prepared; sequence accepted)  
 **Last status reset:** 2026-10-21  
 **Repository baseline:** The commit/PR that records this reset; update the exact SHA after merge.
 
 ## Active work
 
-Sitolo's implementation program starts at **Phase 0** in this repository. The current objective is to reconcile the copied project corpus, settle/record material architecture and contract decisions, confirm phase dependencies, and establish a reviewed Phase 0 exit package.
+Sitolo's implementation program starts at **Phase 0** in this repository. The current objective is to reconcile material architecture and contract decisions, confirm phase dependencies, and establish a reviewed Phase 0 exit package. The product owner approved the P0.1–P0.8 sequence on 2026-10-21; individual part write sets still require an explicit gate. React Native is the sole permitted mobile framework under ADR-026; Flutter is prohibited.
 
 This status is an explicit restart baseline. Existing files, earlier phase contracts, code, PR-specific notes, test claims or run artifacts do not by themselves prove that any phase is complete in this repository. Claims require current, revision-attributable evidence and the required human gate.
 
@@ -34,7 +34,7 @@ The ICM execution pipeline remains independent of product phase numbering:
 → 05-implement → 06-audit → 07-remediate → 08-verify → 09-deliver
 ```
 
-Begin a **new** Stage 01 Select run for Phase 0. Do not resume a previous phase-specific run by default. Prior run folders are historical records unless a human explicitly selects them as supporting evidence.
+The current planning run is `phase0-ownership-reconciliation-20261021`. Its selection brief, research memo, investigation and Stage 04 plan are stored under their respective stage `output/` directories. The part order is accepted; P0.1's exact write set and stop condition must be recorded before the implementation agent starts that part. Product-code implementation is not this assistant's role. Prior run folders remain historical unless explicitly selected as supporting evidence.
 
 ## Evidence rule
 
