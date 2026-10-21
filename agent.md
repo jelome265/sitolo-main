@@ -156,6 +156,8 @@ A request to “add an endpoint” is insufficiently scoped until the agent dete
 
 The agent MUST inspect the existing implementation before introducing a parallel implementation.
 
+For every phase/part, the agent MUST follow `docs/phase_part_execution_contract.md` and consult `docs/code_ownership_map.md` when package, client, source-file or test ownership is involved. The ownership map remains a Phase 0 proposal until the human accepts it. Before implementation, the plan MUST map each in-scope requirement to its approved owner, exact implementation paths, exact test paths and verification command, and identify relevant packages not touched with reasons. The human MUST accept the current part sequence and write set. The agent MUST NOT silently implement a missing crate's responsibility in another crate, duplicate business behavior across crates/apps, create an unapproved package, or move crate-owned tests to a root catch-all test directory. If a requirement's owner is missing or ambiguous, stop and return to planning.
+
 The agent MUST prefer extending an existing correct abstraction over creating a duplicate abstraction.
 
 The agent MUST NOT rewrite unrelated code solely because it prefers a different style.
@@ -2802,6 +2804,8 @@ A mock provider passing does not prove webhook verification.
 A handler test passing does not prove SQL RLS behavior.
 
 Use real infrastructure where the infrastructure itself is part of the security/correctness claim.
+
+**Test placement is an ownership rule:** put Rust unit tests with the source/module they exercise; put a crate's public integration tests in that crate's `tests/`; place app/client tests inside the app that owns the behavior. Reserve repository-root `tests/` for genuine cross-crate, cross-app, whole-workflow or repository-wide architecture checks. A root-level journey test does not replace the tests of the crates and public boundaries it crosses. A zero-test target, undiscovered suite, or skipped package is not a pass. Apply `docs/code_ownership_map.md`; do not report package-level coverage from a green aggregate command unless the package's tests actually ran.
 
 ---
 
