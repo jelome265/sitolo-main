@@ -2639,7 +2639,7 @@ PostgreSQL documents `SKIP LOCKED` as appropriate for queue-like workloads becau
 # 78. Final Architecture
 
 ```text
-                  FLUTTER / TAURI / ADMIN
+                  REACT NATIVE / TAURI / ADMIN
                            |
                            v
                     RUST API / COMMANDS
