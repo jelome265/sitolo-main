@@ -6,7 +6,7 @@
 **Primary market:** Malawi first; controlled African regional expansion  
 **Backend:** Rust + Axum + Tokio  
 **Persistence:** PostgreSQL authoritative; SQLite client continuity  
-**Clients:** Flutter / Android-first, Tauri desktop, TypeScript where materially useful  
+**Clients:** React Native / Android-first, Tauri desktop, TypeScript where materially useful  
 **Architecture:** Modular monolith first, durable workers/outbox, explicit external adapters  
 **Baseline:** 6 September 2026  
 **Status:** Implementation-governing contract
@@ -33,7 +33,7 @@ None of the first four may silently become a competing business authority. Telem
 
 The following project artifacts are already present and are treated as upstream contracts rather than regenerated here: `business_model_design.md`, `sitolo.md`, `system_architecture_design.md`, `security_architecture_design.md`, `security_implementation_spec.md`, `domain_model.md`, `database_design.md`, `api_contract.md`, `auth_authorization_spec.md`, `sync_protocol.md`, `payment_integration_spec.md`, `mra_eis_integration_spec.md`, `testing_strategy.md`, `threat_model.md`, `observability_spec.md`, `deployment_spec.md`, `implementation_plan.md`, `ADR-001-025.md`, `security_test_harness.md`, `ci_enforcement.md`, and the Phase 1 repository/workspace/CI implementation document.
 
-The upstream contracts establish Rust + Axum + Tokio as the backend baseline, PostgreSQL as authoritative server state, SQLite as client continuity state, Flutter as the Android-first client, Tauri for desktop, TypeScript only where materially useful, modular-monolith-first architecture, durable outbox/workers, explicit external adapter boundaries, append-oriented financial corrections, ledger-backed inventory, server-enforced authorization, tenant isolation, fail-closed security and release-blocking tests. The API contract already requires RFC 9457-style errors, request correlation and explicit retry semantics. The observability contract already defines metrics, traces, structured logs, correlation IDs, cardinality constraints, telemetry trust boundaries and the rule that telemetry is not business truth. Phase 2 implements these existing commitments rather than creating alternative conventions.
+The upstream contracts establish Rust + Axum + Tokio as the backend baseline, PostgreSQL as authoritative server state, SQLite as client continuity state, React Native as the Android-first client, Tauri for desktop, TypeScript only where materially useful, modular-monolith-first architecture, durable outbox/workers, explicit external adapter boundaries, append-oriented financial corrections, ledger-backed inventory, server-enforced authorization, tenant isolation, fail-closed security and release-blocking tests. The API contract already requires RFC 9457-style errors, request correlation and explicit retry semantics. The observability contract already defines metrics, traces, structured logs, correlation IDs, cardinality constraints, telemetry trust boundaries and the rule that telemetry is not business truth. Phase 2 implements these existing commitments rather than creating alternative conventions.
 
 # 2. Scope and Non-Goals
 
