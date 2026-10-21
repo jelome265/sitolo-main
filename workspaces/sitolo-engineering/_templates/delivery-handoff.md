@@ -10,6 +10,15 @@ run_slug: "[run-slug]"
 
 ## Governing contract
 
+## Phase transition decision
+
+- current_phase:
+- canonical_phase_contract:
+- exit_gate: pass|blocked|not_applicable
+- evidence_revision:
+- next_phase_or_stop_condition:
+- human_decision:
+
 ## Verification evidence
 
 ## Audit status
