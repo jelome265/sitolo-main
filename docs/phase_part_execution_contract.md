@@ -35,6 +35,8 @@ Use stable part identifiers only after agreement. If the phase-part plan changes
 
 ## 3. Non-negotiable implementation rules
 
+0. **Mobile framework is fixed.** Follow `docs/ADR-026-react-native-mobile.md`: React Native is the sole permitted mobile framework. Do not create Flutter/Dart app manifests, sources, dependencies or active test/build targets. Historical ADR text is not current implementation guidance.
+
 1. Implement each responsibility in its approved owner. Do not put a missing crate's logic in another crate, add one catch-all module to hide unclear ownership, or duplicate the same business rule in API, worker, Tauri and React.
 2. The plan's file write set is a boundary, not a suggestion. If a required file is missing from the plan or ownership is unclear, stop and return to Stage 04; do not silently broaden the diff.
 3. Do not create empty or speculative crates. A new crate, package, top-level directory or owner requires an approved architectural reason and a map update.
@@ -71,7 +73,7 @@ Completing a part does not complete its phase unless the phase contract's entire
 
 ## 6. Phase 1 enforcement foundation
 
-Phase 1 must implement a required mechanical code-ownership/architecture gate from the human-approved Phase 0 map. It must validate actual Cargo package membership and dependency edges, the location of crate-owned tests, use of test-only packages, app-specific Tauri/React and Flutter test/build commands when those targets are due, and package-level check results. The missing checker must be reported as not yet implemented until it exists and is executed successfully.
+Phase 1 must implement a required mechanical code-ownership/architecture gate from the human-approved Phase 0 map. It must validate actual Cargo package membership and dependency edges, the location of crate-owned tests, use of test-only packages, app-specific Tauri/React and React Native mobile test/build commands when those targets are due, and package-level check results. The missing checker must be reported as not yet implemented until it exists and is executed successfully.
 
 **The target architecture inventory is not the same as the current workspace inventory.** The Phase 0 map and Phase 1 manifest must record `first_required_phase` and an explicit lifecycle/disposition for every planned package. The checker compares the real workspace against packages due by the current phase and accepted part, while continuing to validate all previously active packages. It must not require a future-phase package prematurely, and it must not let an in-scope missing package's responsibility be implemented in a neighboring crate. No empty or speculative crate is created solely to satisfy a path inventory.
 
