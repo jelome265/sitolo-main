@@ -18,7 +18,7 @@
 **Backend authority:** Rust + Axum + Tokio  
 **Primary persistence:** PostgreSQL  
 **Offline store:** SQLite  
-**Primary mobile surface:** Flutter / Android-first  
+**Primary mobile surface:** React Native / Android-first  
 **Desktop:** Tauri  
 **Web/admin:** TypeScript where materially useful  
 **Architecture:** Modular monolith first, with workers and adapters; service extraction only when an independently justified boundary exists
@@ -55,7 +55,7 @@ The domain model must accomplish seven things simultaneously:
 1. Represent real merchant operations without turning every screen into a domain concept.
 2. Preserve financial and inventory correctness under concurrency, retries, offline work, and provider failure.
 3. Make tenant and organizational scope explicit.
-4. Keep business authority in Rust rather than duplicating business rules in Flutter, Tauri or TypeScript.
+4. Keep business authority in Rust rather than duplicating business rules in React Native, Tauri or TypeScript.
 5. Provide stable seams for later extraction without prematurely becoming microservices.
 6. Support regulated vertical extensions without contaminating the retail core with pharmacy- or agro-specific assumptions.
 7. Make security controls expressible as domain invariants rather than relying only on middleware.
@@ -83,7 +83,7 @@ The business model remains the commercial authority, but commercial hypotheses d
 
 Existing Sitolo architecture decisions that this model MUST preserve include:
 
-- dedicated Flutter mobile application as the primary merchant surface;
+- dedicated React Native mobile application as the primary merchant surface;
 - Tauri for desktop back office;
 - limited TypeScript for web/admin/tooling;
 - Rust as the business decision engine;
@@ -3050,7 +3050,7 @@ Domain → Axum
 Domain → SQLx
 Domain → Redis
 Domain → Provider SDK
-Domain → Flutter concepts
+Domain → React Native concepts
 ```
 
 The domain should remain testable without a live database or HTTP server whenever the rule under test is pure business logic.
@@ -3427,7 +3427,7 @@ It makes state transitions and financial invariants difficult to enforce.
 
 ### 4. UI-Owned Rules
 
-Flutter/TypeScript may provide UX validation but cannot own business authority.
+React Native/TypeScript may provide UX validation but cannot own business authority.
 
 ### 5. Current-State-Only History
 
@@ -3563,7 +3563,7 @@ This document was researched against the current Sitolo project documents and cu
 
 - `sitolo.md`: product scope, customer types, business hierarchy, domain scope, sales/inventory/payment/EIS principles.
 - `business_model_design.md`: commercial flywheel and the operating-system positioning.
-- `system_architecture_design.md`: Rust-first stack, PostgreSQL authority, Flutter/Tauri clients, modular monolith, sync, outbox, testing and implementation rules.
+- `system_architecture_design.md`: Rust-first stack, PostgreSQL authority, React Native/Tauri clients, modular monolith, sync, outbox, testing and implementation rules.
 - `security_architecture_design.md`: tenant isolation, authorization, business invariants as security controls, mandatory security gates.
 - `security_implementation_spec.md`: implementation governance and enforcement expectations.
 
