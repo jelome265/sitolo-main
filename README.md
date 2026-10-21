@@ -24,7 +24,7 @@ The long-term product is one core with vertical configuration and progressively 
 ## Product and architecture principles
 
 - Malawi is the initial market; regional expansion is controlled and evidence-led.
-- Rust is the authoritative backend core; Flutter is Android-first mobile, Tauri supports desktop, and a limited web surface is optional where useful.
+- Rust is the authoritative backend core; React Native is the sole mobile framework (Android-first), Tauri supports desktop, and a limited web surface is optional where useful.
 - PostgreSQL is authoritative server-side business state. SQLite is device-local operational state for offline continuity.
 - Sitolo begins as a modular monolith with durable workers, outbox processing, and explicit adapter boundaries for external systems.
 - Clients request; the server decides. Client inputs are never final financial or security authority.
