@@ -15,6 +15,8 @@ Source of authority: [`agent.md`](../agent.md) at the repository root. When docu
 | [`implementation_plan.md`](implementation_plan.md) | Implementation program, dependency order and release posture |
 | [`phase0_architecture_contract_freeze.md`](phase0_architecture_contract_freeze.md) | Canonical Phase 0 architecture/contract reconciliation and exit gate |
 | [`phase_execution_guide.md`](phase_execution_guide.md) | Phase-by-phase purpose, inputs, evidence, exit criteria and next-phase routing |
+| [`code_ownership_map.md`](code_ownership_map.md) | Proposed Rust crate, application, Tauri + React, Flutter, repository-file and test ownership map; Phase 0 ratification required |
+| [`phase_part_execution_contract.md`](phase_part_execution_contract.md) | Mandatory jointly reviewed part breakdown, per-owner implementation/test matrix, stage gates and handoff rules |
 | [`phase_contract_coverage_register.md`](phase_contract_coverage_register.md) | **Authoritative phase 0–20 contract coverage/reconciliation register** |
 | [`current_implementation_status.md`](current_implementation_status.md) | Current product phase and active engineering-stream pointer |
 
