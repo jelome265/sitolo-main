@@ -43,7 +43,7 @@ The chain is a control loop, not a prompt-writing trick: **scope → locate → 
 
 ## Product phase vs ICM stage
 
-The ICM pipeline is engineering workflow infrastructure, not Sitolo product-phase sequencing. Sitolo's active product stream remains Phase 4 Part 8 / PR-009. A later contract such as Phase 8 Product Catalogue is target-state documentation, not a phase transition.
+The ICM pipeline is execution/workflow infrastructure, not Sitolo product-phase sequencing. The active restart position is **Phase 0 — Architecture, Contracts and ADR Freeze**; see [current implementation status](current_implementation_status.md). The [Phase Execution and Transition Guide](phase_execution_guide.md) gives every phase a canonical contract, expected evidence, exit gate and explicit next-phase route. Later-phase contracts describe requirements; they are not proof of implementation and do not authorize skipping a predecessor.
 
 ## Two complementary forms
 
