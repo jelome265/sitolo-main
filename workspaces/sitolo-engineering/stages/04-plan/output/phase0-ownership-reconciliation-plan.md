@@ -26,7 +26,7 @@ Freeze one coherent, testable ownership model across Rust libraries, executables
 
 ## Approved Phase 0 part sequence
 
-Part IDs are provisional until you accept them. They describe architecture reconciliation units, not implementation files or phase completion claims.
+Part order and IDs P0.1–P0.8 are approved. The descriptions define planning outcomes, not permission to implement without recording and accepting each selected part's exact write set and stop condition.
 
 | Part (order approved) | Purpose and required outcome | Exact planning/decision surface | Evidence and acceptance | State |
 |---|---|---|---|---|
