@@ -21,7 +21,7 @@ For this ownership question, the principal repository sources are:
 - `docs/system_architecture_design.md` — target architecture and package topology.
 - `docs/phase1_repository_rust_workspace_ci_deep_implementation.md` — Phase 1 workspace/build contract and candidate crate list.
 - `docs/implementation_plan.md` — phase order and broad dependency chain.
-- `docs/ADR-001-025.md` — accepted architecture decisions, including Rust-first backend, Flutter mobile, Tauri desktop, PostgreSQL authority and modular monolith.
+- `docs/ADR-001-025.md` — accepted architecture decisions, including Rust-first backend, Tauri desktop, PostgreSQL authority and modular monolith; the historical Flutter decision is superseded by accepted ADR-026 for React Native.
 - `docs/code_ownership_map.md` — proposed package/path/test ownership.
 - `docs/phase_part_execution_contract.md` — human-approved write set, package-local tests and part acceptance.
 - `docs/testing_strategy.md` and `docs/ci_enforcement.md` — test evidence and CI gate expectations.
@@ -72,8 +72,21 @@ The system architecture's repository topology lists the main libraries `sitolo-d
 
 **Implication for Sitolo:** the older statement is no longer a claim about the latest stable release. This does **not** mean we should automatically change the project pin. Phase 0 must decide whether to retain or update the approved compiler baseline after reviewing compatibility and the repository's validation requirements. No compatibility test has been run in this planning-only research.
 
+## Accepted mobile-framework decision update (2026-10-21)
+
+The product owner explicitly approved React Native as the sole mobile framework and prohibited Flutter. This supersedes the earlier Flutter selection recorded in ADR-002; see the active [ADR-026](../../../../docs/ADR-026-react-native-mobile.md).
+
+Current official React Native sources:
+
+- Tutorial/native components: https://reactnative.dev/docs/tutorial
+- Environment setup and distinction between using a framework or the Community CLI: https://reactnative.dev/docs/set-up-your-environment
+- Testing overview (static analysis, modular/testable code, Jest in the default template): https://reactnative.dev/docs/testing-overview
+- Release announcements: https://reactnative.dev/blog
+
+The official React Native blog lists an announcement for 0.88 dated 2026-10-19. The environment/setup approach and compatible current version must still be checked in Phase 1; this memo does not choose Expo versus Community CLI or pin React Native tooling. Offline persistence, outbox/replay, secure local state and synchronization remain Sitolo-specific correctness requirements rather than framework guarantees.
+
 ## Recommendation
 
-Keep a complete human-readable target ownership map, but use a phase-aware machine-readable manifest in Phase 1. Each planned package should have a sole responsibility, path, dependency allowlist, test location and `first_required_phase`; lifecycle/disposition must distinguish planned, active, deferred, optional and retired entries. The gate should fail for missing packages due in the accepted phase/part, not for a mapped future package that is not yet required. Once an owner is due, the missing owner blocks implementation; it never authorizes putting the behavior elsewhere.
+Keep a complete human-readable target ownership map, but use a phase-aware machine-readable manifest in Phase 1. The target client decision is React Native mobile plus Tauri/React desktop; do not add Flutter manifests, Dart source or Flutter test targets. Each planned package should have a sole responsibility, path, dependency allowlist, test location and `first_required_phase`; lifecycle/disposition must distinguish planned, active, deferred, optional and retired entries. The gate should fail for missing packages due in the accepted phase/part, not for a mapped future package that is not yet required. Once an owner is due, the missing owner blocks implementation; it never authorizes putting the behavior elsewhere.
 
 Research supports conventions and identifies conflicts. It does not by itself approve Sitolo's crate inventory, lockfile topology, toolchain or current Phase 0 parts.
