@@ -7,7 +7,7 @@
 **Backend:** Rust / Axum / Tokio  
 **Database:** PostgreSQL 18 target line  
 **Database access:** Rust + SQLx  
-**Clients:** Flutter Android-first, Tauri desktop, TypeScript where materially useful  
+**Clients:** React Native Android-first, Tauri desktop, TypeScript where materially useful  
 **Architecture:** Modular monolith first; durable workers; explicit integration adapters  
 **Authority:** PostgreSQL is authoritative for server-side business state  
 **Security posture:** zero trust, deny by default, least privilege, defense in depth, fail closed  
