@@ -24,6 +24,14 @@ Every consequential phase run uses the existing ICM pipeline:
 
 Research and remediation are decision gates; their output may explicitly state why work is not required. Human review remains required at the stage handoffs defined by ICM.
 
+## Phase parts and code ownership (applies to every phase)
+
+Before implementation in any Phase 0–20, ICM must use [`docs/phase_part_execution_contract.md`](phase_part_execution_contract.md) to propose a bounded part sequence and an explicit current-part write set. The agent investigates and proposes; **the human reviews, edits and accepts the sequence and current part**. Do not start implementation merely because a phase or part is documented. A plan must map each in-scope requirement to its approved crate/app/path, exact implementation files, exact test files and verification commands. Every other relevant package must be marked affected or `not touched` with a reason.
+
+Use [`docs/code_ownership_map.md`](code_ownership_map.md) for proposed Rust, API/worker, migration, Flutter, Tauri + React, generated-client and test ownership. Its package inventory is a **Phase 0 proposal**, not an approved list; conflicting source layouts must be resolved before Phase 1 scaffolding. Do not put behavior from an omitted crate in a convenient neighboring crate, move tests to the repository root to avoid crate-local test ownership, create empty crates, or duplicate domain rules in the frontend/native shell. If actual repository state contradicts the accepted plan, stop at the planning gate and revise it with the human.
+
+Part acceptance is not phase acceptance. The delivery handoff names the exact next **agreed** part or a stop/blocker condition; delivery never self-approves the next part.
+
 ## 2. Phase progression
 
 ### Phase 0 — Architecture, Contracts and ADR Freeze
@@ -31,7 +39,7 @@ Research and remediation are decision gates; their output may explicitly state w
 - **Canonical contract:** [Phase 0 contract](phase0_architecture_contract_freeze.md)
 - **Purpose:** Reconcile product scope, domain, runtime architecture, data/API contracts, security, operations, ADRs and the full phase sequence into one approved implementation baseline.
 - **Start from:** The Phase 0 contract and the smallest relevant set of canonical design sources. Treat copied content as material to inspect, not inherited completion evidence.
-- **Work and evidence:** Produce the Phase 0 selection brief, research memo where needed, source-backed investigation, contract/ADR reconciliation record, plan, audit/remediation decisions and revision-attributable verification report.
+- **Work and evidence:** Produce the Phase 0 selection brief, research memo where needed, source-backed investigation, contract/ADR reconciliation record, proposed code/package/client/test ownership map reconciliation, plan, audit/remediation decisions and revision-attributable verification report. Resolve the competing Rust package lists and the API/worker, migrations, Tauri/React and test-placement choices before Phase 1 can scaffold the target layout.
 - **Exit / next:** Human-approved Phase 0 exit package; material decisions are approved or explicitly owned and safely deferred. Then start **Phase 1**. Do not start implementation work that depends on a disputed architecture decision.
 
 ### Phase 1 — Repository, Rust Workspace and CI
@@ -39,7 +47,7 @@ Research and remediation are decision gates; their output may explicitly state w
 - **Canonical contract:** [Phase 1 contract](phase1_repository_rust_workspace_ci_deep_implementation.md)
 - **Purpose:** Create a reproducible engineering foundation: pinned toolchain, workspace/package boundaries, lockfile, dependency/supply-chain policy and required CI checks.
 - **Start from:** Approved Phase 0 architecture and ADRs; record actual repository topology and tool availability.
-- **Work and evidence:** Establish deterministic local/CI commands, formatting/lint/build/test gates, dependency and secret scanning, least-privileged CI permissions, reproducible artifact inputs, and failure behavior for required checks.
+- **Work and evidence:** Establish deterministic local/CI commands, formatting/lint/build/test gates, dependency and secret scanning, least-privileged CI permissions, reproducible artifact inputs, and failure behavior for required checks. Convert the approved ownership map into one machine-readable manifest and a required `scripts/ci/check-code-ownership` (or human-approved equivalent) CI gate. Verify the actual Cargo package inventory/dependency edges, package-local tests, testkit dependency restrictions, and Tauri/React + Flutter build/test commands so a workspace-level green result cannot hide an omitted package or skipped client.
 - **Exit / next:** A clean checkout reproduces the declared toolchain and required checks; missing tools are not reported as passing. Then start **Phase 2**.
 
 ### Phase 2 — Configuration, Secrets, Errors and Telemetry
