@@ -2171,7 +2171,7 @@ External sources were checked for current technology and Malawi integration cont
 
 1. Rust Release Team, **Announcing Rust 1.98.0**, 20 Aug 2026 — https://blog.rust-lang.org/2026/08/20/Rust-1.98.0/
 2. Rust official release announcements — https://blog.rust-lang.org/releases/
-3. React Native, **Learn the Basics** — https://reactnative.dev/docs/tutorial
+3. 3. React Native, **Learn the Basics** — https://reactnative.dev/docs/tutorial
 4. React Native, **Testing overview** — https://reactnative.dev/docs/testing-overview
 5. React Native, **Environment setup** — https://reactnative.dev/docs/set-up-your-environment
 6. React Native, **Platform-specific code** — https://reactnative.dev/docs/platform-specific-code
