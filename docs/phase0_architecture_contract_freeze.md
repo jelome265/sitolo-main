@@ -31,7 +31,7 @@ Start with the minimum routed context and then follow only the references needed
 | Operations and verification | `docs/observability_spec.md`, `docs/deployment_spec.md`, `docs/testing_strategy.md`, `docs/ci_enforcement.md` | Operability, test strategy, release controls |
 | Decisions and phase order | `docs/ADR-001-025.md`, `docs/implementation_plan.md` | Existing decisions and the Phase 0–20 dependency sequence |
 | Phase routing | `docs/phase_execution_guide.md`, `docs/phase_contract_coverage_register.md`, `docs/phase_part_execution_contract.md` | Phase/part sequence, implementation gates and how to advance |
-| Code ownership | `docs/code_ownership_map.md` | Proposed package/client/file ownership and test placement; must be ratified in Phase 0 before Phase 1 scaffolding |
+| Code ownership | `docs/code_ownership_map.md` and `docs/ADR-026-react-native-mobile.md` | Mobile framework is approved as React Native; remaining package/client/file ownership and test placement must be ratified before Phase 1 scaffolding |
 
 A listed file can be outdated, incomplete or inconsistent. Inspect its content and links before treating it as authoritative. Current external laws, regulator requirements and provider contracts must be rechecked when a decision depends on them.
 
@@ -46,10 +46,12 @@ A listed file can be outdated, incomplete or inconsistent. Inspect its content a
 
 ### 3.2 Reconcile architecture and ownership
 
+The mobile framework decision is already explicit: [ADR-026](ADR-026-react-native-mobile.md) selects React Native as the sole permitted mobile framework and supersedes the historical Flutter selection in ADR-002. Phase 0 must reconcile the remaining mobile workflow/tooling, native-module, local persistence and test-harness choices without re-opening the prohibition on Flutter.
+
 - Verify the intended client surfaces, backend runtime, persistence authorities and external integration boundaries.
 - Confirm domain and module ownership, dependency direction, and the boundary between the modular monolith, workers and adapters.
 - Reconcile the conflicting candidate crate/package lists in `docs/system_architecture_design.md` and `docs/phase1_repository_rust_workspace_ci_deep_implementation.md`; do not silently select or combine them.
-- Review `docs/code_ownership_map.md` for Rust crate roles, executable entry points, migration ownership/path, Flutter mobile, Tauri + React, generated API types, and test locations. Resolve the package inventory and Tauri workspace/lockfile boundary before Phase 1 scaffolding; record approved decisions in ADRs and retain unresolved blockers explicitly.
+- Review `docs/code_ownership_map.md` for Rust crate roles, executable entry points, migration ownership/path, React Native mobile, Tauri + React, generated API types, and test locations. Resolve the package inventory and Tauri workspace/lockfile boundary before Phase 1 scaffolding; record approved decisions in ADRs and retain unresolved blockers explicitly.
 - Confirm server-side authority for authorization, tenant/resource scope and financially significant decisions.
 - Identify cross-context interactions and their data/API/event contracts.
 - Record material architecture decisions in the existing ADR system. Do not silently change a decision because an implementation would be easier.
@@ -102,7 +104,7 @@ Phase 0 may be marked complete only when every applicable condition below has ex
 
 - [ ] Product scope, primary workflows and exclusions have been reviewed and accepted.
 - [ ] The architecture, module ownership, client/runtime boundaries and authoritative data responsibilities are mutually consistent.
-- [ ] The approved Rust package inventory, API/worker composition roots, migration path, Tauri + React native boundary, Flutter mobile boundary, and package/app test locations have one explicit owner each. Any unresolved choice that affects Phase 1 scaffolding blocks Phase 1 until human disposition.
+- [ ] The approved Rust package inventory, API/worker composition roots, migration path, Tauri + React native boundary, React Native mobile boundary, and package/app test locations have one explicit owner each. Any unresolved choice that affects Phase 1 scaffolding blocks Phase 1 until human disposition.
 - [ ] Domain invariants, API contracts, persistence rules and integration boundaries do not contain unresolved material contradictions.
 - [ ] Security and operational requirements are routed to their canonical sources and material gaps are recorded.
 - [ ] Every material architecture decision is either recorded and approved in an ADR or listed as open with an owner and disposition rule.
