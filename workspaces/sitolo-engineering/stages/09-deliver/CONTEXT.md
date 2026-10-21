@@ -15,8 +15,12 @@ One job: prepare the verified change for review and controlled integration.
 | Reference | Delivery guide | references/delivery.md | Full file | Handoff format |
 | Reference | Current phase status | ../../../../docs/current_implementation_status.md | Full file | Reconcile phase status without assuming completion |
 | Reference | Phase execution guide | ../../../../docs/phase_execution_guide.md | Selected phase exit and next-phase rule | Ensure the handoff directs the next allowed phase |
+| Reference | Phase parts | ../../../../docs/phase_part_execution_contract.md | Selected part and completion gate | Record exact part outcome and next agreed part/stop condition |
+| Reference | Code ownership map | ../../../../docs/code_ownership_map.md | Changed package/app/test paths | Report ownership and evidence without hiding omitted crates |
 
 **Do NOT load:** unrelated stage contracts, unrelated reference families, the full documentation corpus, or the full `agent.md`; use the routed governance context and exact inputs only.
+
+Delivery must identify the current phase and part, its accepted write set, every changed package/app and its tests, relevant packages not touched with reason, exact revision and check outcomes, unresolved audit findings, and the next **human-agreed** part or explicit stop condition. A stage/part handoff does not itself approve the next part or close the phase.
 
 ## Process
 
