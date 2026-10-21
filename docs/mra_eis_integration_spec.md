@@ -181,7 +181,7 @@ The integration belongs in the platform integration layer, downstream of committ
 ```text
 ┌────────────────────────────────────────────────────────────┐
 │                     Sitolo Clients                         │
-│ Flutter POS / Tauri / Admin / Approved API Clients        │
+│ React Native POS / Tauri / Admin / Approved API Clients        │
 └─────────────────────────────┬──────────────────────────────┘
                               │
                               ▼
@@ -578,7 +578,7 @@ Because MRA defines the terminal as the client application, a certified architec
 
 ```text
 MODE A: Direct certified terminal
-Flutter/Tauri terminal → MRA EIS
+React Native/Tauri terminal → MRA EIS
 
 MODE B: Sitolo brokered integration
 Approved terminal → Sitolo secure integration service → MRA
@@ -2121,7 +2121,7 @@ Support staff may need to inspect MRA errors and terminal state, but support mus
 
 These are deliberately preserved as open decisions rather than filled with assumptions:
 
-1. What is the exact certified production architecture for a Flutter mobile terminal: direct MRA connection, Sitolo broker, or another approved model?
+1. What is the exact certified production architecture for a React Native mobile terminal: direct MRA connection, Sitolo broker, or another approved model?
 2. Which MRA environments are currently available for certification in September 2026, and what are the exact base URLs?
 3. What exact product ID/version approval evidence is required for the Sitolo release currently under development?
 4. What is the current production credential issuance/rotation procedure?
