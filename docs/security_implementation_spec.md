@@ -10,7 +10,7 @@
 **Primary market:** Malawi first  
 **Regional target:** Africa  
 **Backend:** Rust  
-**Mobile:** Flutter / Android-first  
+**Mobile:** React Native / Android-first  
 **Desktop:** Tauri  
 **Web/Admin:** TypeScript where materially useful  
 **Authoritative server database:** PostgreSQL  
@@ -506,7 +506,7 @@ Rust's Cargo documentation describes workspaces as collections of packages that 
 
 ## 6.2 Mobile
 
-Flutter is the primary merchant mobile application.
+React Native is the primary merchant mobile application.
 
 The mobile client is not the security authority.
 
@@ -642,7 +642,7 @@ DOMAIN
   cannot depend on HTTP
 
 DOMAIN
-  cannot depend on Flutter/Tauri
+  cannot depend on React Native/Tauri
 
 AUTHORIZATION
   cannot be implemented only in HTTP handlers
@@ -675,7 +675,7 @@ Avoid:
 DOMAIN -> AXUM
 DOMAIN -> SQLx-specific web extraction
 DOMAIN -> Redis
-DOMAIN -> Flutter
+DOMAIN -> React Native
 DOMAIN -> external provider SDK
 ```
 
@@ -1663,7 +1663,7 @@ CI should inspect emitted bundles and source maps for:
 
 ---
 
-# 22. Flutter Security Contract
+# 22. React Native Security Contract
 
 The mobile application must assume:
 
@@ -3922,7 +3922,7 @@ At minimum create:
 
 ```text
 ADR-001  Rust-first backend
-ADR-002  Flutter mobile
+ADR-002  React Native mobile
 ADR-003  Tauri desktop
 ADR-004  PostgreSQL authority
 ADR-005  Modular monolith
