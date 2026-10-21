@@ -67,10 +67,10 @@ When a required decision is explicitly marked open in the design documents, the 
 
 Sitolo is a Rust-first modular-monolith business operating system.
 
-The target runtime model is:
+The target runtime model is (mobile framework choice is fixed by ADR-026):
 
 ```text
-Flutter Mobile / Tauri Desktop / limited Web
+React Native Mobile / Tauri Desktop / limited Web
                  |
               HTTPS/API
                  |
@@ -97,7 +97,7 @@ The agent MUST preserve the following baseline:
 - SQLx is the PostgreSQL access layer.
 - PostgreSQL is authoritative server-side business state.
 - SQLite is the local operational store for offline continuity.
-- Flutter is the primary mobile client.
+- React Native is the primary mobile client.
 - Tauri is the desktop shell/client.
 - TypeScript is constrained to web/admin, tooling, generated clients/schema tooling, and Tauri UI where appropriate.
 - External systems are trust boundaries.
@@ -205,7 +205,7 @@ The agent MUST prefer an explicit correction state over destructive mutation whe
 
 Clients are operational surfaces, not authorities.
 
-Flutter, Tauri, browsers, imported files, provider callbacks, and offline local state MUST be treated as untrusted inputs.
+React Native, Tauri, browsers, imported files, provider callbacks, and offline local state MUST be treated as untrusted inputs.
 
 The authoritative processing model is:
 
@@ -267,7 +267,7 @@ The domain layer MUST NOT depend on:
 - Redis;
 - HTTP client implementations;
 - provider SDK implementations;
-- Flutter concepts;
+- React Native concepts;
 - Tauri concepts;
 - UI state;
 - persistence-specific behavior.
@@ -342,7 +342,7 @@ Domain -> Axum
 Domain -> SQLx
 Domain -> Redis
 Domain -> Provider SDK
-Domain -> Flutter
+Domain -> React Native
 Domain -> Tauri UI
 ```
 
@@ -1639,11 +1639,11 @@ Never render merchant/customer-provided content as trusted HTML without delibera
 
 Released client artifacts are observable.
 
-The agent MUST assume anything bundled into Flutter/Tauri/web clients can be extracted.
+The agent MUST assume anything bundled into React Native/Tauri/web clients can be extracted.
 
 No secrets, private API keys, provider credentials, signing secrets, or privileged tokens belong in clients.
 
-Flutter/Tauri security requirements include:
+React Native/Tauri security requirements include:
 
 - secure credential storage;
 - no forbidden secrets in release artifacts;
@@ -2056,9 +2056,9 @@ serialization cost
 
 ---
 
-# 63. Flutter Standards
+# 63. React Native Standards
 
-The Flutter client is a client of the domain/API contract, not the authority.
+React Native is the sole approved mobile framework; Flutter is prohibited. The React Native client consumes the domain/API contract and is not a source of business authority. See `docs/ADR-026-react-native-mobile.md`.
 
 Organize features around business capabilities rather than a giant page-centric folder hierarchy.
 
@@ -3285,7 +3285,7 @@ These rules are absolute unless superseded by a higher-authority requirement exp
 This contract is derived from the project’s governing design documents:
 
 - `docs/commercial/01_strategy/business_model_design.md` — commercial model, segments, product surfaces, monetization, retention, enterprise strategy, regulatory/commercial boundaries.
-- `system_architecture_design.md` — runtime architecture, module boundaries, Rust/Axum/Tokio, Flutter/Tauri, PostgreSQL/SQLite, workers, adapters, sync, reliability, performance, operations.
+- `system_architecture_design.md` — runtime architecture, module boundaries, Rust/Axum/Tokio, React Native/Tauri, PostgreSQL/SQLite, workers, adapters, sync, reliability, performance, operations.
 - `security_architecture_design.md` — zero-trust security contract, threat model, authorization, tenant isolation, API security, CI/CD security, release gates, incident controls.
 - `domain_model.md` — domain concepts, aggregates, value objects, commands, events, state machines, invariants, bounded contexts, offline semantics.
 - `database_design.md` — PostgreSQL schema model, constraints, RLS, roles, SQLx, transaction boundaries, concurrency, migrations, indexing, backup/restore, database DoD.
