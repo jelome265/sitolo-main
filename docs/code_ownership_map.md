@@ -169,15 +169,27 @@ No implementation begins while a required behavior has no owner, while the crate
 
 ### At repository foundation — Phase 1 deliverable
 
-Phase 1 must turn the approved Phase 0 map into deterministic enforcement. Implement scripts/ci/check-code-ownership (or an explicitly approved equivalent) and make it a required CI gate. It must at minimum:
+Phase 1 must turn the approved Phase 0 map into deterministic enforcement. Implement `scripts/ci/check-code-ownership` (or an explicitly approved equivalent) and make it a required CI gate. The map describes the **target ownership inventory**; it does not mean every future-phase crate must be created as an empty placeholder in Phase 1. The Phase 0 decision must identify when each package first becomes required.
 
-1. enumerate all Cargo packages using Cargo metadata and compare the actual package/member/path inventory with the approved map;
-2. detect unexpected packages, missing approved packages, duplicate ownership and unmapped source/test directories;
+The machine-readable manifest must distinguish at least:
+
+- `first_required_phase`: the first phase whose accepted part requires the package to exist and own real implementation;
+- `lifecycle`: `planned`, `active`, `deferred`, `optional`, or `retired`, with human/ADR disposition for deferred or optional entries;
+- `path` and sole responsibility;
+- allowed dependency edges and prohibited edges;
+- the package/app's test locations and required verification commands.
+
+The checker must at minimum:
+
+1. enumerate actual Cargo packages with Cargo metadata and compare them with manifest entries due by the current phase and accepted part; continue checking all already-active workspace packages;
+2. detect unexpected packages, missing **due** packages, duplicate ownership, prohibited dependency edges and unmapped source/test directories;
 3. enforce the approved dependency allowlist, including domain purity and the prohibition on production dependencies on testkit;
 4. keep crate-owned test paths within the owning crate and reject root-level tests that actually belong to one package;
-5. verify Tauri/React source and tests remain inside the desktop package, native commands stay inside src-tauri, and any app-specific test command is wired to CI;
+5. verify Tauri/React source and tests remain inside the desktop package, native commands stay inside `src-tauri`, and each in-scope app has its required test/build command wired to CI;
 6. verify each required package's test/lint/build target is actually invoked and report package-level results rather than hiding missing targets behind a workspace-level green status;
 7. fail closed if its inputs are missing, malformed or ambiguous.
+
+A future package may be absent before `first_required_phase`; that absence is not a failure and is not permission to implement its responsibility in another package. When a phase/part needs that responsibility, an absent owner blocks implementation until the plan and package lifecycle are reviewed. Deferred or optional packages must not disappear from the map: their disposition remains visible and downstream work that depends on them remains blocked until resolved.
 
 The checker must consume a structured manifest generated or maintained from the **human-approved** map. Do not parse arbitrary prose as if it were a reliable manifest. Do not create this validator or claim that it runs during Phase 0; its executable implementation and CI integration belong to Phase 1.
 
