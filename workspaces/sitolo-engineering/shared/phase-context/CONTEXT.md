@@ -1,47 +1,60 @@
 # Phase Context Router
 
-Implementation-specific Layer 3 context.
+**Current active product phase:** Phase 0 — Architecture, Contracts and ADR Freeze.  
+**Current ICM action:** Start a fresh Stage 01 Select run.  
+**Canonical phase sequence:** `docs/implementation_plan.md`.  
+**Phase-specific direction:** `docs/phase_execution_guide.md`.
 
-## Inputs
+This file is an ICM Layer 3 routing surface. It selects the relevant phase contract; it does not override the implementation plan or any authoritative domain/security/provider source.
 
-| Phase | Location | Use |
-|---|---|---|
-| Phase contract coverage | ../../../../docs/phase_contract_coverage_register.md | Authoritative phase 0–20 contract coverage, routing, implementation/evidence status and remediation register |
-| Phase 1 | ../../../../docs/phase1_repository_rust_workspace_ci_deep_implementation.md | Repository and CI controls |
-| Phase 2 | ../../../../docs/phase2_config_secrets_logging_errors_telemetry_implementation.md | Runtime configuration and telemetry |
-| Phase 3 | ../../../../docs/phase3_identity_sessions_mfa_device_identity_implementation.md | Identity, session and device controls |
-| Phase 4 | ../../../../docs/phase4_tenant_organization_branch_iam_implementation.md | Tenant, organization, branch and IAM target contract |
-| Active Part 8 | ../../../../docs/phase4_part8_audit_outbox_implementation_contract.md; ../../../../docs/phase4_part8_pr009_current_status.md | Binding Part 8 contract and current PR-009 status |
-| Current implementation | ../../../../docs/current_implementation_status.md | Full file | Active product phase vs ICM workflow separation |
-| Phase 5 | ../../../../docs/phase5_postgresql_schema_migrations_constraints_rls_implementation.md | Schema and RLS |
-| Phase 6 | ../../../../docs/phase6_authorization_engine_policy_enforcement_implementation.md | Authorization |
-| Phase 7 | ../../../../docs/phase7_security_test_framework_implementation.md | Security tests |
-| Phase 8 | ../../../../docs/phase8_product_catalogue_implementation.md | Product catalogue and pricing target contract |
-| Phase 9 | ../../../../docs/phase9_inventory_ledger_implementation.md | Inventory ledger |
-| Phase 10 | ../../../../docs/phase10_pos_sales_implementation.md | POS and sales |
-| Phase 11 | ../../../../docs/phase11_payments_reconciliation_implementation.md | Payments and reconciliation |
-| Phase 12 | ../../../../docs/phase12_offline_synchronization_implementation.md | Offline synchronization |
-| Phase 13 | ../../../../docs/phase13_procurement_suppliers_implementation.md | Procurement and suppliers |
-| Phase 14 | ../../../../docs/phase14_returns_refunds_cash_implementation.md | Returns, refunds and cash |
-| Phase 15 | ../../../../docs/phase15_mra_eis_implementation.md | MRA EIS integration and certification |
-| Phase 16 | ../../../../docs/phase16_reporting_exports_implementation.md | Reporting and exports |
-| Phase 17 | ../../../../docs/phase17_billing_entitlements_implementation.md | Billing and entitlements |
-| Phase 18 | ../../../../docs/phase18_admin_support_implementation.md | Admin and support |
-| Phase 19 | ../../../../docs/phase19_hardening_performance_dr_implementation.md | Hardening, performance and disaster recovery |
-| Phase 20 | ../../../../docs/phase20_production_certification_implementation.md | Production certification |
+## Active phase
 
-## Historical Part 4 records
+| Phase | Canonical contract | Load when | Expected next destination |
+|---|---|---|---|
+| **0 — ACTIVE** | `../../../../docs/phase0_architecture_contract_freeze.md` | Every new implementation-program run during the restart baseline | Phase 1 only after Phase 0 exit is reviewed and accepted |
 
-Phase 4 Part 6 and Part 7 PR-specific contracts are completed implementation records. They remain available for historical/audit context but are not current work routing targets:
+Read the Phase 0 contract and the phase execution guide, then route only the relevant canonical inputs listed by the Phase 0 contract. Do not load all future-phase contracts by default.
 
-- ../../../../docs/phase4_part6_jules_implementation_contract.md
-- ../../../../docs/phase4_part7_jules_implementation_contract.md
+## Phase contracts — reference index
 
-The older PR-009 remediation instructions and dated execution snapshot are also historical review context:
+All paths below are relative to this file.
 
-- ../../../../docs/phase4_part8_pr009_remediation_implementation_instructions.md
-- ../../../../docs/phase4_part8_pr009_remediation_implementation_instructions.md
+| Phase | Contract | Scope |
+|---:|---|---|
+| 0 | `../../../../docs/phase0_architecture_contract_freeze.md` | Architecture, contracts and ADR freeze |
+| 1 | `../../../../docs/phase1_repository_rust_workspace_ci_deep_implementation.md` | Repository, Rust workspace, CI and supply chain |
+| 2 | `../../../../docs/phase2_config_secrets_logging_errors_telemetry_implementation.md` | Configuration, secrets, errors and telemetry |
+| 3 | `../../../../docs/phase3_identity_sessions_mfa_device_identity_implementation.md` | Identity, sessions, MFA and device identity |
+| 4 | `../../../../docs/phase4_tenant_organization_branch_iam_implementation.md` | Tenant, organization, branch and IAM foundations |
+| 5 | `../../../../docs/phase5_postgresql_schema_migrations_constraints_rls_implementation.md` | PostgreSQL schema, migrations, constraints and RLS |
+| 6 | `../../../../docs/phase6_authorization_engine_policy_enforcement_implementation.md` | Authorization engine and policy enforcement |
+| 7 | `../../../../docs/phase7_security_test_framework_implementation.md` | Security test framework |
+| 8 | `../../../../docs/phase8_product_catalogue_implementation.md` | Product catalogue and pricing |
+| 9 | `../../../../docs/phase9_inventory_ledger_implementation.md` | Inventory ledger |
+| 10 | `../../../../docs/phase10_pos_sales_implementation.md` | POS and sales |
+| 11 | `../../../../docs/phase11_payments_reconciliation_implementation.md` | Payments and reconciliation |
+| 12 | `../../../../docs/phase12_offline_synchronization_implementation.md` | Offline synchronization |
+| 13 | `../../../../docs/phase13_procurement_suppliers_implementation.md` | Procurement and suppliers |
+| 14 | `../../../../docs/phase14_returns_refunds_cash_implementation.md` | Returns, refunds and cash |
+| 15 | `../../../../docs/phase15_mra_eis_implementation.md` | MRA EIS integration and certification |
+| 16 | `../../../../docs/phase16_reporting_exports_implementation.md` | Reporting and exports |
+| 17 | `../../../../docs/phase17_billing_entitlements_implementation.md` | Billing and entitlements |
+| 18 | `../../../../docs/phase18_admin_support_implementation.md` | Administration and support |
+| 19 | `../../../../docs/phase19_hardening_performance_dr_implementation.md` | Performance, hardening and disaster recovery |
+| 20 | `../../../../docs/phase20_production_certification_implementation.md` | Production certification |
 
-## Rule
+## Historical records
 
-Prefer the latest applicable implementation contract and current-status document over obsolete planning or review material. Historical records must not be treated as current implementation state.
+The `workspaces/sitolo-engineering/runs/pr009-part8/` directory is a prior execution record. Keep it for traceability; it is not the current run and does not select Phase 4 as active. Do not resume it unless the human explicitly requests that historical run.
+
+Part-specific Phase 4 contracts and status snapshots remain reference/history for their original scope. They are not the active phase pointer for this restart.
+
+## Phase transition rule
+
+The active product phase changes only when:
+1. The current phase's canonical exit criteria are met with revision-attributable evidence.
+2. Required security, operational and human review gates have passed.
+3. `docs/current_implementation_status.md` and the phase contract register are updated consistently.
+4. The next phase and its exact prerequisites are recorded in the delivery handoff.
+
+A future-phase contract's existence never authorizes that phase to start. If a gate is blocked, keep the current phase open and report the blocker instead of routing forward.
