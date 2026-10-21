@@ -6,6 +6,8 @@ A run brief records:
 - canonical phase contract and applicable predecessor/entry-gate status;
 - this run's phase exit criteria and required evidence;
 - next phase or explicit stop/blocker condition;
+- phase-part plan reference and status (planning-only, proposed, or human-approved);
+- current part ID, previous-part gate, accepted write-set reference, and next agreed part or stop condition;
 
 - request;
 - business capability;
