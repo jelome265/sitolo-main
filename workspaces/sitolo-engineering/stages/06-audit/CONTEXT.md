@@ -21,6 +21,10 @@ One job: independently determine whether the implemented change is logically cor
 
 **Do NOT load:** unrelated stage contracts, unrelated reference families, the full documentation corpus, or the full `agent.md`; use the routed governance context and exact inputs only.
 
+## Ownership and part audit
+
+Apply `../../../../docs/phase_part_execution_contract.md` and the relevant ownership rows from `../../../../docs/code_ownership_map.md`. Independently map every planned requirement to the actual implementation owner, actual source file, and test file. Check all relevant crates/apps for omitted responsibilities; confirm tests are inside their owner; review dependency direction and ensure the frontend/native layer has not become a second domain engine. Code placed in a convenient but incorrect crate, an omitted owner, a root-level test substituting for missing crate tests, or an unapproved file outside the write set is a material finding, not a style preference.
+
 ## Process
 
 1. Read the run brief/plan security applicability. If `security_relevant: yes`, load the security context and control register for the named control IDs.
