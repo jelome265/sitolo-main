@@ -13,6 +13,8 @@ Source of authority: [`agent.md`](../agent.md) at the repository root. When docu
 | [`agentic_workflow.md`](agentic_workflow.md) | Filesystem-routed ICM engineering workflow |
 | [`ADR-001-025.md`](ADR-001-025.md) | Architecture decision records |
 | [`implementation_plan.md`](implementation_plan.md) | Implementation program, dependency order and release posture |
+| [`phase0_architecture_contract_freeze.md`](phase0_architecture_contract_freeze.md) | Canonical Phase 0 architecture/contract reconciliation and exit gate |
+| [`phase_execution_guide.md`](phase_execution_guide.md) | Phase-by-phase purpose, inputs, evidence, exit criteria and next-phase routing |
 | [`phase_contract_coverage_register.md`](phase_contract_coverage_register.md) | **Authoritative phase 0–20 contract coverage/reconciliation register** |
 | [`current_implementation_status.md`](current_implementation_status.md) | Current product phase and active engineering-stream pointer |
 
@@ -87,14 +89,16 @@ Phase documents are normative requirements and implementation sequencing artifac
 
 Completed PR-specific contracts for Phase 4 Parts 6 and 7 are historical implementation records; active work is represented by the current phase/PR status documents and the Part 8 binding contract. Additional Phase 2 and Phase 4 remediation/execution contracts remain in this directory. Their status must be read from metadata and current implementation evidence, not inferred from filename or existence. PR-specific review documents are snapshots and must be checked against the current PR head.
 
-## Active Phase 4 Part 8 work
+## Historical Phase 4 Part 8 records
 
 | Document | Purpose |
 |---|---|
-| [`phase4_part8_audit_outbox_implementation_contract.md`](phase4_part8_audit_outbox_implementation_contract.md) | Binding Part 8 audit/outbox target contract |
-| [`phase4_part8_pr009_current_status.md`](phase4_part8_pr009_current_status.md) | Current PR-009 implementation/status snapshot |
+| [`phase4_part8_audit_outbox_implementation_contract.md`](phase4_part8_audit_outbox_implementation_contract.md) | Phase 4 Part 8 contract retained for its original scope; not the active restart pointer |
+| [`phase4_part8_pr009_current_status.md`](phase4_part8_pr009_current_status.md) | Historical PR-009 review snapshot; not current implementation status |
 | [`phase4_part8_pr009_remediation_implementation_instructions.md`](phase4_part8_pr009_remediation_implementation_instructions.md) | Superseded historical PR-009 review |
 | [`phase4_part8_pr009_current_status.md`](phase4_part8_pr009_current_status.md) | Current PR-009 implementation/status snapshot |
+
+The current implementation position is Phase 0. Start from [current implementation status](current_implementation_status.md) and [the Phase Execution and Transition Guide](phase_execution_guide.md). Do not resume historical run output unless explicitly requested.
 
 ## External standards
 
