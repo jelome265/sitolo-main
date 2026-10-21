@@ -28,7 +28,7 @@ CI is a release-control boundary. Local success is useful evidence; protected CI
 - no approved crate/app responsibility may be omitted, hidden in a neighboring crate, or implemented a second time in a different layer;
 - each package's own tests run within that package's test target; root `tests/` is reserved for true cross-package/system or repository-wide architecture checks;
 - test-only packages must not enter production dependency graphs;
-- when present and in scope, Flutter and Tauri + React targets must have their own build/test commands and results;
+- when present and in scope, React Native and Tauri + React targets must have their own build/test commands and results;
 - the gate fails when an expected package/target/test suite is missing, undiscovered, skipped without an approved reason, or mapped to the wrong owner.
 
 **Current restart baseline:** these rules are mandatory design requirements, not a claim that an ownership checker or Rust/client test targets currently exist. Phase 0 must ratify the map; Phase 1 implements and runs the checker as a required CI control.
