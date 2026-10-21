@@ -9,7 +9,7 @@
 **Backend authority:** Rust + Axum + Tokio  
 **Authoritative persistence:** PostgreSQL  
 **Offline operational store:** SQLite  
-**Primary mobile surface:** Flutter / Android-first  
+**Primary mobile surface:** React Native / Android-first  
 **Desktop:** Tauri  
 **Web/admin:** TypeScript where materially useful  
 **Architecture:** Modular monolith first; workers and provider adapters; selective service extraction only when independently justified
@@ -28,7 +28,7 @@ The payment architecture is:
                          CUSTOMER / MERCHANT
                                 |
                                 v
-                         Flutter / Tauri / Web
+                         React Native / Tauri / Web
                                 |
                                 | intent
                                 v
@@ -557,7 +557,7 @@ They belong in managed secret storage.
 Never put them in:
 
 ```text
-Flutter
+React Native
 Tauri
 browser
 Git
@@ -5741,7 +5741,7 @@ OPTIONAL SETTLEMENT RECONCILIATION
                          SITOLO PAYMENT ARCHITECTURE
 
                          ┌─────────────────┐
-                         │ Flutter/Tauri   │
+                         │ React Native/Tauri   │
                          │ Web/Admin       │
                          └────────┬────────┘
                                   │
