@@ -4,9 +4,9 @@
 **Document:** phase_contract_coverage_register.md  
 **Role:** Authoritative reconciliation record for the Sitolo implementation-phase contract corpus  
 **Scope:** Sitolo implementation phases 0–20 inclusive  
-**Baseline audited:** main at ade3fb82a538823591cb177363b13c8e313937bc (2026-09-26)  
-**Last audited:** 2026-09-26  
-**Status:** Current audit / governance register
+**Prior full audit:** imported register snapshot dated 2026-09-26; not the restart baseline  
+**Restart reconciliation:** 2026-10-21  
+**Status:** Phase 0 routing reconciled for restart; imported implementation/evidence claims are not accepted as current proof
 
 ## 0. Authority boundary
 
@@ -88,18 +88,16 @@ The implementation program defines **21 numbered phases (0 through 20 inclusive)
 Current corpus coverage:
 
 ~~~text
-Dedicated strong phase contracts:      19
-Lightweight/partial phase contracts:    1
-Foundational phase package, no
- single phase contract:                  1
-Missing dedicated phase contracts:       0
+Dedicated phase contracts with full governance depth: 20
+Partial phase contracts:                                1 (Phase 8)
+Missing dedicated phase contracts:                      0
 ~~~
 
 No dedicated phase-contract gaps remain for Phases 11–20.
 
 Phase 8 has a contract but remains materially lighter than the surrounding deep contracts.
 
-Phase 0 has a substantial architectural package, but not a single phase-level implementation contract.
+Phase 0 now has a canonical reconciliation contract. The phase's implementation/reconciliation work and exit evidence remain open until reviewed.
 
 ---
 
@@ -107,27 +105,27 @@ Phase 0 has a substantial architectural package, but not a single phase-level im
 
 | Phase | Canonical contract | Supporting sources | Authority | Contract completeness | ICM routing | Implementation status | Evidence status | Known gaps | Required remediation |
 |---|---|---|---|---|---|---|---|---|---|
-| **0** | No single phase-level contract. Package is anchored by implementation_plan.md plus foundational design/security/testing/ADR documents. | implementation_plan.md; domain_model.md; database_design.md; api_contract.md; auth_authorization_spec.md; sync_protocol.md; payment_integration_spec.md; mra_eis_integration_spec.md; testing_strategy.md; threat_model.md; observability_spec.md; deployment_spec.md; ADR-001-025.md; security-test/CI foundation | Higher-authority project corpus | **Partial** | Not applicable as a normal product phase entry | Architecture baseline established; no phase-complete claim | Broad repository evidence exists; no single current Phase 0 exit package identified | No canonical phase-level contract; foundational package spans many documents | Create a thin Phase 0 reconciliation contract/index without duplicating subject truth |
-| **1** | docs/phase1_repository_rust_workspace_ci_deep_implementation.md | implementation_plan.md; ci_enforcement.md; repository/CI configuration; supply-chain controls | Implementation plan + repository/CI authority | **Complete** | **Routed** | Repository/workspace/CI foundation substantially implemented; phase closure not claimed here | Strong repository and CI evidence; release evidence remains run-specific | Final closure depends on current executable evidence | Keep contract current; close only with revision-attributable evidence |
-| **2** | docs/phase2_config_secrets_logging_errors_telemetry_implementation.md | observability_spec.md; deployment_spec.md; security_implementation_spec.md; Phase 2 remediation records | Phase 2 contract + platform/security authority | **Complete** | **Routed** | Runtime foundation implemented in substantial portions; no blanket phase-closure claim | Current source evidence exists; old Phase 0–2 audit is explicitly historical | Historical remediation artifacts can be mistaken for current evidence | Use current source/CI evidence for closure; preserve historical classification |
-| **3** | docs/phase3_identity_sessions_mfa_device_identity_implementation.md | auth_authorization_spec.md; security_implementation_spec.md; api_contract.md; observability/security contracts | Phase 3 contract + security hierarchy | **Complete** | **Routed** | Identity/device foundation exists; no phase-complete claim | Repository implementation plus contract-level evidence exist; final closure must be current-head based | No dedicated current Phase 3 closure record identified | Add/maintain explicit closure evidence when formally certified |
-| **4** | docs/phase4_tenant_organization_branch_iam_implementation.md | auth_authorization_spec.md; api_contract.md; database_design.md; security_architecture_design.md; Phase 4 Part 8 records | Phase 4 contract + security/database/API authority | **Complete** | **Routed** | **Active Phase 4 work**; Part 8 / audit-outbox stream remains operationally significant | Extensive PR-specific evidence exists; snapshots must match current head | Many Part documents can look authoritative; current-status pointer has stale main SHA | Keep phase contract authoritative; classify PR snapshots; refresh exact-head status evidence |
-| **5** | docs/phase5_postgresql_schema_migrations_constraints_rls_implementation.md | database_design.md; security_architecture_design.md; testing_strategy.md; Phase 5 source evidence | Phase 5 contract + database/security authority | **Complete** | **Routed** | PostgreSQL/security foundation materially implemented; full business schema/RLS phase not complete | Strong design/repository evidence; real PostgreSQL closure evidence must be current | Contract completion is ahead of complete business implementation | Enumerate unchecked exit evidence before phase closure |
-| **6** | docs/phase6_authorization_engine_policy_enforcement_implementation.md | auth_authorization_spec.md; security_architecture_design.md; security_test_harness.md; Phase 5 contract | Phase 6 contract + security authority | **Complete** | **Routed** | Authorization foundation exists; full production enforcement remains phase-dependent | Strong contract/source evidence; complete endpoint/runtime proof not yet established | [X] gate markers can be misread as implementation proof | Require endpoint inventory and executable negative evidence before closure |
-| **7** | docs/phase7_security_test_framework_implementation.md | security_test_harness.md; testing_strategy.md; ci_enforcement.md; threat/security contracts | Phase 7 contract + security/test authority | **Complete** | **Routed** | Security verification framework substantially specified/implemented | Strong contract and CI/test infrastructure evidence; downstream product-surface coverage remains | Framework existence does not prove all future endpoint coverage | Expand executable coverage as later phases add surfaces |
-| **8** | docs/phase8_product_catalogue_implementation.md | domain_model.md; api_contract.md; database_design.md; Phase 5/6/9/10 contracts; commercial sources | Phase 8 contract + domain/security/data authority | **Partial** | **Routed** | **Target-only**; current status treats Phase 8 as later target, not active | Contract exists; no evidence that full catalogue runtime exists | Contract remains lighter than adjacent deep contracts | Deepen Phase 8 to the standard contract depth when this phase is prepared for implementation |
-| **9** | docs/phase9_inventory_ledger_implementation.md | domain_model.md; database_design.md; Phase 8/10 contracts; security/testing contracts | Phase 9 contract + domain/database/security authority | **Complete** | **Routed** | Later-phase target; not active | Very strong target contract; contract itself is not implementation evidence | Runtime is not complete merely because target contract exists | Build against contract and attach executable evidence at implementation time |
-| **10** | docs/phase10_pos_sales_implementation.md | domain_model.md; api_contract.md; database_design.md; Phase 9 dependencies; payment/sync/EIS interfaces | Phase 10 contract + domain/API/database/security authority | **Complete** | **Routed** | Later-phase target; not active | Strong target contract; no proof that complete POS runtime exists | Extensive target gates can be mistaken for completion | Maintain normative target; implement/verify only when dependencies are closed |
-| **11** | docs/phase11_payments_reconciliation_implementation.md | payment_integration_spec.md; domain_model.md; api_contract.md; database_design.md; security_implementation_spec.md; implementation_plan.md | Implementation plan + provider/security/domain authority | **Complete** | **Routed** | Future target; not active | Contract now exists; implementation/evidence remain target-state until executable proof exists. | Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 11 sequentially and collect executable payment/reconciliation evidence; update the register with revision-attributable evidence. |
-| **12** | docs/phase12_offline_synchronization_implementation.md | sync_protocol.md; domain_model.md; database_design.md; api_contract.md; security/testing/deployment contracts | Implementation plan + sync/security/data authority | **Complete** | **Routed** | Future target; not active | Contract now exists; implementation/evidence remain target-state until executable proof exists. | Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 12 sequentially and collect executable sync/replay/revocation evidence; update the register with revision-attributable evidence. |
-| **13** | docs/phase13_procurement_suppliers_implementation.md | domain_model.md; api_contract.md; database_design.md; agent.md; commercial supplier context | Implementation plan + domain/data/security authority | **Complete** | **Routed** | Future target; not active | Contract now exists; implementation/evidence remain target-state until executable proof exists. | Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 13 sequentially and collect procurement/receipt/inventory evidence; update the register with revision-attributable evidence. |
-| **14** | docs/phase14_returns_refunds_cash_implementation.md | domain_model.md; api_contract.md; database_design.md; phase10_pos_sales_implementation.md; agent.md | Implementation plan + domain/financial/security authority | **Complete** | **Routed** | Future target; not active | Contract now exists; implementation/evidence remain target-state until executable proof exists. | Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 14 sequentially and collect correction/refund/cash evidence; update the register with revision-attributable evidence. |
-| **15** | docs/phase15_mra_eis_implementation.md | mra_eis_integration_spec.md; domain_model.md; api_contract.md; deployment_spec.md; security_implementation_spec.md | Applicable MRA authority + current provider contract + Sitolo security/integration hierarchy | **Complete** | **Routed** | Future target; not active | Contract now exists; implementation/evidence remain target-state until executable proof exists. | Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 15 sequentially and collect current MRA/certification evidence; update the register with revision-attributable evidence. |
-| **16** | docs/phase16_reporting_exports_implementation.md | api_contract.md; database_design.md; observability_spec.md; security_implementation_spec.md; implementation_plan.md | Implementation plan + data/security/observability authority | **Complete** | **Routed** | Future target; not active | Contract now exists; implementation/evidence remain target-state until executable proof exists. | Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 16 sequentially and collect report/export security and workload evidence; update the register with revision-attributable evidence. |
-| **17** | docs/phase17_billing_entitlements_implementation.md | docs/commercial/06_payments_finance/payment_collections_and_subscription_billing.md; domain_model.md; api_contract.md; database_design.md; security contracts | Approved commercial decisions + implementation/security hierarchy | **Complete** | **Routed** | Future target; not active | Contract now exists; implementation/evidence remain target-state until executable proof exists. | Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 17 sequentially and collect billing/entitlement reconciliation evidence; update the register with revision-attributable evidence. |
-| **18** | docs/phase18_admin_support_implementation.md | security_control_register.md; security_incident_response.md; security_exception_register.md; agent.md; implementation_plan.md | Security governance + implementation plan + support governance | **Complete** | **Routed** | Future target; not active | Contract now exists; implementation/evidence remain target-state until executable proof exists. | Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 18 sequentially and collect privileged-access/support evidence; update the register with revision-attributable evidence. |
-| **19** | docs/phase19_hardening_performance_dr_implementation.md | deployment_spec.md; observability_spec.md; database_design.md; testing_strategy.md; implementation_plan.md | Implementation plan + deployment/reliability/security authority | **Complete** | **Routed** | Future target; not active | Contract now exists; implementation/evidence remain target-state until executable proof exists. | Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 19 sequentially and collect measured hardening/restore/rollback evidence; update the register with revision-attributable evidence. |
-| **20** | docs/phase20_production_certification_implementation.md | implementation_plan.md; ci_enforcement.md; deployment_spec.md; security_architecture_design.md; security_control_register.md; release-governance-evidence.md; external_standards_verification_register.md | All applicable higher-authority sources; production governance | **Complete** | **Routed** | Future certification target | Contract now exists; implementation/evidence remain target-state until executable proof exists. | Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 20 only after upstream evidence is complete; collect exact-candidate certification evidence; update the register with revision-attributable evidence. |
+| **0** | docs/phase0_architecture_contract_freeze.md | implementation_plan.md; product/domain/architecture; database/API/auth; sync/payment/MRA; testing/observability/deployment; threat/security; ADRs; code_ownership_map.md; phase_part_execution_contract.md | Higher-authority approved project corpus | **Complete** | **Routed** | **IN_PROGRESS: contract reconciliation and restart baseline; no phase-complete claim** | Verification must be recorded against the reset PR/commit; copied content is not completion evidence | Candidate Rust package inventories conflict between system architecture and Phase 1; API/app and worker/jobs boundaries, migration path, Tauri + React workspace boundary and test placement require explicit review. The map is a proposal, not approval. | Run Phase 0 ICM stages; jointly propose and review the phase-part sequence; reconcile the ownership map/ADRs; record human-reviewed exit evidence before Phase 1 scaffolding |
+| **1** | docs/phase1_repository_rust_workspace_ci_deep_implementation.md | implementation_plan.md; ci_enforcement.md; repository/CI configuration; supply-chain controls | Implementation plan + repository/CI authority | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Final closure depends on current executable evidence | Keep contract current; close only with revision-attributable evidence |
+| **2** | docs/phase2_config_secrets_logging_errors_telemetry_implementation.md | observability_spec.md; deployment_spec.md; security_implementation_spec.md; Phase 2 remediation records | Phase 2 contract + platform/security authority | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Historical remediation artifacts can be mistaken for current evidence | Use current source/CI evidence for closure; preserve historical classification |
+| **3** | docs/phase3_identity_sessions_mfa_device_identity_implementation.md | auth_authorization_spec.md; security_implementation_spec.md; api_contract.md; observability/security contracts | Phase 3 contract + security hierarchy | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| No dedicated current Phase 3 closure record identified | Add/maintain explicit closure evidence when formally certified |
+| **4** | docs/phase4_tenant_organization_branch_iam_implementation.md | auth_authorization_spec.md; api_contract.md; database_design.md; security_architecture_design.md; Phase 4 Part 8 records | Phase 4 contract + security/database/API authority | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Part-specific records can be mistaken for active work; imported status snapshots are historical | Use the canonical Phase 4 contract only if/when that phase is reached; reassess prior run records against current evidence |
+| **5** | docs/phase5_postgresql_schema_migrations_constraints_rls_implementation.md | database_design.md; security_architecture_design.md; testing_strategy.md; Phase 5 source evidence | Phase 5 contract + database/security authority | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Contract completion is ahead of complete business implementation | Enumerate unchecked exit evidence before phase closure |
+| **6** | docs/phase6_authorization_engine_policy_enforcement_implementation.md | auth_authorization_spec.md; security_architecture_design.md; security_test_harness.md; Phase 5 contract | Phase 6 contract + security authority | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| [X] gate markers can be misread as implementation proof | Require endpoint inventory and executable negative evidence before closure |
+| **7** | docs/phase7_security_test_framework_implementation.md | security_test_harness.md; testing_strategy.md; ci_enforcement.md; threat/security contracts | Phase 7 contract + security/test authority | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Framework existence does not prove all future endpoint coverage | Expand executable coverage as later phases add surfaces |
+| **8** | docs/phase8_product_catalogue_implementation.md | domain_model.md; api_contract.md; database_design.md; Phase 5/6/9/10 contracts; commercial sources | Phase 8 contract + domain/security/data authority | **Partial** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Contract remains lighter than adjacent deep contracts | Deepen Phase 8 to the standard contract depth when this phase is prepared for implementation |
+| **9** | docs/phase9_inventory_ledger_implementation.md | domain_model.md; database_design.md; Phase 8/10 contracts; security/testing contracts | Phase 9 contract + domain/database/security authority | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Runtime is not complete merely because target contract exists | Build against contract and attach executable evidence at implementation time |
+| **10** | docs/phase10_pos_sales_implementation.md | domain_model.md; api_contract.md; database_design.md; Phase 9 dependencies; payment/sync/EIS interfaces | Phase 10 contract + domain/API/database/security authority | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Extensive target gates can be mistaken for completion | Maintain normative target; implement/verify only when dependencies are closed |
+| **11** | docs/phase11_payments_reconciliation_implementation.md | payment_integration_spec.md; domain_model.md; api_contract.md; database_design.md; security_implementation_spec.md; implementation_plan.md | Implementation plan + provider/security/domain authority | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 11 sequentially and collect executable payment/reconciliation evidence; update the register with revision-attributable evidence. |
+| **12** | docs/phase12_offline_synchronization_implementation.md | sync_protocol.md; domain_model.md; database_design.md; api_contract.md; security/testing/deployment contracts | Implementation plan + sync/security/data authority | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 12 sequentially and collect executable sync/replay/revocation evidence; update the register with revision-attributable evidence. |
+| **13** | docs/phase13_procurement_suppliers_implementation.md | domain_model.md; api_contract.md; database_design.md; agent.md; commercial supplier context | Implementation plan + domain/data/security authority | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 13 sequentially and collect procurement/receipt/inventory evidence; update the register with revision-attributable evidence. |
+| **14** | docs/phase14_returns_refunds_cash_implementation.md | domain_model.md; api_contract.md; database_design.md; phase10_pos_sales_implementation.md; agent.md | Implementation plan + domain/financial/security authority | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 14 sequentially and collect correction/refund/cash evidence; update the register with revision-attributable evidence. |
+| **15** | docs/phase15_mra_eis_implementation.md | mra_eis_integration_spec.md; domain_model.md; api_contract.md; deployment_spec.md; security_implementation_spec.md | Applicable MRA authority + current provider contract + Sitolo security/integration hierarchy | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 15 sequentially and collect current MRA/certification evidence; update the register with revision-attributable evidence. |
+| **16** | docs/phase16_reporting_exports_implementation.md | api_contract.md; database_design.md; observability_spec.md; security_implementation_spec.md; implementation_plan.md | Implementation plan + data/security/observability authority | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 16 sequentially and collect report/export security and workload evidence; update the register with revision-attributable evidence. |
+| **17** | docs/phase17_billing_entitlements_implementation.md | docs/commercial/06_payments_finance/payment_collections_and_subscription_billing.md; domain_model.md; api_contract.md; database_design.md; security contracts | Approved commercial decisions + implementation/security hierarchy | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 17 sequentially and collect billing/entitlement reconciliation evidence; update the register with revision-attributable evidence. |
+| **18** | docs/phase18_admin_support_implementation.md | security_control_register.md; security_incident_response.md; security_exception_register.md; agent.md; implementation_plan.md | Security governance + implementation plan + support governance | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 18 sequentially and collect privileged-access/support evidence; update the register with revision-attributable evidence. |
+| **19** | docs/phase19_hardening_performance_dr_implementation.md | deployment_spec.md; observability_spec.md; database_design.md; testing_strategy.md; implementation_plan.md | Implementation plan + deployment/reliability/security authority | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 19 sequentially and collect measured hardening/restore/rollback evidence; update the register with revision-attributable evidence. |
+| **20** | docs/phase20_production_certification_implementation.md | implementation_plan.md; ci_enforcement.md; deployment_spec.md; security_architecture_design.md; security_control_register.md; release-governance-evidence.md; external_standards_verification_register.md | All applicable higher-authority sources; production governance | **Complete** | **Routed** | Historical/imported status only; no completion status is carried into this restart| Evidence must be re-established against the current restart revision; prior snapshots are not current proof| Phase-level implementation evidence does not yet exist; supporting domain/provider/platform sources remain upstream authorities. | Implement Phase 20 only after upstream evidence is complete; collect exact-candidate certification evidence; update the register with revision-attributable evidence. |
 
 ---
 
@@ -135,9 +133,7 @@ Phase 0 has a substantial architectural package, but not a single phase-level im
 
 ## 3.1 Phase 0
 
-Phase 0 is information-rich but contract-structurally incomplete. The implementation plan defines a sixteen-part foundation package, and those underlying artifacts exist. The missing piece is a single phase-level reconciliation contract that tells agents how that package fits together without duplicating subject authority.
-
-The existing phase0-2 implementation audit is explicitly historical and cannot be promoted into current Phase 0 authority.
+The Phase 0 structural gap is addressed by `docs/phase0_architecture_contract_freeze.md`, which reconciles the existing foundational package without replacing subject-specific authority. Its presence establishes contract routing, not phase completion. Phase 0 work must still reconcile the copied corpus, record unresolved decisions, run applicable checks, and obtain human acceptance of revision-attributable exit evidence. Historical audits remain historical evidence. The new `docs/code_ownership_map.md` records actual repository absence of product crates/apps separately from target proposals and surfaces conflicting package inventories rather than silently choosing one. `docs/phase_part_execution_contract.md` requires the human to review/accept the phase-part sequence and current write set. Neither a proposed map nor these governance files approve Phase 1 or claim executable enforcement exists yet.
 
 ## 3.2 Phases 1–7
 
@@ -157,33 +153,15 @@ This rule applies to all phase rows, including contracts containing acceptance c
 
 ## 3.3 Phase 4
 
-Part-specific Phase 4 documents are valid supporting evidence and historical implementation records. They do not replace the canonical Phase 4 contract.
-
-The hierarchy remains:
-
-~~~text
-Phase 4 contract
-    ↓
-Part-specific binding contract
-    ↓
-current implementation/status evidence
-    ↓
-verification evidence
-~~~
+The Phase 4 contract remains the canonical requirement for that phase. Part-specific contracts, PR snapshots and run output are retained for their original scope and traceability. They are not the active routing target and do not establish current Phase 4 completion in this restart. If Phase 4 is reached later, assess the contract and implementation again against the then-current revision.
 
 ## 3.4 Phase 8
 
-Phase 8 is both a contract-depth problem and an ICM routing problem. Its canonical contract exists, but the engineering phase-context router currently skips it.
-
-A phase that exists only by repository-wide discovery is not sufficient for the intended bounded ICM context-loading model.
+Phase 8 has a canonical contract and is listed in the ICM phase router. Its remaining identified gap is contract depth relative to adjacent phases. Deepen it when Phase 8 is prepared for implementation; do not use that future work to bypass the active Phase 0–7 gates.
 
 ## 3.5 Phases 11–20
 
-The repository is not missing the underlying ideas. It is missing the phase-level reconciliation boundary.
-
-Supporting material already exists for payments, sync, procurement, returns/refunds/cash, EIS, reporting/exports, commercial billing, support/admin, hardening/DR and certification.
-
-The remediation therefore must be **reconciliation, not invention**.
+Canonical phase contracts for Phases 11–20 are present in the imported corpus and linked by the Phase Execution and Transition Guide. Their presence does not prove implementation or readiness. When reached, each phase must reconcile its contract against current approved product, security, domain, provider and regulatory authority, then produce fresh implementation and verification evidence. The work is **reconciliation and evidence, not duplicate contract creation**.
 
 ---
 
@@ -272,45 +250,31 @@ A missing phase contract cannot be silently replaced by agent inference during i
 
 # 7. Required remediation program
 
+The prior checklist included phase-contract creation actions that are no longer applicable because those contracts are present. For this restart, use the following bounded sequence:
+
 ~~~text
-R0  Establish this register as canonical coverage authority
+R0  Keep this register as the contract-coverage reconciliation record
     ↓
-R1  Add register to documentation authority/index routing
+R1  Index the Phase 0 contract and phase execution guide
     ↓
-R2  Add register to engineering ICM phase-context inputs
+R2  Route the engineering workspace to Phase 0 and the canonical phase guide
     ↓
-R3  Make CI protect register existence
+R3  Start a fresh Phase 0 ICM run; reconcile the imported corpus and open decisions
     ↓
-R4  Normalize Phase 0 contract/index
+R4  Verify Phase 0 links/routing and record unavailable checks as blocked/not run
     ↓
-R5  Deepen + route Phase 8
+R5  Obtain human review of Phase 0 exit evidence
     ↓
-R6  Create Phase 11 contract
+R6  Start Phase 1 only after the Phase 0 exit gate is accepted
     ↓
-R7  Create Phase 12 contract
+R7  Establish reproducible repository validation and CI controls in Phase 1
     ↓
-R8  Create Phase 13 contract
+R8  Reconcile/deepen Phase 8 contract when Phase 8 is prepared for implementation
     ↓
-R9  Create Phase 14 contract
-    ↓
-R10 Create Phase 15 contract
-    ↓
-R11 Create Phase 16 contract
-    ↓
-R12 Create Phase 17 contract
-    ↓
-R13 Create Phase 18 contract
-    ↓
-R14 Create Phase 19 contract
-    ↓
-R15 Create Phase 20 contract
-    ↓
-R16 Re-audit all 0–20 rows
-    ↓
-R17 Verify ICM routing and current-head evidence
+R9  Re-assess each later phase against current source and evidence when reached
 ~~~
 
-Phase creation work must be driven from this register and the authoritative source hierarchy, not filename assumptions.
+Do not create duplicate phase contracts merely because an earlier audit checklist lists them. Contract changes must follow the authoritative source hierarchy, and any status claim must identify its current evidence revision.
 
 ---
 
@@ -350,29 +314,19 @@ This register records the ambiguity but does not choose between those designs.
 
 # 9. Repository integrity findings
 
-## 9.1 Current-status SHA drift
+## 9.1 Imported status pointer is not the restart baseline
 
-docs/current_implementation_status.md currently records:
+The source corpus contained a dated implementation-status pointer tied to a previous repository revision and a Phase 4 Part 8 run. This restart replaces that active pointer with Phase 0 in `docs/current_implementation_status.md`.
 
-~~~text
-623f7aed6105664d10d1a2802480fde8316ed5f8
-~~~
-
-The audited main baseline is:
-
-~~~text
-ade3fb82a538823591cb177363b13c8e313937bc
-~~~
-
-Therefore the current-status pointer should be refreshed before it is relied upon as exact-head evidence.
+Do not copy a historical commit identifier into the new status record as if it were the new baseline. The reset PR/revision and subsequent verification evidence become the current attributable baseline after review.
 
 ## 9.2 Phase 4 snapshot drift risk
 
 PR-specific Phase 4 records must be interpreted against their recorded revision and the actual current main/PR head. They are not standalone current-state authority.
 
-## 9.3 Phase 8 routing omission
+## 9.3 Phase 8 routing
 
-Phase 8 is currently absent from the canonical engineering phase-context input table even though its contract exists.
+Phase 8 is present in the engineering phase-context input table. The remaining register concern is contract depth, not an absent route.
 
 ---
 
@@ -391,8 +345,8 @@ Phase 8 is currently absent from the canonical engineering phase-context input t
 [ ] Known gaps are explicit
 [ ] Required remediation is explicit
 [ ] Historical artifacts are not promoted to current authority
-[ ] Phase 8 routing defect is recorded
-[ ] Missing Phases 11–20 are recorded individually
+[ ] Phase 8 contract-depth gap is recorded
+[ ] Phases 11–20 have canonical contract links and target-state status
 [ ] Current-head drift is recorded
 [ ] Register is discoverable through canonical docs/ICM routing
 [ ] CI protects register existence
@@ -434,11 +388,10 @@ PHASE 20
 The contract corpus is currently incomplete:
 
 ~~~text
-0    PARTIAL
-1–7  COMPLETE CONTRACT COVERAGE
-8    PARTIAL
-9–10 COMPLETE CONTRACT COVERAGE
-11–20 MISSING
+0    CONTRACT ROUTED; EXIT GATE OPEN
+1–7  CONTRACT COVERAGE PRESENT
+8    PARTIAL CONTRACT DEPTH
+9–20 CONTRACT COVERAGE PRESENT
 ~~~
 
 This register is the reconciliation boundary between:

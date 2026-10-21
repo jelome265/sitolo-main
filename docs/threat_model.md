@@ -9,7 +9,7 @@
 **Primary deployment market:** Malawi-first, controlled African regionalization  
 **Backend baseline:** Rust / Axum / Tokio / SQLx  
 **Authoritative server database:** PostgreSQL 18  
-**Primary mobile client:** Flutter / SQLite offline store  
+**Primary mobile client:** React Native / SQLite offline store  
 **Desktop client:** Tauri  
 **Threat-modeling posture:** continuous, adversary-driven, evidence-based
 
@@ -82,7 +82,7 @@ It defines:
 
 The model covers:
 
-1. mobile Flutter applications;
+1. mobile React Native applications;
 2. desktop Tauri application;
 3. web/API clients where present;
 4. public API edge;
@@ -271,7 +271,7 @@ The simplified system is:
              +----------------+----------------+
              |                                 |
           Mobile                           Desktop/Web
-          Flutter                           Tauri/Browser
+          React Native                           Tauri/Browser
              |                                 |
              +----------------+----------------+
                               |
@@ -300,7 +300,7 @@ The simplified system is:
                        State                    External Providers
 
 Offline boundary:
-Flutter/Tauri -> SQLite/local evidence -> Sync protocol -> Server validation
+React Native/Tauri -> SQLite/local evidence -> Sync protocol -> Server validation
 
 External trust boundaries:
 Payment providers / MRA / notification providers / object storage / identity provider
@@ -1868,7 +1868,7 @@ build scripts
 release scripts
 package managers
 Cargo manifests/lockfiles
-Flutter dependencies
+React Native dependencies
 Tauri dependencies
 artifact signing
 deployment manifests

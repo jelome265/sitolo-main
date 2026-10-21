@@ -10,10 +10,17 @@ One job: turn the user request into a bounded engineering run.
 | Reference | Governance | ../../shared/governance-context/CONTEXT.md | Sections 0-3 and relevant definitions | Engineering constraints |
 | Reference | Context policy | ../../shared/context-loading.md | Full file | Loading discipline |
 | Reference | Request guide | references/request-brief.md | Full file | Output shape |
+| Reference | Current phase status | ../../../../docs/current_implementation_status.md | Full file | Select the authorized active product phase and phase gate |
+| Reference | Phase execution guide | ../../../../docs/phase_execution_guide.md | Selected phase entry and its next-phase rule | Define the phase contract, expected evidence and transition |
+| Reference | Phase router | ../../shared/phase-context/CONTEXT.md | Active phase section and canonical contract index | Route the smallest phase-specific context |
+| Reference | Phase parts | ../../../../docs/phase_part_execution_contract.md | Relevant sections | Joint approval of phase parts and current write set |
+| Reference | Code ownership map | ../../../../docs/code_ownership_map.md | Relevant rows when implementation ownership is implicated | Route behavior/tests to their owner; Phase 0 proposal until accepted |
 
 **Do NOT load:** unrelated stage contracts, unrelated reference families, the full documentation corpus, or the full `agent.md`; use the routed governance context and exact inputs only.
 
 ## Process
+
+For any Phase 0–20 implementation run, apply `../../../../docs/phase_part_execution_contract.md`. Select either (a) a planning-only run to propose/revise a phase's part sequence, or (b) the exact current part already accepted by the human. Never infer approval from a prior conversation, a file existing, or a proposed part list. If no part sequence/current part is accepted, route to planning and stop before implementation. Record the selected part and previous-part gate in the run brief.
 
 1. Classify the request as feature, bug, security, migration, refactor, documentation, or review.
 2. Identify the affected capability and likely bounded context.
@@ -21,7 +28,9 @@ One job: turn the user request into a bounded engineering run.
 4. Determine `security_relevant: yes|no` from affected trust boundaries and control families. Record the rationale and candidate control IDs in the run brief.
 5. If security is relevant, route through the security context; do not guess or silently defer applicability.
 6. Always route through Stage 02. That stage records whether external research is required.
-7. Write the run brief to output/.
+7. Read current phase status and the phase execution guide. Record the selected product phase, canonical contract, predecessor-gate state, this run's exit criteria, and the next phase. A user request to work on a later phase does not override an unmet prerequisite; record the blocker and route back to the owning phase.
+8. Keep product-phase state separate from the ICM stage number. Do not resume a prior phase-specific run unless the human explicitly selects it as relevant historical evidence.
+9. Write the run brief to output/.
 
 ## Human Check
 

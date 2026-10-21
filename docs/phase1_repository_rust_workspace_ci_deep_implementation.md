@@ -276,7 +276,7 @@ sitolo-domain → redis
 sitolo-domain → provider SDK
 ```
 
-The policy must eventually be machine-enforced using Cargo metadata inspection or equivalent architecture tests.
+This policy MUST be machine-enforced in Phase 1 using Cargo metadata inspection or equivalent deterministic architecture tests. It is a required blocking CI gate, not a future suggestion. The checker must compare the actual workspace package inventory and dependency edges against the human-approved `docs/code_ownership_map.md` and structured manifest, enforce the approved test-placement and testkit rules, and fail when required packages or checks are omitted. Phase 1 must not decide the unresolved crate inventory on its own: Phase 0 must ratify the map first.
 
 The purpose is not style. It prevents external mechanisms from becoming business semantics.
 
@@ -937,16 +937,21 @@ New incompatible licensing must block merge until resolved.
 
 # 32. ARCHITECTURE POLICY
 
-The CI policy must eventually answer:
+The required, blocking CI policy MUST answer at minimum:
 
 ```text
+Does the actual package inventory match the human-approved map?
 Does domain depend on infrastructure?
 Does production depend on testkit?
 Does provider-specific representation leak into domain?
 Does an application bypass approved ports?
+Are crate-owned tests inside the owning package?
+Are required package/app test and build targets actually invoked?
+Are Tauri/React and React Native targets included when present and in scope?
+Does any approved package or requirement have no implementation/test owner?
 ```
 
-Architecture checks should be deterministic and blocking.
+Architecture checks must be deterministic and blocking. Their failures must fail the required gate; a missing checker, missing package or undiscovered test suite cannot be reported as a pass.
 
 Documentation alone is insufficient.
 

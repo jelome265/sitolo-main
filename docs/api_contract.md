@@ -8,7 +8,7 @@
 **Primary market:** Malawi first; controlled African expansion  
 **Backend:** Rust + Axum + Tokio  
 **Persistence:** PostgreSQL authoritative server state; SQLite client continuity  
-**Clients:** Flutter Android-first, Tauri desktop, limited TypeScript web/admin  
+**Clients:** React Native Android-first, Tauri desktop, limited TypeScript web/admin  
 **Architecture:** Modular monolith first; workers and adapters; selective service extraction only when independently justified
 
 ---
@@ -2427,7 +2427,7 @@ sensitive fields
 validation rules
 ```
 
-Generated TypeScript/Dart clients must be derived from the contract rather than hand-maintaining incompatible copies.
+Generated TypeScript clients for React Native and web/desktop surfaces must be derived from the canonical contract rather than hand-maintaining incompatible copies.
 
 ---
 
@@ -4913,7 +4913,7 @@ These must not be invented as facts. They become implementation decisions when t
 
 This contract is based on:
 
-- Sitolo's existing product/domain architecture: mobile-first, offline-capable, multi-tenant operation; Rust as business authority; PostgreSQL as server authority; Flutter as primary mobile surface; Tauri for desktop; and a modular monolith with workers/adapters.
+- Sitolo's existing product/domain architecture: mobile-first, offline-capable, multi-tenant operation; Rust as business authority; PostgreSQL as server authority; React Native as primary mobile surface; Tauri for desktop; and a modular monolith with workers/adapters.
 - Sitolo's existing domain model: bounded contexts, explicit aggregates, inventory ledger semantics, append-only financial facts, payment intents, reconciliation cases, sync commands and approval boundaries.
 - Sitolo's existing security architecture and implementation specification: zero-trust, deny-by-default, server-side authorization, BOLA/property/function controls, mandatory security tests, bounded resources, secure error handling and fail-closed release gates.
 - OWASP API Security Top 10 2023 for object-level authorization, authentication, property/function authorization, resource consumption, business-flow abuse, SSRF, misconfiguration, endpoint inventory and unsafe API consumption.

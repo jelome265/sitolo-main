@@ -9,7 +9,7 @@
 **Backend authority:** Rust + Axum + Tokio  
 **Authoritative server persistence:** PostgreSQL  
 **Offline operational persistence:** SQLite  
-**Primary mobile client:** Flutter / Android-first  
+**Primary mobile client:** React Native / Android-first  
 **Desktop:** Tauri  
 **Web/admin:** TypeScript where materially useful  
 **Architecture:** Modular monolith first; workers and adapters; selective service extraction only when justified
@@ -28,7 +28,7 @@ It will **not** use generic last-write-wins replication for business truth.
 USER INTENT
     |
     v
-FLUTTER DOMAIN COMMAND
+REACT NATIVE DOMAIN COMMAND
     |
     v
 LOCAL SQLITE TRANSACTION
@@ -92,7 +92,7 @@ The device is allowed to preserve intent locally. The server remains responsible
 
 The existing Sitolo architecture makes several decisions that this protocol MUST preserve:
 
-- Flutter is the primary mobile client.
+- React Native is the primary mobile client.
 - SQLite is the local operational store.
 - Rust owns the transactional business decision engine.
 - PostgreSQL is authoritative for server-side business truth.
@@ -301,7 +301,7 @@ Replay is redelivery of an already seen command or event.
 The following components are distinct security subjects:
 
 ```text
-Flutter client
+React Native client
 Tauri client
 Web/admin client
 Rust API
@@ -368,7 +368,7 @@ Provider responses are untrusted until verified.
 
 # 9. Local Store Architecture
 
-The Flutter application should maintain a durable SQLite operational database containing only the data required for its authorized operating scope.
+The React Native application should maintain a durable SQLite operational database containing only the data required for its authorized operating scope.
 
 Recommended logical areas:
 
@@ -2378,7 +2378,7 @@ A single broken device must not consume all sync worker capacity.
 
 # 105. Background Sync Scheduling
 
-Flutter synchronization should consider:
+React Native synchronization should consider:
 
 - connectivity;
 - battery;
@@ -3075,9 +3075,9 @@ The sync endpoint follows the API contract, including:
 
 ---
 
-# 145. Browser/Tauri/Flutter Relationship
+# 145. Browser/Tauri/React Native Relationship
 
-Flutter is the primary offline operational client.
+React Native is the primary offline operational client.
 
 Tauri may support local operational workflows but must use the same command/domain semantics.
 
@@ -6673,7 +6673,7 @@ Primary external technical references:
 1. SQLite — Atomic Commit: https://www.sqlite.org/atomiccommit.html
 2. SQLite — Write-Ahead Logging: https://www.sqlite.org/wal.html
 3. SQLite — PRAGMA / synchronous behavior: https://sqlite.org/pragma.html
-4. Flutter architecture/offline-first guidance: https://docs.flutter.dev/app-architecture
+4. React Native platform/environment guidance: https://reactnative.dev/docs/set-up-your-environment
 5. PostgreSQL documentation: https://www.postgresql.org/docs/current/
 6. OAuth 2.0 Security Best Current Practice, RFC 9700: https://www.rfc-editor.org/rfc/rfc9700.html
 7. OAuth 2.0 for Native Apps, RFC 8252: https://www.rfc-editor.org/rfc/rfc8252.html

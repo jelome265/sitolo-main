@@ -12,6 +12,8 @@ One job: independently determine whether the implemented change is logically cor
 | Working | Research | ../02-research/output/[run-slug]-research.md | Full file | External constraints |
 | Reference | Governance | ../../shared/governance-context/CONTEXT.md | Relevant sections | Engineering authority |
 | Reference | Project docs | ../../../../docs/README.md | Applicable contracts | Requirement evidence |
+| Reference | Phase parts | ../../../../docs/phase_part_execution_contract.md | Current part gates | Audit the accepted scope and stop condition |
+| Reference | Code ownership map | ../../../../docs/code_ownership_map.md | Relevant package/app/test rows | Detect omitted or misplaced responsibility and test coverage |
 | Reference | Audit skill | ../../skills/engineering-review/SKILL.md | Full file | Review method |
 | Reference | Audit contract | references/audit-contract.md | Full file | Independent semantic audit contract |
 | Reference | Security checks | references/security-checks.md | Full file | Security-specific adversarial checks |
@@ -20,6 +22,10 @@ One job: independently determine whether the implemented change is logically cor
 | Reference | Security context | ../../shared/security-context/CONTEXT.md | Conditional when security_relevant=yes | Security control and threat evidence |
 
 **Do NOT load:** unrelated stage contracts, unrelated reference families, the full documentation corpus, or the full `agent.md`; use the routed governance context and exact inputs only.
+
+## Ownership and part audit
+
+Apply `../../../../docs/phase_part_execution_contract.md` and the relevant ownership rows from `../../../../docs/code_ownership_map.md`. Independently map every planned requirement to the actual implementation owner, actual source file, and test file. Check all relevant crates/apps for omitted responsibilities; confirm tests are inside their owner; review dependency direction and ensure the frontend/native layer has not become a second domain engine. Code placed in a convenient but incorrect crate, an omitted owner, a root-level test substituting for missing crate tests, or an unapproved file outside the write set is a material finding, not a style preference.
 
 ## Process
 

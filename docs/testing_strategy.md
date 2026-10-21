@@ -4,7 +4,7 @@ Status: Phase 0 implementation contract
 Artifact: 09 of 16  
 Date: 2026-09-04  
 System: Sitolo — Business Operating System for African SMEs  
-Primary implementation baseline: Rust backend, PostgreSQL authoritative server, SQLite offline client store, Flutter Android-first client, Tauri desktop, limited TypeScript web/admin/tooling.
+Primary implementation baseline: Rust backend, PostgreSQL authoritative server, SQLite offline client store, React Native Android-first client, Tauri desktop, limited TypeScript web/admin/tooling.
 
 This document is the executable testing strategy for Sitolo. It converts the architecture, security model, domain model, database contract, API contract, authentication/authorization specification, offline synchronization protocol and external-integration specifications into a verification system. The objective is not to maximize test count or code coverage. The objective is to produce repeatable evidence that the system preserves business truth, tenant isolation, financial integrity, inventory integrity, authorization, synchronization correctness, external-integration safety, recoverability and operational behavior under both normal and adversarial conditions.
 
@@ -26,9 +26,9 @@ RULE 9 — Release evidence is immutable and attributable to a specific source r
 RULE 10 — A test suite is incomplete when it cannot detect a known dangerous mutation.
 ```
 
-The testing strategy is aligned with the current OWASP ASVS 5.0.0 stable standard for web application verification, OWASP API Security Top 10 2023 for API-specific risks, NIST SSDF for secure development practices, Rust/Cargo native unit/integration/doc testing, PostgreSQL regression and isolation testing concepts, Flutter unit/widget/integration testing, and OpenTelemetry semantic-convention principles for test observability.
+The testing strategy is aligned with the current OWASP ASVS 5.0.0 stable standard for web application verification, OWASP API Security Top 10 2023 for API-specific risks, NIST SSDF for secure development practices, Rust/Cargo native unit/integration/doc testing, PostgreSQL regression and isolation testing concepts, React Native unit/component/device testing, and OpenTelemetry semantic-convention principles for test observability.
 
-External references: OWASP ASVS 5.0.0: https://owasp.org/www-project-application-security-verification-standard/ ; OWASP API Security: https://owasp.org/API-Security/ ; NIST SP 800-218: https://csrc.nist.gov/pubs/sp/800/218/final ; Rust Cargo tests: https://doc.rust-lang.org/cargo/guide/tests.html ; Cargo test command: https://doc.rust-lang.org/cargo/commands/cargo-test.html ; PostgreSQL regression testing: https://www.postgresql.org/docs/current/regress-run.html ; Flutter integration testing: https://docs.flutter.dev/testing/integration-tests ; Flutter testing: https://docs.flutter.dev/testing ; OpenTelemetry semantic conventions: https://opentelemetry.io/docs/specs/semconv/.
+External references: OWASP ASVS 5.0.0: https://owasp.org/www-project-application-security-verification-standard/ ; OWASP API Security: https://owasp.org/API-Security/ ; NIST SP 800-218: https://csrc.nist.gov/pubs/sp/800/218/final ; Rust Cargo tests: https://doc.rust-lang.org/cargo/guide/tests.html ; Cargo test command: https://doc.rust-lang.org/cargo/commands/cargo-test.html ; PostgreSQL regression testing: https://www.postgresql.org/docs/current/regress-run.html ; React Native testing overview: https://reactnative.dev/docs/testing-overview ; React Native environment setup: https://reactnative.dev/docs/set-up-your-environment ; OpenTelemetry semantic conventions: https://opentelemetry.io/docs/specs/semconv/.
 
 ## 2. Quality Model
 | Dimension | What must be demonstrated | Primary evidence |
@@ -73,7 +73,7 @@ The pyramid is intentionally not a simplistic “many unit tests, few end-to-end
 | Fuzz | Untrusted parsers and protocol surfaces | Slow | PR smoke + nightly/continuous campaigns |
 | Load/performance | Throughput, tail latency, DB pool, queue behavior | Slow | Scheduled + release candidate |
 | E2E | Full user workflows | Slow | PR smoke + nightly + release |
-| Real-device | Flutter on representative Android devices | Slow | Nightly + release |
+| Real-device | React Native on representative Android devices | Slow | Nightly + release |
 | Chaos/DR | Dependency outages, process death, recovery/replay | Very slow | Nightly targeted + release |
 | Manual/pentest | Threat-led human assessment | Very slow | Milestones and before production |
 
@@ -83,7 +83,7 @@ LOCAL
   ├── deterministic unit tests
   ├── ephemeral PostgreSQL
   ├── mock/fake external providers
-  └── local Flutter emulator
+  └── local Android emulator for React Native
 
 CI PR
   ├── isolated PostgreSQL service
@@ -518,29 +518,33 @@ Required chaos sequences:
 | Conflict semantics | stock, price, role, cash, tax examples |
 | Resync | corrupt/stale local cursor and authoritative snapshot recovery |
 
-## 24. Flutter Mobile Testing
-Flutter testing is divided into unit, widget and integration tests. The official Flutter integration_test package supports execution on physical devices/emulators and Firebase Test Lab, while widget testing validates widget behavior in isolation. Sitolo requires all three because low-connectivity operation and process death cannot be established by widget tests alone.
+## 24. React Native Mobile Testing
+
+The mobile application is React Native, and its unit/component tests and device-level tests belong inside `apps/mobile/`. The official React Native testing overview describes static analysis, testable module boundaries and automated tests; its default template includes Jest. Sitolo may use Jest for TypeScript/JavaScript unit tests and an approved React Native component-testing library after Phase 1 dependency review. The end-to-end/device harness remains a Phase 1 tooling decision.
+
+These test layers prove different things:
+
+- **Unit tests:** deterministic client-side state transitions, command serialization, retry/backoff classification and pure calculations.
+- **Component tests:** loading/error/permission/empty states, offline indication and UI behavior. UI mocks do not prove real persistence or native platform behavior.
+- **Mobile integration tests:** repository wiring, local SQLite schema/migrations, transaction behavior, durable outbox/checkpoints, reconnect replay and conflict states.
+- **Device/E2E tests:** real app startup, background/foreground changes, process death, storage exhaustion, network transitions, secure-storage/native module behavior and end-to-end workflows on approved Android devices. Add iOS coverage when iOS is a supported release target.
+- **Cross-application tests:** root-level only where a real journey crosses apps or server infrastructure; they do not replace tests inside the mobile package.
+
+Target ownership (not an instruction to scaffold every path immediately):
 
 ```text
-Flutter test suites:
-  test/
-    domain/
-    application/
-    persistence/
-    sync/
-    security/
-  integration_test/
-    auth_flow_test.dart
-    offline_sale_test.dart
-    reconnect_sync_test.dart
-    payment_state_test.dart
-    device_revocation_test.dart
-    migration_test.dart
-    low_storage_test.dart
+apps/mobile/
+  src/
+    features/<feature>/*.test.ts(x)
+    data/                         # adapters with owner-local tests
+    sync/                         # outbox/replay/checkpoint unit and integration tests
+  e2e/                            # full app/device journeys using the chosen harness
+  android/                        # native tests where a native module/platform behavior exists
+  ios/                            # native tests where a native module/platform behavior exists
 ```
 
-Widget tests should assert loading/error/permission/empty states, not merely screenshots. Integration tests should execute user-visible workflows against a controlled backend or test server. The mobile suite must include background/foreground transitions, process death, storage exhaustion, network changes and device clock manipulation where platform constraints allow.
-
+Exact package scripts, React Native workflow (Expo vs Community CLI), device harness and paths must be approved/pinned through Phase 1. A test suite that was not discovered/executed is not a pass. The suite must include background/foreground transitions, process death, storage exhaustion, network changes and device-clock manipulation where platform constraints permit.
+ 
 ## 25. Real Device Matrix
 The product explicitly targets low- and mid-range Android devices and intermittent connectivity. Therefore at least one representative lower-memory/older Android device class and one current mainstream Android device class must be included in release verification. Exact models should be maintained as an owned device matrix and updated based on observed customer hardware.
 
@@ -554,7 +558,7 @@ The product explicitly targets low- and mid-range Android devices and intermitte
 | Battery constrained | background behavior, queue persistence, resumed sync |
 
 ## 26. Tauri/Desktop Testing
-Tauri is tested separately because desktop capabilities introduce filesystem, navigation, update and native-command attack surfaces that are not equivalent to Flutter mobile. Tests must verify restricted command surfaces, navigation allowlists, CSP, credential persistence and update integrity as implemented.
+Tauri is tested separately because desktop capabilities introduce filesystem, navigation, update and native-command attack surfaces that are not equivalent to React Native mobile. Tests must verify restricted command surfaces, navigation allowlists, CSP, credential persistence and update integrity as implemented.
 
 - No untrusted UI action can invoke an unrestricted shell/filesystem bridge.
 - Credentials are stored through the approved secure mechanism and are not written to ordinary logs.
@@ -1129,7 +1133,7 @@ Tools are implementation choices. The strategy defines control objectives, not p
 | Dynamic security | OWASP-aligned DAST tooling |
 | Secret scanning | dedicated repository/history scanner |
 | Dependencies | RustSec/Cargo audit ecosystem and equivalent package scanners |
-| Mobile | flutter_test + integration_test |
+| Mobile | Jest/React Native component tests plus the approved device/E2E harness |
 | Load | k6, Gatling, Locust or equivalent depending on repository standards |
 | Tracing | OpenTelemetry-compatible instrumentation |
 | SBOM | CycloneDX/SPDX-compatible generator |
@@ -1381,7 +1385,7 @@ TST-008  implement idempotency/replay suite
 TST-009  implement payment provider contract fixtures
 TST-010  implement MRA EIS contract fixtures
 TST-011  implement sync crash/replay harness
-TST-012  implement Flutter integration harness
+TST-012  implement React Native mobile device/E2E harness
 TST-013  establish low-end Android device profile
 TST-014  establish fuzz targets
 TST-015  establish DAST disposable environment
@@ -1429,7 +1433,7 @@ The existing architecture requires that domains are not considered done merely b
 | NIST SP 800-218 | secure SDLC practices, evidence and defect prevention |
 | Rust Cargo testing model | unit, integration and documentation tests as repository foundation |
 | PostgreSQL testing model | real database regression, isolation and recovery testing concepts |
-| Flutter testing model | unit/widget/integration and real-device verification |
+| React Native testing model | TypeScript unit/component tests plus real-device/E2E verification |
 | OpenTelemetry semantic conventions | stable telemetry fields used in test evidence and diagnostics |
 
 ## 85. Test Strategy Risk Register
@@ -1478,7 +1482,7 @@ cargo test --workspace --all-targets --all-features
 cargo test --workspace --doc
 # property tests: repository-selected command
 # fuzz smoke: repository-selected command
-# Flutter unit/widget/integration: repository-selected command
+# React Native unit/component/device tests: repository-approved package commands
 # security scans: repository-selected commands
 # DAST: disposable deployment only
 # migration/DB suite: disposable PostgreSQL
@@ -1541,8 +1545,8 @@ CI secret exposure regression
 4. Rust Cargo testing guide: https://doc.rust-lang.org/cargo/guide/tests.html  
 5. Rust cargo-test command: https://doc.rust-lang.org/cargo/commands/cargo-test.html  
 6. PostgreSQL 18 regression testing: https://www.postgresql.org/docs/current/regress-run.html  
-7. Flutter testing documentation: https://docs.flutter.dev/testing  
-8. Flutter integration testing: https://docs.flutter.dev/testing/integration-tests  
+7. React Native testing overview: https://reactnative.dev/docs/testing-overview  
+8. React Native environment setup: https://reactnative.dev/docs/set-up-your-environment  
 9. OpenTelemetry Semantic Conventions: https://opentelemetry.io/docs/specs/semconv/  
 10. OpenTelemetry general semantic conventions: https://opentelemetry.io/docs/specs/semconv/general/
 

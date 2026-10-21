@@ -8,6 +8,20 @@ run_slug: "[run-slug]"
 
 ## Request
 
+## Product phase and routing
+
+- selected_phase:
+- canonical_phase_contract:
+- predecessor_gate_status:
+- phase_exit_criteria:
+- next_phase_or_stop_condition:
+- phase_part_plan_reference:
+- part_sequence_status: planning-only|proposed|human-approved
+- current_part_id:
+- previous_part_gate_status:
+- approved_write_set_reference:
+- next_agreed_part_or_stop_condition:
+
 ## Capability
 
 ## Scope

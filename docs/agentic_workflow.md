@@ -43,7 +43,7 @@ The chain is a control loop, not a prompt-writing trick: **scope → locate → 
 
 ## Product phase vs ICM stage
 
-The ICM pipeline is engineering workflow infrastructure, not Sitolo product-phase sequencing. Sitolo's active product stream remains Phase 4 Part 8 / PR-009. A later contract such as Phase 8 Product Catalogue is target-state documentation, not a phase transition.
+The ICM pipeline is execution/workflow infrastructure, not Sitolo product-phase sequencing. The active restart position is **Phase 0 — Architecture, Contracts and ADR Freeze**; see [current implementation status](current_implementation_status.md). The [Phase Execution and Transition Guide](phase_execution_guide.md) gives every phase a canonical contract, expected evidence, exit gate and explicit next-phase route. Later-phase contracts describe requirements; they are not proof of implementation and do not authorize skipping a predecessor.
 
 ## Two complementary forms
 
@@ -102,15 +102,15 @@ Consequential handoffs are intentionally visible. The person can inspect and edi
 
 ## Validation
 
-`scripts/ci/check-icm-workspace` and its PowerShell counterpart verify workspace structure, context boundaries, reference scaffolding, and factory-output hygiene. `scripts/ci/check-doc-references` verifies Markdown reference resolution.
+At the Phase 0 restart baseline, `scripts/ci/check-icm-workspace`, its PowerShell counterpart, `scripts/ci/check-doc-references` and the aggregate `scripts/ci/verify` entrypoints are not present in the repository. Do not claim these checks passed or route users to missing scripts as though they exist. Phase 1 owns the reproducible repository/CI validation foundation; the Phase 0 exit record must keep these checks marked blocked/not run until the actual commands are added and exercised. In the meantime, review routing and links directly and record the limitations.
 
-The CI cold walk is intentionally **mechanical**: it proves the routing graph, exact handoff paths, template instantiation, and System Map source navigation in an isolated copy. It does not prove that a fresh LLM can make correct engineering decisions or produce semantically meaningful run artifacts.
+Once the mechanical validator is established in Phase 1, its cold walk should verify the routing graph, exact handoff paths, template instantiation, and System Map source navigation in an isolated copy. That check is currently a required design target, not an executed proof. Even when available, it will not prove that a fresh LLM can make correct engineering decisions or produce semantically meaningful run artifacts.
 
 ## Walk-test requirement
 
-Use two distinct proofs:
+Use two distinct proofs once the validation foundation is available:
 
-1. **Mechanical walk:** CI traverses the filesystem, instantiates every stage artifact, checks exact handoffs, and validates a System Map source hop.
+1. **Mechanical walk:** a repository validator traverses the filesystem, instantiates each stage artifact, checks exact handoffs, and validates a System Map source hop.
 2. **Cold-agent walk:** a fresh agent with no prior conversation memory enters through the root router, follows the declared Inputs, performs a meaningful bounded task, writes a valid handoff, and reports status from filesystem state alone.
 
-Only the second demonstrates agent usability; neither substitutes for product-level tests or human approval.
+Neither proof is currently claimed for this restart baseline. Only the second demonstrates agent usability; neither substitutes for product-level tests or human approval.

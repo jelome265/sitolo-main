@@ -1,71 +1,41 @@
 # Sitolo — Current Implementation Status
 
-**Status:** Current implementation-state pointer
-**Date:** 2026-09-26
-**Main baseline:** `623f7aed6105664d10d1a2802480fde8316ed5f8`
+**Status:** Restart baseline  
+**Current product phase:** Phase 0 — Architecture, Contracts and ADR Freeze  
+**Phase lifecycle:** IN_PROGRESS (restart/reconciliation work); Phase 0 exit gate remains open  
+**Current ICM run:** `phase0-ownership-reconciliation-20261021` (Stages 01–04 prepared; sequence accepted)  
+**Last status reset:** 2026-10-21  
+**Repository baseline:** The commit/PR that records this reset; update the exact SHA after merge.
 
-## Active product implementation
+## Active work
 
-The active Sitolo product-development stream is **Phase 4 Part 8 / PR-009: durable audit evidence + transactional outbox**.
+Sitolo's implementation program starts at **Phase 0** in this repository. The current objective is to reconcile material architecture and contract decisions, confirm phase dependencies, and establish a reviewed Phase 0 exit package. The product owner approved the P0.1–P0.8 sequence on 2026-10-21; individual part write sets still require an explicit gate. React Native is the sole permitted mobile framework under ADR-026; Flutter is prohibited.
 
-PR #49 is the active implementation PR for that work. It remains open and is not the same work as PR #52.
+This status is an explicit restart baseline. Existing files, earlier phase contracts, code, PR-specific notes, test claims or run artifacts do not by themselves prove that any phase is complete in this repository. Claims require current, revision-attributable evidence and the required human gate.
 
-## PR #52
+## Authoritative phase routing
 
-PR #52 (`feat/agentic-workflow`) was the initial **engineering workflow/documentation architecture change**; the current mainline ICM conformance pass is tracked separately.
+1. [Phase 0 contract](phase0_architecture_contract_freeze.md) — current active phase contract.
+2. [Phase execution and transition guide](phase_execution_guide.md) — purpose, inputs, expected evidence, exit gate and next phase for every Phase 0–20.
+3. [Implementation plan](implementation_plan.md) — canonical phase order and program dependencies.
+4. [Phase contract coverage register](phase_contract_coverage_register.md) — contract coverage and reconciliation; does not replace product or technical authority.
+5. [Engineering phase-context router](../workspaces/sitolo-engineering/shared/phase-context/CONTEXT.md) — ICM reference routing.
 
-It adds and hardens the ICM filesystem workflow, context routing, System Map, documentation authority classification, reference integrity, and documentation remediation controls.
+## Phase 0 exit gate
 
-It does **not** move Sitolo's product implementation to Phase 8.
+Phase 0 remains open until the responsible human accepts the evidence package described in the Phase 0 contract. Outstanding conflicts, unapproved decisions, missing references and checks that could not run must remain visible. Do not begin Phase 1 as active implementation work until the Phase 0 exit conditions are met.
 
-## Phase 8
+## ICM execution position
 
-`docs/phase8_product_catalogue_implementation.md` is a later-phase **target-state contract**.
-
-Its presence does not mean Phase 8 is active, implemented, or verified.
-
-The contract exists so future Phase 8 work has a stable requirement definition before implementation begins.
-
-## Current Phase 4 sequence
-
-```text
-Phase 4 Part 1 → completed baseline
-Phase 4 Part 2 → completed baseline
-Phase 4 Part 3 → completed baseline
-Phase 4 Part 4 → completed baseline
-Phase 4 Part 5 → completed baseline
-Phase 4 Part 6 → completed baseline
-Phase 4 Part 7 → completed baseline
-Phase 4 Part 8 → ACTIVE / PR-009
-```
-
-Current product work must use the active Part 8 binding contract and the current PR-009 status document rather than later Phase 8 contracts.
-
-## Authority
-
-For current implementation state:
-
-1. current source tree;
-2. active phase/PR contract;
-3. current verification evidence;
-4. historical audits only as historical evidence.
-
-A contract for a future phase is not implementation evidence. A PR-specific review snapshot is not current state unless it matches the current PR head.
-
-## ICM workflow position
-
-The ICM pipeline itself is workflow infrastructure:
+The ICM execution pipeline remains independent of product phase numbering:
 
 ```text
-01-select
-02-research
-03-investigate
-04-plan
-05-implement
-06-audit
-07-remediate
-08-verify
-09-deliver
+01-select → 02-research → 03-investigate → 04-plan
+→ 05-implement → 06-audit → 07-remediate → 08-verify → 09-deliver
 ```
 
-That pipeline is independent of the Sitolo product phase sequence. It is the mechanism used to perform engineering work safely; it is not a replacement for product-phase planning.
+The current planning run is `phase0-ownership-reconciliation-20261021`. Its selection brief, research memo, investigation and Stage 04 plan are stored under their respective stage `output/` directories. The part order is accepted; P0.1's exact write set and stop condition must be recorded before the implementation agent starts that part. Product-code implementation is not this assistant's role. Prior run folders remain historical unless explicitly selected as supporting evidence.
+
+## Evidence rule
+
+A document contract describes requirements. A status entry describes the selected state. Only current source, reproducible checks, review and revision-attributable evidence support implementation/verification claims. If a required command or referenced script is absent, mark it **not run / blocked**, record the exact path, and address it within the owning phase.

@@ -3,7 +3,7 @@
 
 **Positioning:** Business Operating System for African SMEs
 **Primary market:** Malawi first; architecture designed for eventual African regionalization
-**Primary clients:** Flutter mobile application; Tauri desktop application; limited TypeScript for web/admin and tooling
+**Primary clients:** React Native mobile application; Tauri desktop application; limited TypeScript for web/admin and tooling
 **Backend:** Rust-first
 **Primary persistence:** PostgreSQL server; SQLite local operational store
 **Architecture stance:** Modular monolith first, durable workers and adapters, selective service extraction only when justified
@@ -14,7 +14,7 @@
 
 # 0. Architecture Executive Decision
 
-Sitolo should be engineered as a Rust-first business operating system with a deliberately small number of runtime boundaries. The default deployment is a single Rust application exposing a versioned API, backed by PostgreSQL, plus asynchronous workers in the same repository and deployment family. Flutter is the principal mobile client and Tauri is the desktop client. TypeScript is deliberately constrained to the places where a web ecosystem provides disproportionate leverage: web/admin UI, API client generation, developer tooling, documentation, and selected build/configuration tasks.
+Sitolo should be engineered as a Rust-first business operating system with a deliberately small number of runtime boundaries. The default deployment is a single Rust application exposing a versioned API, backed by PostgreSQL, plus asynchronous workers in the same repository and deployment family. React Native is the sole permitted mobile framework and Tauri is the desktop client. TypeScript is deliberately constrained to the places where a web ecosystem provides disproportionate leverage: web/admin UI, API client generation, developer tooling, documentation, and selected build/configuration tasks.
 
 The central architectural decision is not 'Rust versus another language'. The central decision is that Sitolo owns business truth in a strongly typed, transactional domain core and treats clients, payment providers, tax systems, notification providers, and future financial partners as untrusted or failure-prone edges. This creates a stable center and flexible boundaries.
 
@@ -26,7 +26,7 @@ The platform must survive real merchant conditions: unreliable networks, low-end
                              SITOLO PLATFORM
 
    ┌──────────────────────┐        ┌───────────────────────┐
-   │ Flutter Mobile       │        │ Tauri Desktop         │
+   │ React Native Mobile       │        │ Tauri Desktop         │
    │ Android-first        │        │ Back-office / POS     │
    │ SQLite local store   │        │ Local cache + device  │
    │ Offline operation    │        │ integration           │
@@ -68,7 +68,7 @@ This architecture derives from the existing `sitolo.md` enterprise product speci
 
 | --- | --- |
 
-| Dedicated mobile app | Flutter application with a durable SQLite operational database and offline command queue |
+| Dedicated mobile app | React Native application with a durable SQLite operational database and offline command queue |
 
 | Desktop back office | Tauri application sharing domain API contracts but optimized for larger workflows |
 
@@ -160,11 +160,13 @@ The repository should treat the compiler, Cargo lockfiles and crate versions as 
 
 SQLx is a deliberate choice for the core system because SQL remains a transparent part of the architecture. The project can use migrations and compile-time checked queries rather than hiding critical financial semantics behind a high-level ORM. SQLx's documentation also describes an explicit MSRV policy and compile-time verification model, which fits a locked CI toolchain. citeturn244519search1turn244519search2
 
-## 3.3 Flutter client
+## 3.3 React Native mobile client
 
-Flutter is the primary mobile client because it supports a cross-platform architecture while compiling release applications to native machine code. Flutter's current architecture guidance also supports persistent SQL storage for complex offline data and an explicit offline-first application pattern. citeturn734608search5turn734608search12turn734608search15
+React Native is the sole approved mobile framework for Sitolo. The mobile application uses React Native components and TypeScript/JavaScript, with platform-specific Android/iOS integration only through approved native code or modules. React Native uses native platform components rather than browser DOM elements; see the [official tutorial](https://reactnative.dev/docs/tutorial).
 
-The Flutter application should be organized around feature modules rather than a page-centric folder tree. Local persistence is SQL-backed; UI state is derived from repositories and use cases; synchronization is a separate subsystem. The UI should never directly issue arbitrary SQL or raw HTTP calls.
+This choice does not, by itself, select Expo versus the React Native Community CLI, navigation/state-management libraries, package manager, or local SQLite library. Those choices must be assessed against native requirements, offline behavior, build/release control and supported toolchains; do not invent or pin them from this document alone. See [environment setup](https://reactnative.dev/docs/set-up-your-environment) and the current [release announcements](https://reactnative.dev/blog).
+
+The mobile source should be feature-oriented under `apps/mobile/src/`. Separate presentation, app orchestration, remote API adapters, durable local persistence and sync orchestration. A durable command/outbox, replay safety, checkpoints, conflict policy, recovery after process death, and protection of sensitive local data are Sitolo responsibilities—not guarantees that come automatically from React Native. The client is never the authority for server-side financial, inventory, authorization, tenant or fiscal rules.
 
 ## 3.4 Tauri desktop
 
@@ -391,7 +393,7 @@ sitolo/
 │   └── sitolo-cli/               # admin/dev operational CLI if needed
 ├── migrations/
 ├── apps/
-│   ├── mobile/                   # Flutter
+│   ├── mobile/                   # React Native
 │   ├── desktop/                  # Tauri + TS UI
 │   └── admin-web/                # optional Next.js/React + TS
 ├── packages/
@@ -402,7 +404,7 @@ sitolo/
 └── tests/
 ```
 
-The exact crate split can start smaller. Do not create a crate for every noun. The critical rule is dependency direction. Domain code must not depend on Axum, SQLx, Redis, HTTP client implementations, or Flutter. Application code may depend on domain and abstract ports. Infrastructure implements those ports. API adapts requests into application commands. This prevents framework details from leaking into business logic and makes future extraction possible without a rewrite.
+The exact crate split can start smaller. Do not create a crate for every noun. The critical rule is dependency direction. Domain code must not depend on Axum, SQLx, Redis, HTTP client implementations, or React Native. Application code may depend on domain and abstract ports. Infrastructure implements those ports. API adapts requests into application commands. This prevents framework details from leaking into business logic and makes future extraction possible without a rewrite.
 
 ## Dependency direction
 
@@ -709,7 +711,7 @@ Every provider webhook and every client-originated financial command must be ide
 
 # 16. Offline-First Architecture
 
-Offline is a first-class execution mode. Flutter's architecture guidance describes offline-first systems as relying on local persistent state and explicit synchronization strategies. Sitolo extends that concept with business-specific command semantics because generic cache synchronization is not sufficient for financial transactions. citeturn734608search15
+Offline is a first-class execution mode. The mobile framework is React Native, but offline-first correctness comes from Sitolo's durable local state and explicit synchronization protocol. Generic cache synchronization is not sufficient for financial transactions.
 
 ## 16.1 Local database
 
@@ -1463,7 +1465,7 @@ The API process should be stateless with respect to business truth. Any local fi
 
 # 57. Container and Build Design
 
-Build the Rust backend as a reproducible artifact with a minimal runtime image. Use multi-stage builds. Run as a non-root user. Include only runtime libraries required. Lock Cargo dependencies. Generate SBOMs for releases when operational maturity warrants it. Flutter/Tauri release pipelines should pin SDK/toolchain versions and produce signed artifacts.
+Build the Rust backend as a reproducible artifact with a minimal runtime image. Use multi-stage builds. Run as a non-root user. Include only runtime libraries required. Lock Cargo dependencies. Generate SBOMs for releases when operational maturity warrants it. React Native/Tauri release pipelines should pin SDK/toolchain versions and produce signed artifacts.
 
 # 58. CI/CD
 
@@ -1901,11 +1903,14 @@ Append-only transaction tables grow continuously. At meaningful scale, use archi
 **Tradeoff:** smaller pool of application developers and a steeper learning curve.
 **Mitigation:** strong repository conventions, modular code, code review templates and reusable internal libraries.
 
-## ADR-002 Flutter mobile
+## ADR-026 React Native mobile
 
-**Decision:** Flutter is the primary mobile client.
-**Reason:** cross-platform code reuse, native release compilation, mature UI ecosystem, and explicit support for SQL persistence/offline-first patterns. citeturn734608search5turn734608search12
-**Tradeoff:** larger client binary and Dart/Flutter expertise requirement.
+**Decision:** React Native is the sole permitted mobile framework; see [ADR-026](ADR-026-react-native-mobile.md). Flutter is prohibited.
+
+**Architecture consequence:** mobile presentation uses React Native native components and TypeScript/JavaScript; local persistence, offline command durability, sync/replay and secure device integration require explicit package ownership and executable tests. The framework decision does not authorize a client-side second business engine, and Tauri webview components are not a substitute for React Native mobile components.
+
+**Tooling decision still open:** the exact React Native workflow (Expo versus Community CLI), compatible release/toolchain, package manager, state/navigation libraries, SQLite adapter and device/E2E harness must be selected and pinned through the Phase 0/Phase 1 gates. Do not infer these from the framework decision.
+
 
 ## ADR-003 Tauri desktop
 
@@ -1942,7 +1947,7 @@ Append-only transaction tables grow continuously. At meaningful scale, use archi
 
 Some decisions should remain deliberately open until prototypes or customer data settle them:
 
-- Exact Flutter SQLite package and synchronization library choices.
+- Exact React Native-compatible SQLite/local-persistence package and synchronization library choices.
 
 - Exact identity provider versus self-hosted standards-based auth.
 
@@ -1964,7 +1969,7 @@ Some decisions should remain deliberately open until prototypes or customer data
 
 ```text
 CLIENTS
-- Flutter Android app
+- React Native Android app
 - Tauri desktop app
 - Small TypeScript admin web
 
@@ -2096,7 +2101,7 @@ A feature is architecturally complete when its normal path, failure path, retry 
 
  ┌────────────────────────────── CLIENTS ───────────────────────────────┐
  │                                                                      │
- │  Flutter Mobile                     Tauri Desktop       TS Web/Admin │
+ │  React Native Mobile                     Tauri Desktop       TS Web/Admin │
  │  ┌──────────────┐                 ┌──────────────┐     ┌───────────┐ │
  │  │ UI           │                 │ UI           │     │ UI        │ │
  │  │ Local SQL    │                 │ Local state  │     │ Browser   │ │
@@ -2147,11 +2152,11 @@ External sources were checked for current technology and Malawi integration cont
 
 | Rust official release announcements | Rust 1.98.0 is the current stable release listed for August 20, 2026; use a pinned stable toolchain rather than an implicit environment version. |
 
-| Flutter architectural overview | Supports cross-platform native compilation and an architecture designed for reusable application layers. |
+| React Native tutorial and platform components | Documents React components rendered through native platform components and platform-specific implementation boundaries. |
 
-| Flutter offline-first guidance | Supports local persistence plus synchronization as an explicit architecture pattern. |
+| Sitolo offline-first mobile design | Local persistence and synchronization are Sitolo responsibilities to design and verify. |
 
-| Flutter SQL persistence guidance | Supports SQL/SQLite for complex local persistence in Flutter applications. |
+| Mobile SQLite library decision | Exact SQLite implementation is selected during architecture/tooling review; test its real behavior. |
 
 | Tauri architecture | Rust + webview desktop architecture with message-passing and optional JS/TS APIs. |
 
@@ -2169,20 +2174,21 @@ External sources were checked for current technology and Malawi integration cont
 
 1. Rust Release Team, **Announcing Rust 1.98.0**, 20 Aug 2026 — https://blog.rust-lang.org/2026/08/20/Rust-1.98.0/
 2. Rust official release announcements — https://blog.rust-lang.org/releases/
-3. Flutter, **Architectural overview** — https://docs.flutter.dev/resources/architectural-overview
-4. Flutter, **Offline-first support** — https://docs.flutter.dev/app-architecture/design-patterns/offline-first
-5. Flutter, **Persistent storage architecture: SQL** — https://docs.flutter.dev/app-architecture/design-patterns/sql
-6. Tauri, **Architecture** — https://v2.tauri.app/concept/architecture/
-7. Malawi Revenue Authority, **EIS Developer Resource Center** — https://eis-portal.mra.mw/Home/DeveloperResources
-8. Malawi Revenue Authority EIS API, **Introduction** — https://eis-api.mra.mw/docs/introduction_1_print.htm
-9. Malawi Revenue Authority EIS API, **Overview / lifecycle** — https://eis-api.mra.mw/docs/overview.htm
-10. Malawi Revenue Authority EIS API, **Terminal** — https://eis-api.mra.mw/docs/terminal.htm
-11. Malawi Revenue Authority EIS API, **EIS API** — https://eis-api.mra.mw/docs/eis_api_2.htm
-12. Malawi Revenue Authority EIS API, **Transacting Offline** — https://eis-api.mra.mw/docs/transacting_offline.htm
-13. Malawi Revenue Authority EIS API, **Signing Offline Receipts** — https://eis-api.mra.mw/docs/signing_offline_receipts_print.htm
-14. Malawi Revenue Authority EIS API, **Submitting Offline Transactions** — https://eis-api.mra.mw/docs/submitting_offline_transactions.htm
-15. LaunchBadge SQLx, **CHANGELOG / project repository** — https://github.com/launchbadge/sqlx
-16. Existing Sitolo source baseline: `sitolo.md` and `business_model_design.md` (internal project documents).
+3. React Native, **Learn the Basics** — https://reactnative.dev/docs/tutorial
+4. React Native, **Testing overview** — https://reactnative.dev/docs/testing-overview
+5. React Native, **Environment setup** — https://reactnative.dev/docs/set-up-your-environment
+6. React Native, **Platform-specific code** — https://reactnative.dev/docs/platform-specific-code
+7. Tauri, **Architecture** — https://v2.tauri.app/concept/architecture/
+8. Malawi Revenue Authority, **EIS Developer Resource Center** — https://eis-portal.mra.mw/Home/DeveloperResources
+9. Malawi Revenue Authority EIS API, **Introduction** — https://eis-api.mra.mw/docs/introduction_1_print.htm
+10. Malawi Revenue Authority EIS API, **Overview / lifecycle** — https://eis-api.mra.mw/docs/overview.htm
+11. Malawi Revenue Authority EIS API, **Terminal** — https://eis-api.mra.mw/docs/terminal.htm
+12. Malawi Revenue Authority EIS API, **EIS API** — https://eis-api.mra.mw/docs/eis_api_2.htm
+13. Malawi Revenue Authority EIS API, **Transacting Offline** — https://eis-api.mra.mw/docs/transacting_offline.htm
+14. Malawi Revenue Authority EIS API, **Signing Offline Receipts** — https://eis-api.mra.mw/docs/signing_offline_receipts_print.htm
+15. Malawi Revenue Authority EIS API, **Submitting Offline Transactions** — https://eis-api.mra.mw/docs/submitting_offline_transactions.htm
+16. LaunchBadge SQLx, **CHANGELOG / project repository** — https://github.com/launchbadge/sqlx
+17. Existing Sitolo source baseline: `sitolo.md` and `business_model_design.md` (internal project documents).
 
 # 109. Change Control
 
@@ -2190,7 +2196,7 @@ This architecture is a living engineering document. Any change to one of the fol
 
 # 110. Closing Position
 
-Sitolo should not try to win by having the most components. It should win by making the business system trustworthy under the conditions its customers actually operate in. Rust provides the implementation foundation for a memory-safe, high-concurrency backend. Flutter provides the mobile operating surface. Tauri provides a native-feeling desktop control surface. PostgreSQL provides durable transactional truth. SQLite provides local continuity. External provider APIs remain adapters. The differentiated engineering lies in the seams: tenant isolation, offline synchronization, inventory correctness, financial history, payment reconciliation, tax submission state, auditability and operational recovery.
+Sitolo should not try to win by having the most components. It should win by making the business system trustworthy under the conditions its customers actually operate in. Rust provides the implementation foundation for a memory-safe, high-concurrency backend. React Native provides the mobile UI/platform integration surface. Tauri provides a native-feeling desktop control surface. PostgreSQL provides durable transactional truth. SQLite provides local continuity. External provider APIs remain adapters. The differentiated engineering lies in the seams: tenant isolation, offline synchronization, inventory correctness, financial history, payment reconciliation, tax submission state, auditability and operational recovery.
 
 The architecture therefore follows a simple equation:
 
@@ -2813,65 +2819,68 @@ SYNC STATE
 
 The client should not mirror every server table. Replicate the smallest projection required for the device's authorized workflows. This both improves performance and limits data exposure.
 
-# 136. Client Repository Architecture
+# 136. React Native Client Repository Architecture
 
-Flutter should use a layered design such as:
-
-```text
-Presentation
-  ↓
-Feature controller / state notifier
-  ↓
-Use case
-  ↓
-Repository interface
-  ├── Local data source (SQLite)
-  └── Remote data source (API/sync)
-```
-
-The business UI reads from the repository. A synchronization process updates the local database, which then triggers UI refresh through the normal local data flow. This prevents a fragmented architecture where some screens read SQLite and others read HTTP directly.
-
-# 137. Flutter Feature Module Layout
+The React Native mobile client should use a layered feature-oriented structure. UI components render state and collect input; feature/application code coordinates user interactions; repository/data adapters own local persistence and remote API/sync boundaries. Keep offline command durability and conflict behavior explicit rather than allowing screens to implement them independently.
 
 ```text
-lib/
-  core/
-    networking/
-    persistence/
-    sync/
-    auth/
-    errors/
-    telemetry/
-  features/
-    sales/
-      data/
-      domain/
-      presentation/
-    inventory/
-    catalogue/
-    cash/
-    payments/
-    reconciliation/
-    reports/
-    settings/
-  app/
+React Native UI
+       ↓
+feature/application state
+       ↓
+use cases / client commands
+       ↓
+repository boundary
+       ├── SQLite local store
+       └── Rust API / synchronization protocol
 ```
 
-Each feature owns its UI and use-case logic. Shared code should be truly shared; avoid a gigantic `utils/` folder that becomes an implicit dependency network.
+The mobile client may own local drafts, cached projections and a durable pending-command queue under the approved contract. The Rust server remains authoritative for accepted business operations. UI validation improves usability but never replaces server validation or authorization.
 
-# 138. Flutter State Management Rule
+# 137. React Native Feature Module Layout
 
-Use one predictable state-management approach consistently. The chosen framework is less important than the boundary: UI state is not domain state, and domain state is not network state.
-
-For example:
+The following is a target organization to be ratified with the mobile package tooling choice. Do not scaffold all folders in advance; each phase part names the paths it actually needs.
 
 ```text
-UI state: loading/error/display mode
-Domain state: register shift / sale / stock
-Sync state: queued/retrying/conflict/acked
+apps/mobile/
+  package.json
+  <one package-manager lockfile>
+  src/
+    app/                       # bootstrap and navigation composition
+    features/
+      sales/
+      inventory/
+      catalogue/
+      cash/
+      payments/
+      reconciliation/
+      reports/
+      settings/
+    data/
+      api/
+      local/
+      repositories/
+    sync/                      # client protocol adapters, outbox and replay orchestration
+    shared/                    # genuinely shared UI/platform-neutral client utilities
+  android/                      # native project/config when required by chosen workflow
+  ios/                          # native project/config when required by chosen workflow
+  e2e/                          # approved real-device/end-to-end harness
 ```
 
-A single object should not represent all three because changes in network state should not mutate business truth.
+Each feature owns its UI and client-side orchestration/tests. Extract shared code only when it is genuinely shared and has a deliberate owner. Server-side domain invariants must not be copied into mobile feature modules.
+
+# 138. React Native Mobile State Management Rule
+
+Use explicit separation between presentation, accepted business state and synchronization state. The selected library is a Phase 1 tooling decision; the required state boundaries are not.
+
+```text
+UI state: loading / error / display mode
+Local workflow state: draft / pending local command
+Server-authoritative state: accepted sale / register shift / stock
+Sync state: queued / sending / retryable / conflict / acknowledged
+```
+
+One state object must not collapse these distinct meanings. A queued command must not be presented as a server-accepted sale or payment.
 
 # 139. Desktop Tauri Architecture
 
@@ -3731,7 +3740,7 @@ This becomes important when two reports disagree and the business needs to under
 Initial performance budgets can be expressed as a rough target rather than a guarantee:
 
 ```text
-Flutter local query             < 20 ms typical
+Mobile local query             < 20 ms typical
 POS calculation                < 20 ms typical
 Rust request parsing            < 10 ms typical
 Database transaction            < 100 ms target under normal load
@@ -5884,7 +5893,7 @@ The architecture can be reduced to ten absolute rules:
 | DB access | SQLx |
 | Primary DB | PostgreSQL |
 | Local mobile DB | SQLite |
-| Mobile | Flutter |
+| Mobile | React Native |
 | Desktop | Tauri |
 | Web/admin | TypeScript + React/Next.js where needed |
 | Async jobs | Rust worker runtime + PostgreSQL outbox |
@@ -5909,7 +5918,7 @@ The architecture can be reduced to ten absolute rules:
 | Password crypto | No | Use audited libraries |
 | Database | No | PostgreSQL |
 | Desktop shell | No | Tauri |
-| Mobile toolkit | No | Flutter |
+| Mobile framework | No | React Native |
 | Payment rails | No | Providers |
 | Tax authority | No | MRA |
 | Message broker | Not initially | Add only when required |
@@ -5993,11 +6002,11 @@ TS says refund allowed differently
 → production inconsistency
 ```
 
-# 412. Why Flutter Is the Operational Client
+# 412. Why React Native Is the Operational Client
 
-Flutter's current documentation supports cross-platform application architecture, native release compilation and SQL persistence for complex local data, while also documenting offline-first patterns. This aligns directly with Sitolo's need to operate on mobile devices under intermittent connectivity. citeturn734608search5turn734608search12turn734608search15
+React Native is the selected mobile framework; its official documentation describes React components backed by native platform components, TypeScript/static-analysis support and automated testing guidance ([tutorial](https://reactnative.dev/docs/tutorial), [testing](https://reactnative.dev/docs/testing-overview), [environment setup](https://reactnative.dev/docs/set-up-your-environment)). The framework decision is accepted by ADR-026; the precise React Native release, workflow and library choices remain subject to compatibility review.
 
-The key decision is architectural, not merely UI technology: local SQLite state and synchronization are first-class subsystems.
+The product requirement is broader than rendering: the mobile client must preserve durable local work, recover safely after process death, handle unreliable networks and reconcile accepted commands. Those properties require explicit storage and protocol design, server validation and real-device evidence; no framework choice alone proves them.
 
 # 413. Why Tauri Is the Back-Office Shell
 
@@ -6314,7 +6323,7 @@ The repository should track technology choices and rationale. For example:
 2026-09 — Rust 1.98 pinned baseline
 2026-09 — modular monolith retained
 2026-09 — Tauri desktop
-2026-09 — Flutter mobile
+2026-10 — React Native mobile (ADR-026)
 2026-09 — SQLite local store
 ```
 
@@ -6352,7 +6361,7 @@ That contract is the foundation on which Sitolo can grow from a small merchant P
 
 ## Architecture Source Verification Notes
 
-The external research used for this architecture was intentionally narrow and authoritative where possible. MRA EIS official developer materials were used for the terminal, onboarding, configuration, sales, offline transaction and submission model. Flutter's official architectural materials were used for mobile architecture, SQL persistence and offline-first patterns. Tauri's official architecture documentation was used for the desktop shell decision. Rust's official release feed was used to verify the current stable Rust line for the preparation date. SQLx's project documentation was used to validate the intended compile-time verification and release/MSRV posture.
+The external research used for this architecture was intentionally narrow and authoritative where possible. MRA EIS official developer materials were used for the terminal, onboarding, configuration, sales, offline transaction and submission model. React Native's official tutorial, testing and environment documentation were used to ground mobile UI and tooling conventions. The product-specific offline architecture remains a Sitolo decision. Tauri's official architecture documentation was used for the desktop shell decision. Rust's official release feed was used to verify the current stable Rust line for the preparation date. SQLx's project documentation was used to validate the intended compile-time verification and release/MSRV posture.
 
 The architecture remains subject to verification against the exact provider contracts, MRA certification status, pharmacy regulatory requirements, privacy law obligations and hosting/security requirements applicable at production launch.
 

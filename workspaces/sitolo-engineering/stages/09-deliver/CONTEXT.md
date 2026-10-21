@@ -13,8 +13,14 @@ One job: prepare the verified change for review and controlled integration.
 | Working | Verification | ../08-verify/output/[run-slug]-verification.md | Full file | Evidence |
 | Reference | Governance | ../../shared/governance-context/CONTEXT.md | Git and review rules | Delivery requirements |
 | Reference | Delivery guide | references/delivery.md | Full file | Handoff format |
+| Reference | Current phase status | ../../../../docs/current_implementation_status.md | Full file | Reconcile phase status without assuming completion |
+| Reference | Phase execution guide | ../../../../docs/phase_execution_guide.md | Selected phase exit and next-phase rule | Ensure the handoff directs the next allowed phase |
+| Reference | Phase parts | ../../../../docs/phase_part_execution_contract.md | Selected part and completion gate | Record exact part outcome and next agreed part/stop condition |
+| Reference | Code ownership map | ../../../../docs/code_ownership_map.md | Changed package/app/test paths | Report ownership and evidence without hiding omitted crates |
 
 **Do NOT load:** unrelated stage contracts, unrelated reference families, the full documentation corpus, or the full `agent.md`; use the routed governance context and exact inputs only.
+
+Delivery must identify the current phase and part, its accepted write set, every changed package/app and its tests, relevant packages not touched with reason, exact revision and check outcomes, unresolved audit findings, and the next **human-agreed** part or explicit stop condition. A stage/part handoff does not itself approve the next part or close the phase.
 
 ## Process
 
@@ -22,7 +28,9 @@ One job: prepare the verified change for review and controlled integration.
 2. Inspect the final diff for scope, secrets, generated artifacts, and unrelated changes.
 3. Prepare a factual commit/PR summary with tests and known limitations.
 4. Commit and open the review request only through the project's normal Git workflow.
-5. Do not merge merely because the stage is complete.
+5. Record the selected product phase, canonical contract, exit-gate decision, revision-attributable evidence and explicit next phase/stop condition in the handoff.
+6. Update current phase status only when the required phase exit decision has actually been accepted. A completed ICM run, passing checks or merged PR is not by itself a phase transition.
+7. Do not merge merely because the stage is complete.
 
 ## Human Check
 

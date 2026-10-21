@@ -5,7 +5,7 @@
 **Status:** Deep implementation specification  
 **Revision:** 1.0  
 **Date:** 2026-09-06  
-**Scope:** Rust backend, PostgreSQL, Axum API, workers, authentication/authorization, offline sync, payments, MRA EIS, Flutter/Tauri security boundaries, CI/CD and release evidence
+**Scope:** Rust backend, PostgreSQL, Axum API, workers, authentication/authorization, offline sync, payments, MRA EIS, React Native/Tauri security boundaries, CI/CD and release evidence
 
 ---
 

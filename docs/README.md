@@ -11,8 +11,12 @@ Source of authority: [`agent.md`](../agent.md) at the repository root. When docu
 | [`documentation_semantic_remediation_plan.md`](documentation_semantic_remediation_plan.md) | Current semantic documentation audit/remediation plan |
 | [`icm_reference_integrity.md`](icm_reference_integrity.md) | Standing Markdown reference-integrity and authority-classification policy |
 | [`agentic_workflow.md`](agentic_workflow.md) | Filesystem-routed ICM engineering workflow |
-| [`ADR-001-025.md`](ADR-001-025.md) | Architecture decision records |
+| [`ADR-001-025.md`](ADR-001-025.md) | ADR-001 through ADR-025; ADR-002's Flutter decision is superseded and retained as history |\n| [`ADR-026-react-native-mobile.md`](ADR-026-react-native-mobile.md) | Accepted decision: React Native is the sole permitted mobile framework |
 | [`implementation_plan.md`](implementation_plan.md) | Implementation program, dependency order and release posture |
+| [`phase0_architecture_contract_freeze.md`](phase0_architecture_contract_freeze.md) | Canonical Phase 0 architecture/contract reconciliation and exit gate |
+| [`phase_execution_guide.md`](phase_execution_guide.md) | Phase-by-phase purpose, inputs, evidence, exit criteria and next-phase routing |
+| [`code_ownership_map.md`](code_ownership_map.md) | Proposed Rust crate, application, Tauri + React, React Native mobile, repository-file and test ownership map; Phase 0 ratification required |
+| [`phase_part_execution_contract.md`](phase_part_execution_contract.md) | Mandatory jointly reviewed part breakdown, per-owner implementation/test matrix, stage gates and handoff rules |
 | [`phase_contract_coverage_register.md`](phase_contract_coverage_register.md) | **Authoritative phase 0–20 contract coverage/reconciliation register** |
 | [`current_implementation_status.md`](current_implementation_status.md) | Current product phase and active engineering-stream pointer |
 
@@ -24,7 +28,7 @@ Source of authority: [`agent.md`](../agent.md) at the repository root. When docu
 | [`phase4_part5_to_phase0_enterprise_audit_remediation_plan.md`](phase4_part5_to_phase0_enterprise_audit_remediation_plan.md) | Historical Phase 4 Part 5 remediation artifact |
 | [`phase0-2_implementation_audit_and_remediation.md`](phase0-2_implementation_audit_and_remediation.md) | Historical Phase 0–2 / Phase 3-readiness audit |
 | [`phase4_part8_pr009_remediation_implementation_instructions.md`](phase4_part8_pr009_remediation_implementation_instructions.md) | Superseded PR-009 review; historical evidence only |
-| [`phase4_part8_pr009_current_status.md`](phase4_part8_pr009_current_status.md) | Current PR-009 status pointer and closure gates |
+| [`phase4_part8_pr009_current_status.md`](phase4_part8_pr009_current_status.md) | Historical PR-009 status snapshot; does not govern the restart |
 | [`business_model_design.md`](business_model_design.md) | Compatibility entry only; canonical business model lives in `commercial/01_strategy/business_model_design.md` |
 
 ## Core design corpus
@@ -85,16 +89,17 @@ Phase documents are normative requirements and implementation sequencing artifac
 | [`phase19_hardening_performance_dr_implementation.md`](phase19_hardening_performance_dr_implementation.md) | Hardening/performance/disaster-recovery implementation contract |
 | [`phase20_production_certification_implementation.md`](phase20_production_certification_implementation.md) | Production certification implementation contract |
 
-Completed PR-specific contracts for Phase 4 Parts 6 and 7 are historical implementation records; active work is represented by the current phase/PR status documents and the Part 8 binding contract. Additional Phase 2 and Phase 4 remediation/execution contracts remain in this directory. Their status must be read from metadata and current implementation evidence, not inferred from filename or existence. PR-specific review documents are snapshots and must be checked against the current PR head.
+Phase 4 Part-specific contracts and PR-specific review/status documents are retained for their original scope and historical traceability. They do not define the active work for this restart. Additional Phase 2 and Phase 4 remediation/execution contracts must be interpreted by their lifecycle metadata and applicable evidence, not inferred from filename or existence. No copied phase status or prior review snapshot is accepted as completion evidence for this restart.
 
-## Active Phase 4 Part 8 work
+## Historical Phase 4 Part 8 records
 
 | Document | Purpose |
 |---|---|
-| [`phase4_part8_audit_outbox_implementation_contract.md`](phase4_part8_audit_outbox_implementation_contract.md) | Binding Part 8 audit/outbox target contract |
-| [`phase4_part8_pr009_current_status.md`](phase4_part8_pr009_current_status.md) | Current PR-009 implementation/status snapshot |
+| [`phase4_part8_audit_outbox_implementation_contract.md`](phase4_part8_audit_outbox_implementation_contract.md) | Phase 4 Part 8 contract retained for its original scope; not the active restart pointer |
+| [`phase4_part8_pr009_current_status.md`](phase4_part8_pr009_current_status.md) | Historical PR-009 review snapshot; not current implementation status |
 | [`phase4_part8_pr009_remediation_implementation_instructions.md`](phase4_part8_pr009_remediation_implementation_instructions.md) | Superseded historical PR-009 review |
-| [`phase4_part8_pr009_current_status.md`](phase4_part8_pr009_current_status.md) | Current PR-009 implementation/status snapshot |
+
+The current implementation position is Phase 0. Start from [current implementation status](current_implementation_status.md) and [the Phase Execution and Transition Guide](phase_execution_guide.md). Do not resume historical run output unless explicitly requested.
 
 ## External standards
 

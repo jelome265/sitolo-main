@@ -1,6 +1,6 @@
 # Sitolo — CI Enforcement Contract
 
-**Status:** reconstructed from the active GitHub Actions workflows, repository policy scripts, Rust workspace contract, security test harness and current ICM validator.
+**Status:** Required CI policy contract. Each referenced workflow/script must be verified against the current repository revision; a path named here is not proof the executable check exists or has run. See `docs/current_implementation_status.md` for the restart baseline.
 
 ## Purpose
 
@@ -17,9 +17,21 @@ CI is a release-control boundary. Local success is useful evidence; protected CI
 
 ### Rust/build
 
-- formatting/checks/build/tests as defined by the active Rust workflow;
+- formatting/checks/build/tests for every approved Cargo package and required app target;
 - release/build verification where required;
-- dependency policy and audit checks.
+- dependency policy and audit checks;
+- actual package inventory and dependency direction must match the human-approved `docs/code_ownership_map.md`.
+
+### Code ownership and test placement (Phase 1 required gate)
+
+- a required, deterministic ownership checker compares Cargo metadata/package paths/dependency edges with the approved ownership manifest;
+- no approved crate/app responsibility may be omitted, hidden in a neighboring crate, or implemented a second time in a different layer;
+- each package's own tests run within that package's test target; root `tests/` is reserved for true cross-package/system or repository-wide architecture checks;
+- test-only packages must not enter production dependency graphs;
+- when present and in scope, React Native and Tauri + React targets must have their own build/test commands and results;
+- the gate fails when an expected package/target/test suite is missing, undiscovered, skipped without an approved reason, or mapped to the wrong owner.
+
+**Current restart baseline:** these rules are mandatory design requirements, not a claim that an ownership checker or Rust/client test targets currently exist. Phase 0 must ratify the map; Phase 1 implements and runs the checker as a required CI control.
 
 ### Security
 
@@ -74,4 +86,4 @@ CI verifies the filesystem workflow; CI does not become the workflow engine. The
 - `docs/security_implementation_spec.md`
 - `docs/testing_strategy.md`
 
-This document restores the CI authority filename referenced by the implementation corpus.
+This document defines the CI policy target; the repository must not describe its listed paths as operational until each file is present and its required check has been exercised.
