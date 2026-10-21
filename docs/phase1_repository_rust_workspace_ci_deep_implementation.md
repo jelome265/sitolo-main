@@ -947,7 +947,7 @@ Does provider-specific representation leak into domain?
 Does an application bypass approved ports?
 Are crate-owned tests inside the owning package?
 Are required package/app test and build targets actually invoked?
-Are Tauri/React and Flutter targets included when present and in scope?
+Are Tauri/React and React Native targets included when present and in scope?
 Does any approved package or requirement have no implementation/test owner?
 ```
 
