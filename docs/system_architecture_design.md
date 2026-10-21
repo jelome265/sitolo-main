@@ -1905,9 +1905,12 @@ Append-only transaction tables grow continuously. At meaningful scale, use archi
 
 ## ADR-026 React Native mobile
 
-**Decision:** React Native is the primary mobile client.
-**Reason:** cross-platform code reuse, native release compilation, mature UI ecosystem, and explicit support for SQL persistence/offline-first patterns. citeturn734608search5turn734608search12
-**Tradeoff:** larger client binary and TypeScript/JavaScript/React Native expertise requirement.
+**Decision:** React Native is the sole permitted mobile framework; see [ADR-026](ADR-026-react-native-mobile.md). Flutter is prohibited.
+
+**Architecture consequence:** mobile presentation uses React Native native components and TypeScript/JavaScript; local persistence, offline command durability, sync/replay and secure device integration require explicit package ownership and executable tests. The framework decision does not authorize a client-side second business engine, and Tauri webview components are not a substitute for React Native mobile components.
+
+**Tooling decision still open:** the exact React Native workflow (Expo versus Community CLI), compatible release/toolchain, package manager, state/navigation libraries, SQLite adapter and device/E2E harness must be selected and pinned through the Phase 0/Phase 1 gates. Do not infer these from the framework decision.
+
 
 ## ADR-003 Tauri desktop
 
@@ -2171,7 +2174,7 @@ External sources were checked for current technology and Malawi integration cont
 
 1. Rust Release Team, **Announcing Rust 1.98.0**, 20 Aug 2026 — https://blog.rust-lang.org/2026/08/20/Rust-1.98.0/
 2. Rust official release announcements — https://blog.rust-lang.org/releases/
-3. 3. React Native, **Learn the Basics** — https://reactnative.dev/docs/tutorial
+3. React Native, **Learn the Basics** — https://reactnative.dev/docs/tutorial
 4. React Native, **Testing overview** — https://reactnative.dev/docs/testing-overview
 5. React Native, **Environment setup** — https://reactnative.dev/docs/set-up-your-environment
 6. React Native, **Platform-specific code** — https://reactnative.dev/docs/platform-specific-code
