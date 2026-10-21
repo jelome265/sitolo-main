@@ -7,11 +7,13 @@
 
 This file is an ICM Layer 3 routing surface. It selects the relevant phase contract; it does not override the implementation plan or any authoritative domain/security/provider source.
 
+For every implementation-phase run, also apply `../../../../docs/phase_part_execution_contract.md`. Load `../../../../docs/code_ownership_map.md` when planning or changing package/app/file ownership. That map is a Phase 0 proposal until the human accepts its decisions; do not scaffold candidate crates or move responsibilities between them before then.
+
 ## Active phase
 
 | Phase | Canonical contract | Load when | Expected next destination |
 |---|---|---|---|
-| **0 — ACTIVE** | `../../../../docs/phase0_architecture_contract_freeze.md` | Every new implementation-program run during the restart baseline | Phase 1 only after Phase 0 exit is reviewed and accepted |
+| **0 — ACTIVE** | `../../../../docs/phase0_architecture_contract_freeze.md` | Every new implementation-program run during the restart baseline | Phase 1 only after Phase 0 exit is reviewed and accepted; package map must be ratified first |
 
 Read the Phase 0 contract and the phase execution guide, then route only the relevant canonical inputs listed by the Phase 0 contract. Do not load all future-phase contracts by default.
 
