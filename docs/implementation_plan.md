@@ -99,7 +99,7 @@ The architecture is intentionally not microservice-first. A module may later bec
 ## 3.2 Clients
 
 ```text
-Flutter → Android-first mobile
+React Native → Android-first mobile
 Tauri + TypeScript → desktop
 TypeScript / Next.js → optional admin web
 ```
@@ -364,7 +364,7 @@ Domain
 
 Infrastructure implements ports exposed to application/domain layers.
 
-Domain code must not import Axum, SQLx, Redis, provider HTTP implementations, Flutter or Tauri.
+Domain code must not import Axum, SQLx, Redis, provider HTTP implementations, React Native or Tauri.
 
 ## CI foundation
 
@@ -1998,7 +1998,7 @@ The objective is systemic prevention, not merely restoration.
 
 The following decisions are intentionally open until supported by evidence and ADR approval:
 
-1. exact Flutter SQLite package;
+1. exact React Native SQLite package;
 2. exact synchronization library versus custom implementation split;
 3. managed identity provider versus standards-based self-managed identity;
 4. production cloud/platform;
