@@ -8,7 +8,7 @@
 **Primary market:** Malawi first, controlled African regionalization  
 **Backend:** Rust / Tokio / Axum  
 **Database:** PostgreSQL 18  
-**Mobile:** Flutter / SQLite  
+**Mobile:** React Native / SQLite  
 **Desktop:** Tauri  
 **Telemetry model:** OpenTelemetry-compatible traces, metrics and logs with Prometheus-compatible metric consumption  
 **Normative language:** MUST / MUST NOT / REQUIRED / SHOULD / SHOULD NOT / MAY are intentional requirements.
@@ -130,7 +130,7 @@ This document governs observability for:
 - Reporting/export jobs.
 - Object storage interactions.
 - Redis, if enabled, as a non-authoritative dependency.
-- Flutter client operational telemetry.
+- React Native client operational telemetry.
 - Tauri desktop operational telemetry.
 - Build and deployment telemetry relevant to runtime correctness.
 - Synthetic probes and release verification.
@@ -2139,7 +2139,7 @@ Do not emit a metric per Tokio task ID.
 
 # 21. Mobile Observability
 
-The Flutter client is a core operational component because offline capability lives partly on the device.
+The React Native client is a core operational component because offline capability lives partly on the device.
 
 ## 21.1 Required client telemetry
 
