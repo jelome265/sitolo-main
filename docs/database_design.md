@@ -9,7 +9,7 @@
 **Primary database:** PostgreSQL 18 target line  
 **Database access:** Rust + SQLx  
 **Authoritative state:** PostgreSQL  
-**Offline operational store:** SQLite on Flutter/Tauri clients  
+**Offline operational store:** SQLite on React Native/Tauri clients  
 **Architecture:** Modular monolith first, durable outbox/workers, adapters at external boundaries
 
 > This document defines the authoritative server-side persistence model for Sitolo. It translates the domain model into relational structures, constraints, indexes, transactions, security boundaries, migration rules, partitioning policy, retention behavior, audit/evidence structures, and operational database practices. It is not an API specification and it must not become a mechanical table-per-endpoint design.
@@ -5450,7 +5450,7 @@ The desired property is defense in depth: a missed application predicate should 
 # 193. Database Diagram — Offline Synchronization
 
 ```text
-FLUTTER / TAURI SQLITE
+REACT NATIVE / TAURI SQLITE
        │
        │ command_id
        │ schema_version
