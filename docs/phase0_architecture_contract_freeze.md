@@ -30,7 +30,8 @@ Start with the minimum routed context and then follow only the references needed
 | Continuity and integrations | `docs/sync_protocol.md`, `docs/payment_integration_spec.md`, `docs/mra_eis_integration_spec.md` | Offline, payment and fiscal-provider boundaries |
 | Operations and verification | `docs/observability_spec.md`, `docs/deployment_spec.md`, `docs/testing_strategy.md`, `docs/ci_enforcement.md` | Operability, test strategy, release controls |
 | Decisions and phase order | `docs/ADR-001-025.md`, `docs/implementation_plan.md` | Existing decisions and the Phase 0–20 dependency sequence |
-| Phase routing | `docs/phase_execution_guide.md`, `docs/phase_contract_coverage_register.md` | What each phase must do and how to move between phases |
+| Phase routing | `docs/phase_execution_guide.md`, `docs/phase_contract_coverage_register.md`, `docs/phase_part_execution_contract.md` | Phase/part sequence, implementation gates and how to advance |
+| Code ownership | `docs/code_ownership_map.md` | Proposed package/client/file ownership and test placement; must be ratified in Phase 0 before Phase 1 scaffolding |
 
 A listed file can be outdated, incomplete or inconsistent. Inspect its content and links before treating it as authoritative. Current external laws, regulator requirements and provider contracts must be rechecked when a decision depends on them.
 
@@ -47,6 +48,8 @@ A listed file can be outdated, incomplete or inconsistent. Inspect its content a
 
 - Verify the intended client surfaces, backend runtime, persistence authorities and external integration boundaries.
 - Confirm domain and module ownership, dependency direction, and the boundary between the modular monolith, workers and adapters.
+- Reconcile the conflicting candidate crate/package lists in `docs/system_architecture_design.md` and `docs/phase1_repository_rust_workspace_ci_deep_implementation.md`; do not silently select or combine them.
+- Review `docs/code_ownership_map.md` for Rust crate roles, executable entry points, migration ownership/path, Flutter mobile, Tauri + React, generated API types, and test locations. Resolve the package inventory and Tauri workspace/lockfile boundary before Phase 1 scaffolding; record approved decisions in ADRs and retain unresolved blockers explicitly.
 - Confirm server-side authority for authorization, tenant/resource scope and financially significant decisions.
 - Identify cross-context interactions and their data/API/event contracts.
 - Record material architecture decisions in the existing ADR system. Do not silently change a decision because an implementation would be easier.
@@ -84,7 +87,9 @@ The ICM run must produce or update the following artifacts, using the existing s
 3. **Investigation report** — exact source files inspected, conflicts, gaps, broken references and evidence-backed findings.
 4. **Phase 0 plan** — ordered reconciliation work, owners/decision points, acceptance checks and dependencies.
 5. **Architecture/contract reconciliation record** — canonical source per concern, conflicts resolved or explicitly open, and affected ADRs.
-6. **Phase 0 implementation/reconciliation report** — changes made and deliberately deferred, with file paths.
+6. **Code ownership decision** — reviewed `docs/code_ownership_map.md`, approved package/client/test boundary decisions, unresolved options and the ADRs or phase gates affected.
+7. **Phase-part operating rule** — apply `docs/phase_part_execution_contract.md` so future parts are proposed, reviewed and accepted jointly before implementation.
+8. **Phase 0 implementation/reconciliation report** — changes made and deliberately deferred, with file paths.
 7. **Audit and remediation records** — findings, severity, fix decisions and unresolved risk acceptance where relevant.
 8. **Verification report** — checks run/not run with reasons, results, repository revision and known limitations.
 9. **Delivery handoff** — PR/revision, summary, evidence, outstanding decisions and the exact next action.
@@ -97,6 +102,7 @@ Phase 0 may be marked complete only when every applicable condition below has ex
 
 - [ ] Product scope, primary workflows and exclusions have been reviewed and accepted.
 - [ ] The architecture, module ownership, client/runtime boundaries and authoritative data responsibilities are mutually consistent.
+- [ ] The approved Rust package inventory, API/worker composition roots, migration path, Tauri + React native boundary, Flutter mobile boundary, and package/app test locations have one explicit owner each. Any unresolved choice that affects Phase 1 scaffolding blocks Phase 1 until human disposition.
 - [ ] Domain invariants, API contracts, persistence rules and integration boundaries do not contain unresolved material contradictions.
 - [ ] Security and operational requirements are routed to their canonical sources and material gaps are recorded.
 - [ ] Every material architecture decision is either recorded and approved in an ADR or listed as open with an owner and disposition rule.
@@ -117,7 +123,7 @@ An unresolved decision may remain open only when the architecture supports defer
 
 **Next phase:** Phase 1 — Repository, Rust workspace and CI foundation.
 
-Phase 1 may begin only after the Phase 0 exit package is reviewed. It consumes the approved architecture and ADR baseline to establish a reproducible repository/toolchain, dependency policy, workspace structure, CI gates and supply-chain controls. It must not use Phase 1 scaffolding to make unresolved Phase 0 product or architecture decisions implicitly.
+Phase 1 may begin only after the Phase 0 exit package is reviewed. It consumes the approved architecture and ADR baseline **and the human-approved code ownership map** to establish a reproducible repository/toolchain, approved workspace/package structure, dependency policy, CI gates and supply-chain controls. It must not create crates/apps from an unratified candidate list. The map's machine-readable manifest and required ownership/dependency/test-placement checker belong to Phase 1, after the human-readable ownership decisions are approved. It must not use Phase 1 scaffolding to make unresolved Phase 0 product or architecture decisions implicitly.
 
 ## 8. ICM execution rule
 
@@ -125,5 +131,5 @@ Phase 0 is executed through the existing pipeline:
 
 `01 Select → 02 Research → 03 Investigate → 04 Plan → 05 Implement/Reconcile → 06 Audit → 07 Remediate → 08 Verify → 09 Deliver`
 
-The phase sequence and stage sequence are different axes. Completing an ICM stage does not complete a product phase. The ICM run must not resume a prior phase-specific run unless a human explicitly selects it as relevant historical evidence.
+The phase sequence and stage sequence are different axes. Completing an ICM stage does not complete a product phase. Apply `docs/phase_part_execution_contract.md`: the agent proposes phase parts, the human reviews/edits/accepts the sequence and current part, and implementation stays within the accepted write set. The ICM run must not resume a prior phase-specific run unless a human explicitly selects it as relevant historical evidence.
 
