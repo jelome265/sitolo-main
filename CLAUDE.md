@@ -9,7 +9,7 @@ Sitolo uses filesystem-routed ICM workspaces. The root router is an entry gate: 
 | Any organizational work | workspaces/CLAUDE.md | Mandatory first stop; select the smallest bounded work domain |
 | Repository change impact | map/CLAUDE.md | System Map routing after primary domain selection, or for an explicit map-only request |
 | Canonical project knowledge | docs/README.md | Routes to authoritative project knowledge |
-| Workflow integrity | scripts/ci/check-icm-workspace | Mechanical workspace validation |
+| Workflow integrity | docs/agentic_workflow.md; docs/phase_execution_guide.md | ICM policy and phase routing; mechanical checks are a Phase 1 deliverable and must not be claimed before they exist |
 
 ## Loading
 
