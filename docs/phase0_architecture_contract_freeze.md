@@ -29,7 +29,7 @@ Start with the minimum routed context and then follow only the references needed
 | Security | `docs/threat_model.md`, `docs/security_implementation_spec.md`, `docs/security_control_register.md` | Threats, controls and evidence expectations |
 | Continuity and integrations | `docs/sync_protocol.md`, `docs/payment_integration_spec.md`, `docs/mra_eis_integration_spec.md` | Offline, payment and fiscal-provider boundaries |
 | Operations and verification | `docs/observability_spec.md`, `docs/deployment_spec.md`, `docs/testing_strategy.md`, `docs/ci_enforcement.md` | Operability, test strategy, release controls |
-| Decisions and phase order | `docs/ADR-001-025.md`, `docs/implementation_plan.md` | Existing decisions and the Phase 0–20 dependency sequence |
+| Decisions and phase order | `docs/ADR-001-025.md`, `docs/ADR-026-react-native-mobile.md`, `docs/implementation_plan.md` | Existing/superseded decisions, accepted React Native mobile decision and Phase 0–20 dependency sequence |
 | Phase routing | `docs/phase_execution_guide.md`, `docs/phase_contract_coverage_register.md`, `docs/phase_part_execution_contract.md` | Phase/part sequence, implementation gates and how to advance |
 | Code ownership | `docs/code_ownership_map.md` and `docs/ADR-026-react-native-mobile.md` | Mobile framework is approved as React Native; remaining package/client/file ownership and test placement must be ratified before Phase 1 scaffolding |
 
