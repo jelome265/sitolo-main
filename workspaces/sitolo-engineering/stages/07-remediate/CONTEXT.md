@@ -15,6 +15,10 @@ One job: correct confirmed findings, or explicitly record that no remediation is
 
 **Do NOT load:** unrelated stage contracts, unrelated reference families, the full documentation corpus, or the full `agent.md`; use the routed governance context and exact inputs only.
 
+## Ownership-preserving remediation
+
+Apply `../../../../docs/phase_part_execution_contract.md` and `../../../../docs/code_ownership_map.md`. Correct each behavior in its approved crate/package/app and add proof in that owner's tests. Do not suppress an audit finding by moving the implementation or test elsewhere. If a proper fix requires a new owner, path, dependency edge or part, return to Stage 04 for an explicitly reviewed plan change before editing it.
+
 ## Process
 
 1. Determine whether the latest audit contains PARTIAL or FAIL findings.
