@@ -87,24 +87,11 @@ Duka does not require a PC. Multi-Branch does not require a PC at every branch. 
 
 ## Delivery status
 
-The repository has progressed beyond the initial engineering substrate into the tenancy, authorization and PostgreSQL security-boundary work.
+This repository is restarting Sitolo's implementation program at **Phase 0 — Architecture, Contracts and ADR Freeze**. The current objective is to reconcile the project contracts and architecture, record unresolved decisions, and establish a human-reviewed Phase 0 exit package before Phase 1 implementation begins.
 
-Current product implementation position is **Phase 4 Part 8 / PR-009: durable audit evidence + transactional outbox**. The workflow/documentation architecture is maintained separately in the ICM engineering workspace.
+The [Phase Execution and Transition Guide](docs/phase_execution_guide.md) describes the purpose, inputs, required evidence, exit gate and next phase for every Phase 0–20. The [Phase 0 contract](docs/phase0_architecture_contract_freeze.md) is the active phase contract. The [current status pointer](docs/current_implementation_status.md) and Engineering [phase-context router](workspaces/sitolo-engineering/shared/phase-context/CONTEXT.md) must agree.
 
-Current main-branch status includes:
-
-- Phase 1 repository/Rust/CI/supply-chain foundation;
-- Phase 2 configuration, secrets, errors, telemetry, and runtime foundation;
-- Phase 3 identity/session/MFA/device-identity foundation;
-- Phase 4 organization/branch APIs and repository-scope enforcement;
-- Phase 4 PostgreSQL/RLS security-boundary implementation;
-- active Phase 4 Part 8 audit/outbox contract and implementation work.
-
-Later phase documents, including Phase 8 product catalogue, are target-state contracts and do not change the current product phase.
-
-Commercially, the product remains **pre-validation**. The business model is an enterprise-capable target model and its pricing, segment, channel, retention, Duka economics, and PMF assumptions remain hypotheses until validated through the [Commercial Validation Plan](docs/commercial/02_validation/commercial_validation_plan.md) and [Universal Segment Strategy](docs/segment_strategy_and_duka_economics.md).
-
-The PostgreSQL integration-test harness remains explicitly deferred where stated by the phase documentation. Product implementation must continue to follow the applicable phase contracts and security architecture.
+Existing documents, source files, future-phase contracts and prior run artifacts are review inputs only; they do not carry phase-completion status into this restart. Phase 0 remains open until its exit criteria have been verified against a specific repository revision and accepted by the responsible human.
 
 ## Commercial direction
 
